@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة التحكم | Luxovia Tours</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --blue: #003366; --gold: #D4AF37; --red: #e63946; --green: #28a745; --orange: #fd7e14; }
+        body { font-family: 'Cairo', sans-serif; margin: 0; background: #f8f9fa; display: flex; }
+        
+        .sidebar { width: 280px; background: var(--blue); color: white; height: 100vh; padding: 20px; position: fixed; overflow-y: auto; }
+        .sidebar h2 { text-align: center; color: var(--gold); border-bottom: 1px solid #ffffff33; padding-bottom: 10px; }
+        .nav-btn { width: 100%; padding: 15px; background: none; border: none; color: white; text-align: right; cursor: pointer; font-size: 16px; border-radius: 8px; margin-bottom: 5px; }
+        .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.1); color: var(--gold); }
+        .logout-btn { margin-top: 50px; color: #ffaaaa; }
+
+        .main-content { margin-right: 300px; padding: 40px; width: calc(100% - 320px); }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        .btn-save { background: var(--blue); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        .btn-save:hover { opacity: 0.9; }
+        
+        #imgPreview, #hotelImgPreview, #offerImgPreview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin: 10px 0; display: none; border: 2px dashed var(--gold); }
+        .file-label { display: block; padding: 10px; background: #eee; text-align: center; border-radius: 8px; cursor: pointer; border: 1px solid #ddd; margin: 10px 0; }
+        .file-label:hover { background: #e0e0e0; }
+
+        .hidden { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table th, table td { padding: 12px; border-bottom: 1px solid #eee; text-align: right; }
+        .delete-btn { color: var(--red); cursor: pointer; border: none; background: none; font-weight: bold; padding: 5px 10px; }
+        .delete-btn:hover { background: #ffeeee; border-radius: 5px; }
+        
+        .form-row { display: flex; gap: 20px; margin-bottom: 15px; }
+        .form-row > div { flex: 1; }
+        
+        .badge { background: var(--gold); color: var(--blue); padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        .status-available { background: var(--green); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; }
+        .status-booked { background: var(--red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; }
+        .old-price { text-decoration: line-through; color: #999; font-size: 14px; }
+        .new-price { color: var(--red); font-weight: bold; font-size: 18px; }
+        .discount-badge { background: var(--orange); color: white; padding: 4px 8px; border-radius: 20px; font-size: 12px; }
+        
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-right: 0; width: 100%; padding: 20px; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>Luxovia Admin</h2>
+        <button class="nav-btn active" onclick="showSection('services-sec')">🎯 إدارة الخدمات</button>
+        <button class="nav-btn" onclick="showSection('hotels-sec')">🏨 إدارة الفنادق</button>
+        <button class="nav-btn" onclick="showSection('offers-sec')">🎁 إدارة العروض</button>
+        <button class="nav-btn logout-btn" id="logoutBtn">🚪 تسجيل الخروج</button>
+    </aside>
+
+    <main class="main-content">
+        <!-- قسم الخدمات -->
+        <section id="services-sec">
+            <div class="card">
+                <h3>➕ إضافة خدمة جديدة</h3>
+                <form id="serviceForm">
+                    <select id="category" required>
+                        <option value="">اختر الفئة</option>
+                        <option value="umrah">عمرة</option>
+                        <option value="hajj">حج</option>
+                        <option value="group">كروبات سياحية</option>
+                        <option value="flight">طيران</option>
+                        <option value="land">رحلات برية</option>
+                    </select>
+                    
+                    <div>
+                        <label>📝 عنوان الخدمة</label>
+                        <input type="text" id="title" placeholder="مثال: رحلة عمرة رمضان" required>
+                    </div>
+                    
+                    <div>
+                        <label>📄 وصف الخدمة</label>
+                        <textarea id="description" rows="4" placeholder="وصف الخدمة بالتفصيل..." required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label>💰 السعر (بالدولار)</label>
+                            <input type="number" id="price" placeholder="مثال: 1200" required>
+                        </div>
+                        <div>
+                            <label>🪑 المقاعد المتاحة</label>
+                            <input type="number" id="availableSeats" placeholder="مثال: 50" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label>📅 تاريخ البداية</label>
+                            <input type="datetime-local" id="startDate" required>
+                        </div>
+                        <div>
+                            <label>📅 تاريخ النهاية</label>
+                            <input type="datetime-local" id="endDate" required>
+                        </div>
+                    </div>
+                    
+                    <label class="file-label" for="serviceImgInput">🖼️ اختر صورة الخدمة من الجهاز</label>
+                    <input type="file" id="serviceImgInput" accept="image/*" style="display: none;">
+                    <img id="imgPreview" alt="معاينة الصورة">
+                    
+                    <button type="submit" id="submitBtn" class="btn-save">📌 نشر الخدمة</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>📋 قائمة الخدمات</h3>
+                <div style="overflow-x: auto;">
+                    <table id="servicesTable">
+                        <thead>
+                            <tr><th>الصورة</th><th>عنوان الخدمة</th><th>السعر</th><th>الفئة</th><th>المقاعد</th><th>تاريخ البداية</th><th>تاريخ النهاية</th><th>إجراء</th></tr>
+                        </thead>
+                        <tbody id="servicesTableBody"><tr><td colspan="8">جاري التحميل...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الفنادق -->
+        <section id="hotels-sec" class="hidden">
+            <div class="card">
+                <h3>🏨 إضافة فندق جديد</h3>
+                <form id="hotelForm">
+                    <div><label>🏨 اسم الفندق</label><input type="text" id="hotelName" placeholder="مثال: فندق هيلتون مكة" required></div>
+                    <div><label>📍 الموقع</label><input type="text" id="hotelLocation" placeholder="مثال: مكة المكرمة - الحرم" required></div>
+                    <div class="form-row">
+                        <div><label>💰 السعر لليلة (بالدولار)</label><input type="number" id="hotelPrice" placeholder="مثال: 200" required></div>
+                        <div><label>🛏️ عدد الغرف المتاحة</label><input type="number" id="hotelRooms" placeholder="مثال: 50" required></div>
+                    </div>
+                    <div><label>📋 حالة الحجز</label>
+                        <select id="hotelStatus" required>
+                            <option value="available">✅ متاح</option>
+                            <option value="booked">🔴 محجوز بالكامل</option>
+                            <option value="partial">🟡 حجز جزئي</option>
+                        </select>
+                    </div>
+                    <div><label>📝 وصف الفندق (اختياري)</label><textarea id="hotelDescription" rows="3" placeholder="وصف الفندق والخدمات المقدمة..."></textarea></div>
+                    <label class="file-label" for="hotelImgInput">🖼️ اختر صورة الفندق</label>
+                    <input type="file" id="hotelImgInput" accept="image/*" style="display: none;">
+                    <img id="hotelImgPreview" alt="معاينة الصورة">
+                    <button type="submit" id="submitHotelBtn" class="btn-save">🏨 إضافة الفندق</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>📋 قائمة الفنادق</h3>
+                <div style="overflow-x: auto;">
+                    <table id="hotelsTable">
+                        <thead><tr><th>الصورة</th><th>اسم الفندق</th><th>الموقع</th><th>السعر</th><th>الغرف</th><th>الحالة</th><th>إجراء</th></tr></thead>
+                        <tbody id="hotelsTableBody"><tr><td colspan="7">جاري التحميل...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم العروض -->
+        <section id="offers-sec" class="hidden">
+            <div class="card">
+                <h3>🎁 إضافة عرض جديد</h3>
+                <form id="offerForm">
+                    <div class="form-row">
+                        <div>
+                            <label>🏷️ عنوان العرض</label>
+                            <input type="text" id="offerTitle" placeholder="مثال: عرض العمرة المذهل" required>
+                        </div>
+                        <div>
+                            <label>📝 اسم العرض (الوصف المختصر)</label>
+                            <input type="text" id="offerName" placeholder="مثال: خصم 30% على عمرة رمضان" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label>💰 السعر الحالي (بالدولار)</label>
+                            <input type="number" id="currentPrice" placeholder="مثال: 840" required>
+                        </div>
+                        <div>
+                            <label>💸 السعر السابق (بالدولار)</label>
+                            <input type="number" id="oldPrice" placeholder="مثال: 1200" required>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label>📝 وصف تفصيلي للعرض</label>
+                        <textarea id="offerDescription" rows="4" placeholder="وصف تفصيلي للعرض والمزايا..." required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label>📅 تاريخ بداية العرض</label>
+                            <input type="datetime-local" id="offerStartDate" required>
+                        </div>
+                        <div>
+                            <label>📅 تاريخ نهاية العرض</label>
+                            <input type="datetime-local" id="offerEndDate" required>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label>🔗 رابط العرض (اختياري)</label>
+                        <input type="url" id="offerLink" placeholder="https://example.com/offer">
+                    </div>
+                    
+                    <label class="file-label" for="offerImgInput">🖼️ اختر صورة العرض</label>
+                    <input type="file" id="offerImgInput" accept="image/*" style="display: none;">
+                    <img id="offerImgPreview" alt="معاينة الصورة">
+                    
+                    <button type="submit" id="submitOfferBtn" class="btn-save">🎁 نشر العرض</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>📋 قائمة العروض</h3>
+                <div style="overflow-x: auto;">
+                    <table id="offersTable">
+                        <thead>
+                            <tr>
+                                <th>الصورة</th>
+                                <th>عنوان العرض</th>
+                                <th>اسم العرض</th>
+                                <th>السعر الحالي</th>
+                                <th>السعر السابق</th>
+                                <th>الخصم</th>
+                                <th>المدة</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="offersTableBody"><tr><td colspan="8">جاري التحميل...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+    import { db, auth } from "../js/firebase-config.js";
+    import { collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+    // دالة ضغط الصورة
+    async function compressImage(file, maxSizeKB = 500, maxWidth = 800, maxHeight = 800) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (width > maxWidth) {
+                        height = (height * maxWidth) / width;
+                        width = maxWidth;
+                    }
+                    if (height > maxHeight) {
+                        width = (width * maxHeight) / height;
+                        height = maxHeight;
+                    }
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    let quality = 0.7;
+                    let result = canvas.toDataURL('image/jpeg', quality);
+                    
+                    while (result.length > maxSizeKB * 1024 && quality > 0.1) {
+                        quality -= 0.1;
+                        result = canvas.toDataURL('image/jpeg', quality);
+                    }
+                    
+                    console.log(`✅ تم ضغط الصورة: ${(result.length / 1024).toFixed(2)} KB`);
+                    resolve(result);
+                };
+                img.onerror = reject;
+            };
+            reader.onerror = reject;
+        });
+    }
+
+    // حساب نسبة الخصم
+    function calculateDiscount(oldPrice, currentPrice) {
+        if (!oldPrice || !currentPrice || oldPrice <= 0) return 0;
+        const discount = Math.round(((oldPrice - currentPrice) / oldPrice) * 100);
+        return discount > 0 ? discount : 0;
+    }
+
+    onAuthStateChanged(auth, (user) => {
+        if (!user) window.location.href = "admin-login.html";
+    });
+
+    // ==================== الخدمات ====================
+    let base64Image = "";
+    const imgInput = document.getElementById('serviceImgInput');
+    const imgPreview = document.getElementById('imgPreview');
+
+    if (imgInput) {
+        imgInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("⚠️ الصورة كبيرة جداً، الحد الأقصى 5 ميجابايت");
+                    return;
+                }
+                try {
+                    const compressed = await compressImage(file, 400, 800, 800);
+                    base64Image = compressed;
+                    imgPreview.src = base64Image;
+                    imgPreview.style.display = 'block';
+                } catch (err) {
+                    alert("❌ فشل في ضغط الصورة");
+                }
+            }
+        };
+    }
+
+    const serviceForm = document.getElementById('serviceForm');
+    if (serviceForm) {
+        serviceForm.onsubmit = async (e) => {
+            e.preventDefault();
+            if (!base64Image) { alert("⚠️ يرجى اختيار صورة للخدمة"); return; }
+            
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+            if (startDate >= endDate) { alert("⚠️ تاريخ البداية يجب أن يكون قبل تاريخ النهاية"); return; }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "⏳ جاري النشر...";
+
+            const newService = {
+                category: document.getElementById('category').value,
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                price: Number(document.getElementById('price').value),
+                img: base64Image,
+                start_date: startDate,
+                end_date: endDate,
+                available_seats: Number(document.getElementById('availableSeats').value),
+                createdAt: new Date()
+            };
+
+            try {
+                await addDoc(collection(db, "services"), newService);
+                alert("✅ تمت إضافة الخدمة بنجاح!");
+                serviceForm.reset();
+                imgPreview.style.display = 'none';
+                base64Image = "";
+            } catch (err) { 
+                alert("❌ خطأ: " + err.message); 
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "📌 نشر الخدمة";
+            }
+        };
+    }
+
+    // عرض الخدمات
+    onSnapshot(collection(db, "services"), (snapshot) => {
+        const tbody = document.getElementById('servicesTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="8">📭 لا توجد خدمات حالياً</td></tr>'; return; }
+        
+        snapshot.forEach((doc) => {
+            const s = doc.data();
+            const startDate = s.start_date ? new Date(s.start_date.toDate()).toLocaleDateString('ar') : '-';
+            const endDate = s.end_date ? new Date(s.end_date.toDate()).toLocaleDateString('ar') : '-';
+            const categoryNames = { umrah: 'عمرة', hajj: 'حج', group: 'كروبات', flight: 'طيران', land: 'برية' };
+            tbody.innerHTML += `<tr>
+                <td>${s.img ? `<img src="${s.img}" width="60" height="60" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
+                <td><strong>${s.title || '-'}</strong></td>
+                <td>${s.price || 0} $</td>
+                <td><span class="badge">${categoryNames[s.category] || s.category}</span></td>
+                <td>${s.available_seats || 0}</td>
+                <td>${startDate}</td><td>${endDate}</td>
+                <td><button class="delete-btn" onclick="deleteService('${doc.id}')">🗑️ حذف</button></td>
+            </tr>`;
+        });
+    });
+
+    window.deleteService = async (id) => {
+        if(confirm("⚠️ هل أنت متأكد من الحذف؟")) {
+            await deleteDoc(doc(db, "services", id));
+            alert("✅ تم الحذف");
+        }
+    };
+
+    // ==================== الفنادق ====================
+    let hotelBase64Image = "";
+    const hotelImgInput = document.getElementById('hotelImgInput');
+    const hotelImgPreview = document.getElementById('hotelImgPreview');
+
+    if (hotelImgInput) {
+        hotelImgInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("⚠️ الصورة كبيرة جداً، الحد الأقصى 5 ميجابايت");
+                    return;
+                }
+                try {
+                    const compressed = await compressImage(file, 400, 800, 800);
+                    hotelBase64Image = compressed;
+                    hotelImgPreview.src = hotelBase64Image;
+                    hotelImgPreview.style.display = 'block';
+                } catch (err) {
+                    alert("❌ فشل في ضغط الصورة");
+                }
+            }
+        };
+    }
+
+    const hotelForm = document.getElementById('hotelForm');
+    if (hotelForm) {
+        hotelForm.onsubmit = async (e) => {
+            e.preventDefault();
+            if (!hotelBase64Image) { alert("⚠️ يرجى اختيار صورة للفندق"); return; }
+
+            const submitBtn = document.getElementById('submitHotelBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "⏳ جاري الإضافة...";
+
+            const newHotel = {
+                name: document.getElementById('hotelName').value,
+                location: document.getElementById('hotelLocation').value,
+                price_per_night: Number(document.getElementById('hotelPrice').value),
+                available_rooms: Number(document.getElementById('hotelRooms').value),
+                status: document.getElementById('hotelStatus').value,
+                description: document.getElementById('hotelDescription').value || "",
+                image: hotelBase64Image,
+                createdAt: new Date()
+            };
+
+            try {
+                await addDoc(collection(db, "hotels"), newHotel);
+                alert("✅ تمت إضافة الفندق بنجاح!");
+                hotelForm.reset();
+                hotelImgPreview.style.display = 'none';
+                hotelBase64Image = "";
+            } catch (err) { 
+                alert("❌ خطأ: " + err.message); 
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "🏨 إضافة الفندق";
+            }
+        };
+    }
+
+    // عرض الفنادق
+    onSnapshot(collection(db, "hotels"), (snapshot) => {
+        const tbody = document.getElementById('hotelsTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="7">📭 لا توجد فنادق حالياً</td></tr>'; return; }
+        
+        const statusText = { available: '✅ متاح', booked: '🔴 محجوز', partial: '🟡 حجز جزئي' };
+        const statusClass = { available: 'status-available', booked: 'status-booked', partial: 'status-available' };
+        
+        snapshot.forEach((doc) => {
+            const h = doc.data();
+            tbody.innerHTML += `<tr>
+                <td>${h.image ? `<img src="${h.image}" width="60" height="60" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
+                <td><strong>${h.name || '-'}</strong></td>
+                <td>📍 ${h.location || '-'}</td>
+                <td>${h.price_per_night || 0} $</td>
+                <td>🛏️ ${h.available_rooms || 0}</td>
+                <td><span class="${statusClass[h.status]}">${statusText[h.status] || h.status}</span></td>
+                <td><button class="delete-btn" onclick="deleteHotel('${doc.id}')">🗑️ حذف</button></td>
+            </tr>`;
+        });
+    });
+
+    window.deleteHotel = async (id) => {
+        if(confirm("⚠️ هل أنت متأكد من حذف هذا الفندق؟")) {
+            await deleteDoc(doc(db, "hotels", id));
+            alert("✅ تم الحذف");
+        }
+    };
+
+    // ==================== العروض ====================
+    let offerBase64Image = "";
+    const offerImgInput = document.getElementById('offerImgInput');
+    const offerImgPreview = document.getElementById('offerImgPreview');
+
+    if (offerImgInput) {
+        offerImgInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("⚠️ الصورة كبيرة جداً، الحد الأقصى 5 ميجابايت");
+                    return;
+                }
+                try {
+                    const compressed = await compressImage(file, 400, 800, 800);
+                    offerBase64Image = compressed;
+                    offerImgPreview.src = offerBase64Image;
+                    offerImgPreview.style.display = 'block';
+                } catch (err) {
+                    alert("❌ فشل في ضغط الصورة");
+                }
+            }
+        };
+    }
+
+    const offerForm = document.getElementById('offerForm');
+    if (offerForm) {
+        offerForm.onsubmit = async (e) => {
+            e.preventDefault();
+            if (!offerBase64Image) { alert("⚠️ يرجى اختيار صورة للعرض"); return; }
+            
+            const startDate = new Date(document.getElementById('offerStartDate').value);
+            const endDate = new Date(document.getElementById('offerEndDate').value);
+            const currentPrice = Number(document.getElementById('currentPrice').value);
+            const oldPrice = Number(document.getElementById('oldPrice').value);
+            
+            if (startDate >= endDate) { alert("⚠️ تاريخ بداية العرض يجب أن يكون قبل تاريخ النهاية"); return; }
+            if (currentPrice >= oldPrice) { alert("⚠️ السعر الحالي يجب أن يكون أقل من السعر السابق"); return; }
+
+            const submitBtn = document.getElementById('submitOfferBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "⏳ جاري النشر...";
+
+            const discount = calculateDiscount(oldPrice, currentPrice);
+
+            const newOffer = {
+                title: document.getElementById('offerTitle').value,
+                name: document.getElementById('offerName').value,
+                current_price: currentPrice,
+                old_price: oldPrice,
+                discount_percentage: discount,
+                description: document.getElementById('offerDescription').value,
+                start_date: startDate,
+                end_date: endDate,
+                link: document.getElementById('offerLink').value || "",
+                image: offerBase64Image,
+                is_active: true,
+                createdAt: new Date()
+            };
+
+            try {
+                await addDoc(collection(db, "offers"), newOffer);
+                alert(`✅ تمت إضافة العرض بنجاح! الخصم: ${discount}%`);
+                offerForm.reset();
+                offerImgPreview.style.display = 'none';
+                offerBase64Image = "";
+            } catch (err) { 
+                alert("❌ خطأ: " + err.message); 
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "🎁 نشر العرض";
+            }
+        };
+    }
+
+    // عرض العروض
+    onSnapshot(collection(db, "offers"), (snapshot) => {
+        const tbody = document.getElementById('offersTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="8">📭 لا توجد عروض حالياً</td></tr>'; return; }
+        
+        snapshot.forEach((doc) => {
+            const o = doc.data();
+            const startDate = o.start_date ? new Date(o.start_date.toDate()).toLocaleDateString('ar') : '-';
+            const endDate = o.end_date ? new Date(o.end_date.toDate()).toLocaleDateString('ar') : '-';
+            const isActive = o.end_date && new Date(o.end_date.toDate()) > new Date();
+            
+            tbody.innerHTML += `<tr>
+                <td>${o.image ? `<img src="${o.image}" width="60" height="60" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
+                <td><strong>${o.title || '-'}</strong></td>
+                <td>${o.name || '-'}</td>
+                <td><span class="new-price">${o.current_price || 0} $</span></td>
+                <td><span class="old-price">${o.old_price || 0} $</span></td>
+                <td><span class="discount-badge">⚡ ${o.discount_percentage || 0}% خصم</span></td>
+                <td style="font-size:13px;">${startDate}<br>→<br>${endDate}</td>
+                <td><button class="delete-btn" onclick="deleteOffer('${doc.id}')">🗑️ حذف</button></td>
+            </tr>`;
+        });
+    });
+
+    window.deleteOffer = async (id) => {
+        if(confirm("⚠️ هل أنت متأكد من حذف هذا العرض؟")) {
+            await deleteDoc(doc(db, "offers", id));
+            alert("✅ تم الحذف");
+        }
+    };
+
+    // تسجيل الخروج
+    document.getElementById('logoutBtn').onclick = () => signOut(auth);
+    
+    window.showSection = (id) => {
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if (event?.target) event.target.classList.add('active');
+    };
+    </script>
+</body>
+</html>

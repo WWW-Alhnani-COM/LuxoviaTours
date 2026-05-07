@@ -1,0 +1,2021 @@
+/* ============================================================
+   ALTair Travel + Luxovia Tours - الهوية البصرية المتكاملة
+   الألوان: أزرق (ثقة) + ذهبي (فخامة) مع خلفية فيديو وبطاقات عصرية
+   ============================================================ */
+
+/* ============================================================
+   متغيرات CSS (Design Tokens)
+   ============================================================ */
+:root {
+    /* ===== الألوان الأساسية - أزرق ===== */
+    --color-blue-100: #eef2ff;
+    --color-blue-200: #bfdbfe;
+    --color-blue-300: #93c5fd;
+    --color-blue-400: #60a5fa;
+    --color-blue-500: #3b82f6;
+    --color-blue-600: #2563eb;
+    --color-blue-700: #1d4ed8;
+    --color-blue-800: #1e40af;
+    --color-blue-900: #1e3a8a;
+    
+    /* ===== الألوان الأساسية - ذهبي ===== */
+    --color-gold-100: #fef8e7;
+    --color-gold-200: #fde68a;
+    --color-gold-300: #fcd34d;
+    --color-gold-400: #fbbf24;
+    --color-gold-500: #d4af37;
+    --color-gold-600: #b8960c;
+    --color-gold-700: #a16207;
+    --color-gold-800: #854d0e;
+    --color-gold-900: #713f12;
+    
+    /* ===== الألوان المحايدة ===== */
+    --color-white: #ffffff;
+    --color-black: #0e0930;
+    --color-dark: #1a1a2e;
+    --color-gray-100: #f8fafc;
+    --color-gray-200: #f1f5f9;
+    --color-gray-300: #e2e8f0;
+    --color-gray-400: #cbd5e1;
+    --color-gray-500: #94a3b8;
+    --color-gray-600: #64748b;
+    --color-gray-700: #475569;
+    --color-gray-800: #1e293b;
+    --color-gray-900: #0f172a;
+    
+    /* ===== ألوان الحالة ===== */
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-info: #3b82f6;
+    
+    /* ===== الألوان التراثية (للتوافق) ===== */
+    --color-purple-100: var(--color-blue-100);
+    --color-purple-200: var(--color-blue-200);
+    --color-purple-300: var(--color-blue-300);
+    --color-purple-400: var(--color-blue-400);
+    --color-purple-500: var(--color-blue-600);
+    --color-lime-500: var(--color-gold-300);
+    --color-lime-400: var(--color-gold-400);
+    --color-grey-100: var(--color-gray-100);
+    --color-grey-200: var(--color-gray-200);
+    --color-grey-300: var(--color-gray-300);
+    --color-grey-400: var(--color-gray-400);
+    --color-grey-500: var(--color-gray-500);
+    --color-black-100: var(--color-gray-200);
+    --color-black-200: var(--color-gray-400);
+    --color-black-300: var(--color-gray-500);
+    --color-black-400: var(--color-gray-600);
+    --color-black-500: var(--color-black);
+    --color-type: var(--color-black);
+    
+    /* ===== الظلال ===== */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -1px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 10px 10px -5px rgb(0 0 0 / 0.03);
+    --shadow-gold: 0 4px 16px rgba(212, 175, 55, 0.2);
+    --shadow-blue: 0 4px 16px rgba(37, 99, 235, 0.2);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+    
+    /* ===== المسافات ===== */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
+    --spacing-4xl: 80px;
+    --spacing-5xl: 96px;
+    --spacing-6xl: 128px;
+    
+    /* ===== الزوايا ===== */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 24px;
+    --radius-3xl: 32px;
+    --radius-full: 9999px;
+    
+    /* ===== الخطوط ===== */
+    --font-family-base: "DM Sans", "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-family-heading: "Pangea Afrikan", "DM Sans", "Cairo", sans-serif;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 30px;
+    --font-size-4xl: 36px;
+    --font-size-5xl: 48px;
+    --font-size-6xl: 60px;
+    
+    /* ===== أوزان الخطوط ===== */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* ===== الارتفاعات ===== */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* ===== التدرجات ===== */
+    --gradient-blue: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-blue-800) 100%);
+    --gradient-gold: linear-gradient(135deg, var(--color-gold-500) 0%, var(--color-gold-700) 100%);
+    --gradient-blue-gold: linear-gradient(135deg, var(--color-blue-600) 0%, var(--color-gold-500) 100%);
+    --gradient-dark: linear-gradient(135deg, var(--color-dark) 0%, var(--color-blue-900) 100%);
+    
+    /* ===== الأبعاد ===== */
+    --page-width: 1312px;
+    --page-width-small: 800px;
+    --page-width-x-small: 450px;
+    
+    /* ===== التحولات ===== */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    /* شادو CSS متغيرات إضافية */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 44 100% 50%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 221 83% 53%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 53%;
+    --radius: 0.5rem;
+}
+
+/* ============================================================
+   الأنماط الأساسية
+   ============================================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    background: linear-gradient(135deg, #f5f7fa 0%, var(--color-blue-100) 100%);
+    color: var(--color-gray-800);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   Hero Section مع خلفية فيديو متحركة (دمج مع هوية ALTair)
+   ============================================================ */
+.hero-video-section {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    isolation: isolate;
+}
+
+/* عناصر الزينة الدائرية من ALTair */
+.hero-video-section::before {
+    content: "";
+    position: absolute;
+    top: -30%;
+    right: -15%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--color-gold-500) 0%, transparent 70%);
+    opacity: 0.12;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-video-section::after {
+    content: "";
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--color-blue-400) 0%, transparent 70%);
+    opacity: 0.08;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 1s ease-in-out;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 25, 47, 0.75) 0%, rgba(212, 175, 55, 0.25) 100%);
+    z-index: 1;
+}
+
+.hero-content-video {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 0 24px;
+    color: white;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-content-video h1 {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--color-white) 0%, var(--color-gold-300) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { text-shadow: 0 0 5px rgba(212,175,55,0.3); }
+    50% { text-shadow: 0 0 20px rgba(212,175,55,0.6); }
+}
+
+.hero-content-video p {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-2xl);
+    opacity: 0.95;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.search-bar-video {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    padding: 12px;
+    border-radius: 60px;
+    border: 1px solid rgba(212,175,55,0.4);
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.search-bar-video input,
+.search-bar-video select {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 40px;
+    font-size: var(--font-size-base);
+    background: white;
+    min-width: 200px;
+    font-family: 'Cairo', var(--font-family-base);
+    transition: all var(--transition-base);
+}
+
+.search-bar-video input:focus,
+.search-bar-video select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.4);
+    transform: scale(1.02);
+}
+
+.btn-search-video {
+    background: var(--gradient-gold);
+    border: none;
+    padding: 14px 36px;
+    border-radius: 40px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-search-video:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-gold);
+}
+
+.video-indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 3;
+    direction: ltr;
+}
+
+.video-dot {
+    width: 40px;
+    height: 4px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-dot.active {
+    background: var(--color-gold-500);
+    width: 60px;
+}
+
+.video-dot.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.3);
+    animation: progressBar 7s linear forwards;
+}
+
+@keyframes progressBar {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* ============================================================
+   الهيدر الزجاجي (مدمج مع هوية ALTair)
+   ============================================================ */
+.main-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    transition: all var(--transition-base);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.main-header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.main-header.scrolled .desktop-nav a {
+    color: var(--color-gray-800);
+    text-shadow: none;
+}
+
+.main-header .logo h1 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--color-white), var(--color-gold-500));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.main-header.scrolled .logo h1 {
+    background: linear-gradient(135deg, var(--color-blue-800), var(--color-gold-500));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.main-header .btn-primary {
+    background: rgba(212, 175, 55, 0.9);
+    backdrop-filter: blur(4px);
+    color: var(--color-dark);
+}
+
+.main-header.scrolled .btn-primary {
+    background: var(--gradient-blue);
+    color: white;
+}
+
+.main-header .btn-primary:hover {
+    background: var(--color-gold-500);
+    transform: translateY(-2px);
+}
+
+.container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.flex-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon-img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: all var(--transition-base);
+    border: 2px solid rgba(212,175,55,0.5);
+}
+
+.logo:hover .logo-icon-img {
+    transform: rotate(360deg) scale(1.1);
+    border-color: var(--color-gold-500);
+}
+
+.desktop-nav {
+    display: flex;
+    gap: 32px;
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    transition: all var(--transition-base);
+    position: relative;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.desktop-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-blue-600), var(--color-gold-500));
+    transition: width var(--transition-base);
+}
+
+.desktop-nav a:hover::after,
+.desktop-nav a.active::after {
+    width: 100%;
+}
+
+.btn-primary {
+    border: none;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+/* ============================================================
+   الكاتيجوريز - صور دائرية في النصف العلوي
+   ============================================================ */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 28px;
+    margin: -50px auto 60px;
+    position: relative;
+    z-index: 5;
+}
+
+.category-card {
+    background: var(--color-white);
+    text-align: center;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    border: 1px solid rgba(212,175,55,0.2);
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    overflow: hidden;
+    padding-bottom: 28px;
+}
+
+.category-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-gold);
+    border-color: var(--color-gold-500);
+}
+
+.category-card .icon {
+    width: 100%;
+    height: 160px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-blue-100), var(--color-gold-100));
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card .icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.category-card:hover .icon::before {
+    left: 100%;
+}
+
+.category-card:hover .icon {
+    background: linear-gradient(135deg, var(--color-gold-500), #f5e6a3);
+}
+
+.category-icon {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: all 0.4s ease;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    border: 3px solid white;
+    box-shadow: var(--shadow-sm);
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.08) rotate(5deg);
+    filter: drop-shadow(0 8px 16px rgba(212,175,55,0.3));
+    border-color: var(--color-gold-500);
+}
+
+.category-card h3 {
+    font-size: 1.4rem;
+    font-weight: var(--font-weight-bold);
+    margin: 12px 0 8px;
+    color: var(--color-blue-800);
+}
+
+.category-card p {
+    color: var(--color-gray-600);
+    font-size: 0.85rem;
+}
+
+/* ============================================================
+   الرحلات - Trips Section
+   ============================================================ */
+.section-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin: 60px 0 40px;
+    position: relative;
+    color: var(--color-blue-800);
+}
+
+.section-title::after {
+    content: '';
+    width: 80px;
+    height: 4px;
+    background: var(--gradient-gold);
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+}
+
+.trips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+.trip-card {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    border-top: 3px solid var(--color-gold-500);
+}
+
+.trip-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.trip-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+}
+
+.trip-card:hover .trip-img {
+    transform: scale(1.03);
+}
+
+.trip-info {
+    padding: 24px;
+}
+
+.trip-price {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gold-600);
+    margin: 12px 0;
+}
+
+/* ============================================================
+   واتساب عائم
+   ============================================================ */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    background: #25D366;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(37,211,102,0.4);
+    transition: all var(--transition-base);
+    z-index: 99;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+}
+
+.whatsapp-float i {
+    font-size: 32px;
+    color: white;
+}
+
+/* ============================================================
+   الموبايل ناف
+   ============================================================ */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(15px);
+    padding: 12px 20px;
+    justify-content: space-around;
+    border-top: 1px solid rgba(212,175,55,0.3);
+    z-index: 100;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+}
+
+.mobile-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    text-decoration: none;
+    color: var(--color-gray-600);
+    transition: all var(--transition-base);
+    font-weight: var(--font-weight-medium);
+}
+
+.mobile-nav a i {
+    font-size: 24px;
+    transition: all var(--transition-base);
+}
+
+.mobile-nav a.active,
+.mobile-nav a:hover {
+    color: var(--color-gold-500);
+}
+
+.mobile-nav a.active i,
+.mobile-nav a:hover i {
+    transform: translateY(-3px);
+    color: var(--color-gold-500);
+    text-shadow: 0 2px 8px rgba(212,175,55,0.4);
+}
+
+/* ============================================================
+   الفوتر (Footer)
+   ============================================================ */
+.footer {
+    background: var(--gradient-dark);
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    margin-top: 60px;
+    position: relative;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gold-500), transparent, var(--color-gold-500));
+}
+
+.footer p {
+    opacity: 0.8;
+}
+
+/* ============================================================
+   الأزرار (دمج أنماط ALTair)
+   ============================================================ */
+.NewButton_button__Br6KV {
+    padding: 0 var(--spacing-lg);
+    font-weight: var(--font-weight-medium);
+    display: inline-flex;
+    transition: all var(--transition-base);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    white-space: nowrap;
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    height: 52px;
+    gap: var(--spacing-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.NewButton_button__Br6KV::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.NewButton_button__Br6KV:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.NewButton_primary-blue {
+    background: var(--gradient-blue);
+    color: var(--color-white);
+    box-shadow: var(--shadow-blue);
+}
+
+.NewButton_primary-blue:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.NewButton_gold {
+    background: var(--gradient-gold);
+    color: var(--color-dark);
+    box-shadow: var(--shadow-gold);
+}
+
+.NewButton_gold:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ============================================================
+   أنيميشنات إضافية
+   ============================================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* كلاسات مساعدة */
+.animate-fadeInUp {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease infinite;
+}
+
+.gold-shimmer {
+    background: linear-gradient(90deg, transparent, var(--color-gold-300), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* ============================================================
+   بطاقات إضافية ومكونات ALTair
+   ============================================================ */
+.card {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-gold-border {
+    border-top: 3px solid var(--color-gold-500);
+}
+
+.card-blue-border {
+    border-top: 3px solid var(--color-blue-600);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+}
+
+.badge-blue {
+    background: var(--color-blue-100);
+    color: var(--color-blue-700);
+}
+
+.badge-gold {
+    background: linear-gradient(135deg, var(--color-gold-100) 0%, var(--color-gold-200) 100%);
+    color: var(--color-gold-800);
+}
+
+.divider-gold {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-gold-500), transparent);
+    margin: var(--spacing-xl) 0;
+}
+
+.divider-blue {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-blue-500), transparent);
+    margin: var(--spacing-xl) 0;
+}
+
+.link {
+    color: var(--color-blue-600);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-gold-500);
+    transition: width var(--transition-base);
+}
+
+.link:hover {
+    color: var(--color-gold-600);
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+.text-gold {
+    color: var(--color-gold-500);
+}
+
+.text-blue {
+    color: var(--color-blue-600);
+}
+
+.bg-gradient-blue {
+    background: var(--gradient-blue);
+}
+
+.bg-gradient-gold {
+    background: var(--gradient-gold);
+}
+
+.bg-gradient-blue-gold {
+    background: var(--gradient-blue-gold);
+}
+
+.shadow-gold {
+    box-shadow: var(--shadow-gold);
+}
+
+.shadow-blue {
+    box-shadow: var(--shadow-blue);
+}
+
+/* ============================================================
+   أنيميشن ظهور البطاقات
+   ============================================================ */
+.category-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.category-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================================
+   التصميم المتجاوب - Responsive
+   ============================================================ */
+@media (max-width: 768px) {
+    .hero-content-video h1 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .hero-content-video p {
+        font-size: var(--font-size-base);
+    }
+    
+    .search-bar-video {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+    }
+    
+    .search-bar-video input,
+    .search-bar-video select,
+    .btn-search-video {
+        width: 100%;
+    }
+    
+    .desktop-nav {
+        display: none;
+    }
+    
+    .mobile-nav {
+        display: flex;
+    }
+    
+    .whatsapp-float {
+        bottom: 85px;
+    }
+    
+    .categories-grid {
+        margin-top: 20px;
+        gap: 20px;
+    }
+    
+    .category-card .icon {
+        height: 130px;
+    }
+    
+    .category-icon {
+        width: 85px;
+        height: 85px;
+    }
+    
+    .category-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .category-icon {
+        width: 95px;
+        height: 95px;
+    }
+    
+    .category-card .icon {
+        height: 145px;
+    }
+    
+    .hero-content-video h1 {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+@media (min-width: 1024px) {
+    .flex-header {
+        padding: 16px 32px;
+    }
+}
+/* ============================================================
+   زر الهمبرجر - قائمة側بية للهواتف
+   ============================================================ */
+
+/* زر الهمبرجر */
+.hamburger-menu {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-base);
+}
+
+.hamburger-menu:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hamburger-icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.hamburger-icon span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.main-header.scrolled .hamburger-icon span {
+    background: var(--color-gray-800);
+}
+
+/* حالة الفتح - تحويل الخطوط إلى X */
+.hamburger-menu.active .hamburger-icon span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-menu.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger-menu.active .hamburger-icon span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* القائمة الجانبية (Sidebar) */
+.sidebar-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    background: rgba(10, 25, 47, 0.98);
+    backdrop-filter: blur(20px);
+    z-index: 1002;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 80px 24px 32px;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+    border-right: 1px solid rgba(212, 175, 55, 0.3);
+    overflow-y: auto;
+}
+
+.sidebar-nav.active {
+    right: 0;
+}
+
+/* قائمة الروابط في السايدبار */
+.sidebar-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-nav-links a i {
+    width: 24px;
+    font-size: 20px;
+    color: var(--color-gold-500);
+}
+
+.sidebar-nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), transparent);
+    transition: width var(--transition-base);
+}
+
+.sidebar-nav-links a:hover::before {
+    width: 100%;
+}
+
+.sidebar-nav-links a:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateX(-5px);
+}
+
+.sidebar-nav-links a.active {
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), transparent);
+    border-right: 3px solid var(--color-gold-500);
+}
+
+/* زر إغلاق السايدبار */
+.sidebar-close {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+}
+
+.sidebar-close:hover {
+    background: rgba(212, 175, 55, 0.2);
+    transform: rotate(90deg);
+}
+
+.sidebar-close i {
+    font-size: 20px;
+    color: var(--color-gold-500);
+}
+
+/* طبقة الخلفية المعتمة (Overlay) */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-base);
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* منع التمرير عند فتح القائمة */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* تعديلات الفليكس للهيدر في الموبايل */
+@media (max-width: 768px) {
+    .flex-header {
+        justify-content: space-between;
+        padding: 12px 20px;
+    }
+    
+    /* إظهار زر الهمبرجر */
+    .hamburger-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* إخفاء قائمة سطح المكتب */
+    .desktop-nav {
+        display: none;
+    }
+    
+    /* تعديل زر الرئيسية في الموبايل */
+    .main-header .btn-primary {
+        display: block;
+        padding: 6px 16px;
+        font-size: 12px;
+        background: var(--gradient-gold);
+        color: var(--color-dark);
+    }
+    
+    .main-header.scrolled .btn-primary {
+        background: var(--gradient-blue);
+        color: white;
+    }
+    
+    /* تحسين الشعار في الموبايل */
+    .logo h1 {
+        font-size: 18px;
+    }
+    
+    .logo-icon-img {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* ============================================================
+   نهاية ملف CSS
+   ============================================================ */
+     /* ============================================================
+           أنماط خاصة بصفحة العروض - متوافقة 100% مع هوية الموقع
+        ============================================================ */
+        
+        /* خلفية الفيديو لقسم العروض */
+        .offers-hero {
+            position: relative;
+            text-align: center;
+            padding: 140px 24px 100px;
+            color: white;
+            margin-bottom: 40px;
+            overflow: hidden;
+            isolation: isolate;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* خلفية الفيديو */
+        .offers-video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .offers-video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* طبقة التدرج فوق الفيديو */
+        .offers-header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(10, 25, 47, 0.85) 0%, 
+                rgba(212, 175, 55, 0.45) 50%,
+                rgba(10, 25, 47, 0.8) 100%);
+            z-index: 1;
+        }
+
+        /* عناصر الزينة الدائرية */
+        .offers-hero::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--color-gold-500) 0%, transparent 70%);
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: floatGlow 8s ease-in-out infinite;
+        }
+
+        .offers-hero::after {
+            content: "";
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--color-blue-400) 0%, transparent 70%);
+            opacity: 0.12;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: floatGlow 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatGlow {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, 20px) scale(1.05); }
+        }
+
+        @keyframes fadeInUpHeader {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .offers-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            animation: glowText 3s ease-in-out infinite;
+        }
+
+        @keyframes glowText {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(212,175,55,0.3)); }
+            50% { filter: drop-shadow(0 0 20px rgba(212,175,55,0.6)); }
+        }
+
+        .offers-hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            animation: fadeInUpHeader 0.8s ease-out 0.2s both;
+        }
+
+        /* شبكة العروض */
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+            padding-bottom: 20px;
+        }
+
+        /* بطاقة العرض */
+        .offer-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 3px solid #D4AF37;
+            cursor: pointer;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        /* شارة الخصم */
+        .discount-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            color: #1a2a3a;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 800;
+            z-index: 10;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        /* صورة العرض */
+        .offer-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .offer-card:hover .offer-img {
+            transform: scale(1.05);
+        }
+
+        /* محتوى البطاقة */
+        .offer-body {
+            padding: 24px;
+        }
+
+        .offer-body h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1a56db;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .offer-description {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        /* حاوية الأسعار */
+        .price-container {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .new-price {
+            color: #D4AF37;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+        
+        .new-price span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* مؤقت العرض */
+        .offer-timer {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            padding: 10px 14px;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            margin: 15px 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* زر العرض */
+        .btn-offer {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #1a56db, #0f3b8a);
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-offer:hover {
+            background: linear-gradient(135deg, #D4AF37, #b8960c);
+            color: #1a2a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* حالة عدم وجود بيانات */
+        .empty-offers {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 80px 24px;
+            background: white;
+            border-radius: 28px;
+            color: #64748b;
+        }
+
+        .empty-offers i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: #D4AF37;
+        }
+
+        /* سكيلتون */
+        .skeleton-offer {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border-top: 3px solid #D4AF37;
+        }
+
+        .skeleton-img {
+            height: 240px;
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-body {
+            padding: 24px;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            width: 70%;
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-price {
+            height: 36px;
+            width: 50%;
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .skeleton-timer {
+            height: 44px;
+            width: 100%;
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 16px;
+            margin: 15px 0;
+        }
+
+        .skeleton-btn {
+            height: 50px;
+            width: 100%;
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 50px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ============================================================
+           تنسيقات زر الهمبرجر والقائمة الجانبية
+        ============================================================ */
+        
+        /* زر الهمبرجر */
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger-icon {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .main-header.scrolled .hamburger-icon span {
+            background: var(--color-gray-800);
+        }
+
+        /* حالة الفتح - تحويل الخطوط إلى X */
+        .hamburger-menu.active .hamburger-icon span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger-menu.active .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .hamburger-menu.active .hamburger-icon span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* القائمة الجانبية (Sidebar) */
+        .sidebar-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: rgba(10, 25, 47, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1002;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 80px 24px 32px;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+            border-left: 1px solid rgba(212, 175, 55, 0.3);
+            overflow-y: auto;
+        }
+
+        .sidebar-nav.active {
+            right: 0;
+        }
+
+        /* قائمة الروابط في السايدبار */
+        .sidebar-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav-links a i {
+            width: 24px;
+            font-size: 20px;
+            color: #D4AF37;
+        }
+
+        .sidebar-nav-links a:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .sidebar-nav-links a.active {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.2), transparent);
+            border-right: 3px solid #D4AF37;
+        }
+
+        /* زر إغلاق السايدبار */
+        .sidebar-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .sidebar-close i {
+            font-size: 20px;
+            color: #D4AF37;
+        }
+
+        /* طبقة الخلفية المعتمة */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* منع التمرير عند فتح القائمة */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* الفوتر */
+        .footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #1e3a8a 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37, transparent, #D4AF37);
+        }
+        
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* ============================================================
+           التصميم المتجاوب - Responsive
+        ============================================================ */
+        @media (max-width: 768px) {
+            .offers-hero {
+                padding: 120px 20px 80px;
+                min-height: 400px;
+            }
+            
+            .offers-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .offers-hero p {
+                font-size: 1rem;
+            }
+            
+            .offers-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .offer-img {
+                height: 200px;
+            }
+            
+            .offer-body h3 {
+                font-size: 1.2rem;
+            }
+            
+            .new-price {
+                font-size: 1.5rem;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+            
+            /* إظهار زر الهمبرجر وإخفاء قائمة سطح المكتب */
+            .hamburger-menu {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            /* إخفاء زر "حجز طيران" في الهاتف */
+            .main-header .btn-primary {
+                display: none;
+            }
+            
+            /* الموبايل ناف */
+            .mobile-nav {
+                display: flex;
+            }
+        }
+
+        /* الموبايل ناف */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(15px);
+            padding: 12px 20px;
+            justify-content: space-around;
+            border-top: 1px solid rgba(212,175,55,0.3);
+            z-index: 100;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .mobile-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            text-decoration: none;
+            color: #64748b;
+            transition: all 0.25s ease;
+            font-weight: 500;
+        }
+        
+        .mobile-nav a i {
+            font-size: 24px;
+            transition: all 0.25s ease;
+        }
+        
+        .mobile-nav a.active,
+        .mobile-nav a:hover {
+            color: #D4AF37;
+        }
+        
+        .mobile-nav a.active i,
+        .mobile-nav a:hover i {
+            transform: translateY(-3px);
+            color: #D4AF37;
+            text-shadow: 0 2px 8px rgba(212,175,55,0.4);
+        }
+
+        @media (max-width: 480px) {
+            .offers-hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .discount-badge {
+                top: 12px;
+                right: 12px;
+                padding: 4px 12px;
+                font-size: 0.75rem;
+            }
+            
+            .offer-body {
+                padding: 16px;
+            }
+        }
+
+        

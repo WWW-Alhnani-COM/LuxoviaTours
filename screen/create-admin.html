@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب مدير | Luxovia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: #1a202c; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .setup-card { background: #2d3748; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #D4AF37; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; outline: none; box-sizing: border-box; background: #f7fafc; color: #1a202c; }
+        button { width: 100%; padding: 12px; background: #D4AF37; color: #1a202c; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #b8962d; }
+        button:disabled { background: #718096; cursor: not-allowed; }
+        
+        /* تنسيق رسائل الخطأ */
+        #errorMsg { 
+            background: #feb2b2; 
+            color: #9b2c2c; 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-size: 13px; 
+            margin-top: 15px; 
+            display: none; /* مخفي افتراضياً */
+            text-align: center;
+            border: 1px solid #f56565;
+        }
+        .info { font-size: 12px; color: #a0aec0; margin-top: 15px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="setup-card">
+        <h2>إعداد حساب المدير 🛠️</h2>
+        <p style="text-align: center; font-size: 14px;">إنشاء حساب الإدارة الرئيسي للمرة الأولى.</p>
+        
+        <input type="text" id="adminName" placeholder="الاسم الكامل">
+        <input type="email" id="adminEmail" placeholder="البريد الإلكتروني (مثال: admin@luxovia.com)">
+        <input type="password" id="adminPass" placeholder="كلمة المرور (6 أحرف فأكثر)">
+        
+        <div id="errorMsg"></div> <!-- مكان ظهور الخطأ -->
+
+        <button id="createBtn">إنشاء حساب المسؤول</button>
+        
+        <p class="info">بعد النجاح، سيتم توجيهك للوحة التحكم مباشرة.</p>
+    </div>
+
+    <script type="module">
+        import { auth, db } from "../js/firebase-config.js";
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        const btn = document.getElementById('createBtn');
+        const errorDiv = document.getElementById('errorMsg');
+
+        function showError(message) {
+            errorDiv.innerText = message;
+            errorDiv.style.display = 'block';
+        }
+
+        btn.addEventListener('click', async () => {
+            // تفريغ الأخطاء السابقة
+            errorDiv.style.display = 'none';
+            
+            // تنظيف البيانات (إزالة المسافات)
+            const name = document.getElementById('adminName').value.trim();
+            const email = document.getElementById('adminEmail').value.trim();
+            const pass = document.getElementById('adminPass').value;
+
+            // التحقق من الحقول فارغة
+            if(!name || !email || !pass) {
+                showError("يرجى ملء كافة الحقول المطلوبة.");
+                return;
+            }
+
+            // تعطيل الزر أثناء المعالجة
+            btn.disabled = true;
+            btn.innerText = "جاري الإنشاء...";
+
+            try {
+                // 1. إنشاء الحساب في Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+                const user = userCredential.user;
+
+                // 2. تسجيل البيانات في Firestore مع رتبة admin
+                await setDoc(doc(db, "users", user.uid), {
+                    fullName: name,
+                    email: email,
+                    role: "admin",
+                    createdAt: new Date()
+                });
+
+                alert("تم إنشاء حساب المدير بنجاح!");
+                window.location.href = "admin-dashboard.html";
+
+            } catch (error) {
+                console.error("Firebase Error Code:", error.code);
+                
+                // ترجمة أخطاء Firebase للعربية
+                switch (error.code) {
+                    case 'auth/invalid-email':
+                        showError("صيغة البريد الإلكتروني غير صحيحة. تأكد من كتابته بشكل سليم (مثل: name@example.com).");
+                        break;
+                    case 'auth/weak-password':
+                        showError("كلمة المرور ضعيفة جداً. يجب أن تتكون من 6 أحرف على الأقل.");
+                        break;
+                    case 'auth/email-already-in-use':
+                        showError("هذا البريد الإلكتروني مسجل مسبقاً بحساب آخر.");
+                        break;
+                    case 'auth/network-request-failed':
+                        showError("فشل في الاتصال بالإنترنت. يرجى التحقق من الشبكة.");
+                        break;
+                    default:
+                        showError("حدث خطأ غير متوقع: " + error.message);
+                }
+            } finally {
+                // إعادة تفعيل الزر في حالة الخطأ
+                btn.disabled = false;
+                btn.innerText = "إنشاء حساب المسؤول";
+            }
+        });
+    </script>
+</body>
+</html>

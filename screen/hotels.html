@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>فنادق لوكسوفيا تورز | Luxovia Hotels</title>
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================================
+           أنماط خاصة بصفحة الفنادق - متوافقة مع هوية الموقع
+        ============================================================ */
+        
+        /* خلفية الفيديو لقسم الفنادق */
+        .hotels-hero {
+            position: relative;
+            text-align: center;
+            padding: 140px 24px 100px;
+            color: white;
+            margin-bottom: 40px;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        /* خلفية الفيديو */
+        .hotels-video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hotels-video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* طبقة التدرج فوق الفيديو */
+        .hotels-header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(10, 25, 47, 0.85) 0%, 
+                rgba(212, 175, 55, 0.45) 50%,
+                rgba(10, 25, 47, 0.8) 100%);
+            z-index: 1;
+        }
+
+        /* عناصر الزينة الدائرية */
+        .hotels-hero::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: floatGlow 8s ease-in-out infinite;
+        }
+
+        .hotels-hero::after {
+            content: "";
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #003366 0%, transparent 70%);
+            opacity: 0.12;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: floatGlow 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatGlow {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, 20px) scale(1.05); }
+        }
+
+        /* محتوى الهيدر */
+        .hotels-header-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUpHeader 0.8s ease-out;
+        }
+
+        @keyframes fadeInUpHeader {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hotels-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            animation: glowText 3s ease-in-out infinite;
+        }
+
+        @keyframes glowText {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(212,175,55,0.3)); }
+            50% { filter: drop-shadow(0 0 20px rgba(212,175,55,0.6)); }
+        }
+
+        .hotels-hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            animation: fadeInUpHeader 0.8s ease-out 0.2s both;
+        }
+
+        /* شبكة الفنادق */
+        .hotels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+            padding-bottom: 20px;
+        }
+
+        /* بطاقة الفندق */
+        .hotel-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-top: 3px solid #D4AF37;
+            cursor: pointer;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        /* شارة الحالة */
+        .status-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 10;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        .status-available {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .status-booked {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .status-partial {
+            background: linear-gradient(135deg, #fd7e14, #e67e22);
+            color: white;
+        }
+
+        /* شارة السعر المميز */
+        .price-badge {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(0, 51, 102, 0.9);
+            color: #D4AF37;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+
+        /* صورة الفندق */
+        .hotel-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .hotel-card:hover .hotel-img {
+            transform: scale(1.05);
+        }
+
+        /* محتوى البطاقة */
+        .hotel-body {
+            padding: 24px;
+        }
+
+        .hotel-body h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .hotel-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .hotel-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* حاوية الخدمات والمرافق */
+        .hotel-amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .amenity-tag {
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* حاوية الأسعار */
+        .price-container {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .price-night {
+            font-size: 24px;
+            font-weight: bold;
+            color: #D4AF37;
+        }
+
+        .price-night small {
+            font-size: 14px;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .rooms-count {
+            background: #e8f0fe;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #003366;
+        }
+
+        /* زر الحجز */
+        .btn-book {
+            display: block;
+            background: linear-gradient(135deg, #003366, #004c99);
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn-book:hover {
+            background: linear-gradient(135deg, #D4AF37, #B8960C);
+            color: #003366;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+
+        /* حالة عدم وجود بيانات */
+        .empty-hotels {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 60px 24px;
+            background: white;
+            border-radius: 20px;
+            color: #666;
+        }
+
+        /* سكيلتون */
+        .skeleton-hotel {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border-top: 3px solid #D4AF37;
+        }
+
+        .skeleton-img {
+            height: 240px;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        .skeleton-body {
+            padding: 24px;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            width: 70%;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-location {
+            height: 16px;
+            width: 50%;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-price {
+            height: 32px;
+            width: 40%;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .skeleton-btn {
+            height: 50px;
+            width: 100%;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 50px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* فلتر البحث */
+        .filter-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #003366;
+            color: white;
+            border-color: #003366;
+        }
+
+        /* القائمة السفلية للأجهزة المحمولة */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 51, 102, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            justify-content: space-around;
+            z-index: 1000;
+            border-top: 1px solid rgba(212,175,55,0.3);
+        }
+
+        .mobile-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            gap: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav a.active,
+        .mobile-nav a:hover {
+            color: #D4AF37;
+        }
+
+        .mobile-nav a span {
+            font-size: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .hotels-hero {
+                padding: 100px 20px 60px;
+            }
+            
+            .hotels-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hotels-hero p {
+                font-size: 1rem;
+            }
+            
+            .hotels-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .hotel-img {
+                height: 200px;
+            }
+            
+            .hotel-body h3 {
+                font-size: 1.25rem;
+            }
+            
+            .price-night {
+                font-size: 1.5rem;
+            }
+            
+            .mobile-nav {
+                display: flex;
+            }
+            
+            .main-content {
+                padding-bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر الثابت - التنسيقات من ملف style.css الخارجي -->
+    <header class="main-header" id="mainHeader">
+        <div class="container flex-header">
+            <div class="logo">
+                <img src="../img/logo.jpg" alt="Luxovia" class="logo-icon-img" onerror="this.src='https://placehold.co/48/1a56db/d4af37?text=L'">
+                <h1>Luxovia Tours</h1>
+            </div>
+            <nav class="desktop-nav">
+                <a href="../index.html">الرئيسية</a>
+                <a href="trips.html">الرحلات</a>
+                <a href="offers.html">العروض</a>
+                <a href="hotels.html" style="color: #D4AF37;">الفنادق</a>
+                <a href="../screen/profile.html">الملف الشخصي</a>
+                <a href="#contact">اتصل بنا</a>
+            </nav>
+            <button class="btn-primary">حجز طيران</button>
+        </div>
+    </header>
+
+    <!-- قسم الهيرو مع خلفية فيديو -->
+    <section class="hotels-hero">
+        <div class="hotels-video-background">
+            <video autoplay muted loop playsinline id="hotelsHeroVideo">
+                <source src="../vid/vecteezy_london-skyline-on-thames-river-with-shard-in-the-background_5174637.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hotels-header-overlay"></div>
+        <div class="hotels-header-content">
+            <h1> أفخم الفنادق والمنتجعات</h1>
+            <p>أفضل الإقامات في أرقى الفنادق بأفضل الأسعار</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- فلتر البحث -->
+        <div class="filter-section">
+            <div class="filter-title">
+                🔍 تصفية حسب الحالة
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">الجميع</button>
+                <button class="filter-btn" data-filter="available">✅ المتاح</button>
+                <button class="filter-btn" data-filter="partial">🟡 حجز جزئي</button>
+                <button class="filter-btn" data-filter="booked">🔴 محجوز بالكامل</button>
+            </div>
+        </div>
+
+        <div id="hotels-list" class="hotels-grid">
+            <!-- سكيلتون أثناء التحميل -->
+            <div class="skeleton-hotel">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-location"></div>
+                    <div class="skeleton-price"></div>
+                    <div class="skeleton-btn"></div>
+                </div>
+            </div>
+            <div class="skeleton-hotel">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-location"></div>
+                    <div class="skeleton-price"></div>
+                    <div class="skeleton-btn"></div>
+                </div>
+            </div>
+            <div class="skeleton-hotel">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-location"></div>
+                    <div class="skeleton-price"></div>
+                    <div class="skeleton-btn"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- القائمة السفلية للأجهزة المحمولة -->
+    <nav class="mobile-nav">
+        <a href="../index.html">🏠<span>الرئيسية</span></a>
+        <a href="trips.html">🎒<span>الرحلات</span></a>
+        <a href="offers.html">🔥<span>العروض</span></a>
+        <a href="hotels.html" class="active">🏨<span>الفنادق</span></a>
+        <a href="profile.html">👤<span>حسابي</span></a>
+    </nav>
+
+    <script type="module">
+        import { db } from "../js/firebase-config.js";
+        import { collection, getDocs, query } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        const hotelsContainer = document.getElementById('hotels-list');
+        let allHotels = [];
+
+        // التحكم بخلفية الفيديو
+        const heroVideo = document.getElementById('hotelsHeroVideo');
+        if (heroVideo) {
+            heroVideo.play().catch(error => console.log("Auto-play prevented: ", error));
+        }
+
+        // تأثير التمرير على الهيدر
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // تأثير بارالاكس لخلفية الفيديو
+        window.addEventListener('scroll', () => {
+            const videoBg = document.querySelector('.hotels-video-background');
+            if (videoBg) {
+                const scrolled = window.pageYOffset;
+                videoBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // دالة عرض حالة التحميل
+        function showSkeleton() {
+            hotelsContainer.innerHTML = '';
+            for (let i = 0; i < 6; i++) {
+                const skeletonCard = `
+                    <div class="skeleton-hotel">
+                        <div class="skeleton-img"></div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-location"></div>
+                            <div class="skeleton-price"></div>
+                            <div class="skeleton-btn"></div>
+                        </div>
+                    </div>
+                `;
+                hotelsContainer.insertAdjacentHTML('beforeend', skeletonCard);
+            }
+        }
+
+        // دالة الحصول على نص الحالة
+        function getStatusText(status) {
+            const statusMap = {
+                'available': '✅ متاح',
+                'booked': '🔴 محجوز بالكامل',
+                'partial': '🟡 حجز جزئي'
+            };
+            return statusMap[status] || status || '✅ متاح';
+        }
+
+        // دالة الحصول على كلاس الحالة
+        function getStatusClass(status) {
+            const classMap = {
+                'available': 'status-available',
+                'booked': 'status-booked',
+                'partial': 'status-partial'
+            };
+            return classMap[status] || 'status-available';
+        }
+
+        // دالة إنشاء بطاقة الفندق
+        function createHotelCard(hotel) {
+            const name = hotel.name || hotel.hotelName || 'فندق مميز';
+            const location = hotel.location || 'موقع مميز';
+            const pricePerNight = hotel.price_per_night || hotel.price || 0;
+            const availableRooms = hotel.available_rooms || hotel.rooms || 0;
+            const status = hotel.status || 'available';
+            const description = hotel.description || '';
+            const imageUrl = hotel.image || hotel.img || 'https://placehold.co/600x400/e2e8f0/475569?text=Hotel';
+            
+            return `
+                <div class="hotel-card" data-status="${status}" onclick="window.location.href='hotel-details.html?id=${hotel.id}'">
+                    <div class="status-badge ${getStatusClass(status)}">${getStatusText(status)}</div>
+                    <div class="price-badge">⭐ ${pricePerNight} ر.س/ليلة</div>
+                    <img src="${imageUrl}" class="hotel-img" alt="${name}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Hotel'">
+                    <div class="hotel-body">
+                        <h3>${name}</h3>
+                        <div class="hotel-location">
+                            📍 ${location}
+                        </div>
+                        ${description ? `<div class="hotel-description">${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</div>` : ''}
+                        <div class="price-container">
+                            <div class="price-night">
+                                ${pricePerNight.toLocaleString()} <small>ر.س / ليلة</small>
+                            </div>
+                            <div class="rooms-count">
+                                🛏️ ${availableRooms} غرفة متاحة
+                            </div>
+                        </div>
+                        <button class="btn-book">احجز الآن 📅</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // دالة عرض الفنادق مع الفلتر
+        function displayHotels(filter = 'all') {
+            hotelsContainer.innerHTML = '';
+            
+            let filteredHotels = allHotels;
+            if (filter !== 'all') {
+                filteredHotels = allHotels.filter(hotel => hotel.status === filter);
+            }
+            
+            if (filteredHotels.length === 0) {
+                hotelsContainer.innerHTML = `
+                    <div class="empty-hotels">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🏨</div>
+                        <p style="font-size: 18px; font-weight: 500;">لا توجد فنادق متاحة</p>
+                        <p style="font-size: 14px; margin-top: 8px;">سيتم إضافة فنادق جديدة قريباً</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // ترتيب الفنادق حسب السعر (الأقل أولاً)
+            filteredHotels.sort((a, b) => {
+                const priceA = a.price_per_night || a.price || 0;
+                const priceB = b.price_per_night || b.price || 0;
+                return priceA - priceB;
+            });
+            
+            filteredHotels.forEach((hotel, index) => {
+                const card = createHotelCard(hotel);
+                hotelsContainer.insertAdjacentHTML('beforeend', card);
+            });
+            
+            // تأثير ظهور تدريجي للبطاقات
+            const cards = document.querySelectorAll('.hotel-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 80);
+            });
+        }
+
+        // دالة جلب الفنادق من Firebase
+        async function fetchHotels() {
+            showSkeleton();
+            
+            try {
+                const hotelsQuery = query(collection(db, "hotels"));
+                const querySnapshot = await getDocs(hotelsQuery);
+                
+                if (querySnapshot.empty) {
+                    hotelsContainer.innerHTML = `
+                        <div class="empty-hotels">
+                            <div style="font-size: 48px; margin-bottom: 16px;">🏨</div>
+                            <p style="font-size: 18px; font-weight: 500;">لا توجد فنادق حالياً</p>
+                            <p style="font-size: 14px; margin-top: 8px;">سيتم إضافة فنادق جديدة قريباً</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                allHotels = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    allHotels.push({ 
+                        id: doc.id, 
+                        ...data,
+                        status: data.status || 'available'
+                    });
+                });
+                
+                displayHotels('all');
+                
+            } catch (error) {
+                console.error("خطأ في جلب الفنادق:", error);
+                hotelsContainer.innerHTML = `
+                    <div class="empty-hotels">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+                        <p style="font-size: 18px; font-weight: 500;">حدث خطأ أثناء تحميل الفنادق</p>
+                        <p style="font-size: 14px; margin-top: 8px;">يرجى التحقق من اتصال الإنترنت</p>
+                        <button class="retry-btn" onclick="location.reload()" style="margin-top:20px; padding:10px 28px; background:#003366; color:white; border:none; border-radius:50px; cursor:pointer;">🔄 إعادة المحاولة</button>
+                    </div>
+                `;
+            }
+        }
+
+        // إعداد أزرار الفلتر
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filterValue = btn.getAttribute('data-filter');
+                    displayHotels(filterValue);
+                });
+            });
+        }
+
+        // تحميل الفنادق عند بدء الصفحة
+        fetchHotels().then(() => {
+            setupFilters();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>عروض لوكسوفيا تورز الحصرية | Luxovia Tours</title>
+    
+    <!-- استيراد ملف التنسيقات الخارجي (نفس الرئيسية) -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (نفس الرئيسية) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+ <style>
+    /* ============================================================
+       تنسيقات شبكة العروض - متجاوبة مع جميع الشاشات
+    ============================================================ */
+    
+    /* الشبكة الرئيسية للعروض */
+    .offers-grid {
+        display: grid;
+        gap: 30px;
+        margin-bottom: 80px;
+        padding-bottom: 20px;
+    }
+    
+    /* ===== شاشات الكمبيوتر (أكبر من 1200px) ===== */
+    @media (min-width: 1200px) {
+        .offers-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
+        }
+    }
+    
+    /* ===== شاشات الكمبيوتر المتوسطة (992px - 1199px) ===== */
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .offers-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+    }
+    
+    /* ===== شاشات التابلت الأفقية (768px - 991px) ===== */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .offers-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+    }
+    
+    /* ===== شاشات التابلت العمودية والهواتف الكبيرة (576px - 767px) ===== */
+    @media (min-width: 576px) and (max-width: 767px) {
+        .offers-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+    }
+    
+    /* ===== شاشات الهواتف الصغيرة (أقل من 576px) ===== */
+    @media (max-width: 575px) {
+        .offers-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+    
+    /* ===== بطاقة العرض ===== */
+   .offer-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    cursor: pointer;
+    display: flex;
+    flex-direction: row; /* أفقي - صورة يسار / محتوى يمين */
+    height: 100%;
+    min-height: 280px;
+}
+    
+   .offer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
+    border-color: #D4AF37;
+}
+    
+    /* شارة الخصم */
+   .discount-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #D4AF37, #FFD700);
+    color: #1a2a3a;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: 800;
+    z-index: 10;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    backdrop-filter: blur(4px);
+}
+    
+/* صورة العرض - في الجهة اليسرى */
+.offer-img {
+    width: 40%;
+    height: auto;
+    min-height: 280px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+    
+ .offer-card:hover .offer-img {
+    transform: scale(1.02);
+}
+    
+    /* محتوى البطاقة */
+ .offer-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+}
+    
+   .offer-body h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a56db;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.offer-description {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+    /* حاوية الأسعار */
+    .price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.new-price {
+    color: #D4AF37;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.new-price span {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+    
+   
+    
+    /* مؤقت العرض */
+   .offer-timer {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+    padding: 8px 12px;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 0.75rem;
+    margin: 10px 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* زر العرض */
+.btn-offer {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #1a56db, #0f3b8a);
+    color: white;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    margin-top: 10px;
+}
+   .btn-offer:hover {
+    background: linear-gradient(135deg, #D4AF37, #b8960c);
+    color: #1a2a3a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+    
+    /* حالة عدم وجود بيانات */
+    .empty-offers {
+        text-align: center;
+        grid-column: 1 / -1;
+        padding: 80px 24px;
+        background: white;
+        border-radius: 28px;
+        color: #64748b;
+    }
+    
+    .empty-offers i {
+        font-size: 64px;
+        margin-bottom: 20px;
+        display: inline-block;
+        color: #D4AF37;
+    }
+    
+    /* سكيلتون */
+    .skeleton-offer {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        border-top: 3px solid #D4AF37;
+        height: 100%;
+    }
+    
+    .skeleton-img {
+        height: 240px;
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+    
+    .skeleton-body {
+        padding: 24px;
+    }
+    
+    .skeleton-title {
+        height: 24px;
+        width: 70%;
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+    
+    .skeleton-price {
+        height: 36px;
+        width: 50%;
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 8px;
+        margin: 12px 0;
+    }
+    
+    .skeleton-timer {
+        height: 44px;
+        width: 100%;
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 16px;
+        margin: 15px 0;
+    }
+    
+    .skeleton-btn {
+        height: 50px;
+        width: 100%;
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 50px;
+    }
+    
+    @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+    
+    /* حاوية الهيرو */
+    .offers-hero {
+        position: relative;
+        text-align: center;
+        padding: 140px 24px 100px;
+        color: white;
+        margin-bottom: 40px;
+        overflow: hidden;
+        isolation: isolate;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* خلفية الفيديو */
+    .offers-video-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+    
+    .offers-video-background video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: cover;
+    }
+    
+    /* طبقة التدرج فوق الفيديو */
+    .offers-header-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+            rgba(10, 25, 47, 0.85) 0%, 
+            rgba(212, 175, 55, 0.45) 50%,
+            rgba(10, 25, 47, 0.8) 100%);
+        z-index: 1;
+    }
+    
+    /* محتوى الهيدر */
+    .offers-header-content {
+        position: relative;
+        z-index: 3;
+        max-width: 800px;
+        margin: 0 auto;
+        animation: fadeInUpHeader 0.8s ease-out;
+    }
+    
+    @keyframes fadeInUpHeader {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .offers-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #ffffff 0%, #D4AF37 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        animation: glowText 3s ease-in-out infinite;
+    }
+    
+    @keyframes glowText {
+        0%, 100% { filter: drop-shadow(0 0 5px rgba(212,175,55,0.3)); }
+        50% { filter: drop-shadow(0 0 20px rgba(212,175,55,0.6)); }
+    }
+    
+    .offers-hero p {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        animation: fadeInUpHeader 0.8s ease-out 0.2s both;
+    }
+    
+    /* حاوية عامة */
+    .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    @media (max-width: 768px) {
+    .offer-card {
+        flex-direction: column; /* عمودي */
+        min-height: auto;
+    }
+    
+    .offer-img {
+        width: 100%;
+        height: 200px;
+        min-height: auto;
+    }
+    
+    .offer-body {
+        width: 100%;
+        padding: 20px;
+    }
+    
+    .offer-body h3 {
+        font-size: 1.2rem;
+    }
+    
+    .new-price {
+        font-size: 1.3rem;
+    }
+    
+    .discount-badge {
+        top: 12px;
+        right: 12px;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .offer-img {
+        height: 180px;
+    }
+    
+    .offer-body {
+        padding: 16px;
+    }
+    
+    .offer-body h3 {
+        font-size: 1.1rem;
+    }
+    
+    .price-container {
+        gap: 8px;
+    }
+    
+    .new-price {
+        font-size: 1.2rem;
+    }
+    
+    .btn-offer {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+    
+    /* زر إعادة المحاولة */
+    .retry-btn {
+        margin-top: 20px;
+        padding: 10px 28px;
+        background: linear-gradient(135deg, #1a56db, #0f3b8a);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: 'Cairo', sans-serif;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .retry-btn:hover {
+        background: linear-gradient(135deg, #D4AF37, #b8960c);
+        color: #1a2a3a;
+        transform: translateY(-2px);
+    }
+</style>
+</head>
+<body>
+
+    <!-- الهيدر الثابت -->
+    <header class="main-header" id="mainHeader">
+        <div class="container flex-header">
+            <!-- زر الهمبرجر (يظهر فقط في الموبايل) -->
+           
+            
+            <div class="logo">
+                <img src="../img/logo.jpg" alt="Luxovia" class="logo-icon-img" onerror="this.src='https://placehold.co/48/1a56db/d4af37?text=L'">
+                <h1>Luxovia Tours</h1>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="../index.html">الرئيسية</a>
+                <a href="trips.html">الرحلات</a>
+                <a href="offers.html" style="color: #D4AF37;">العروض</a>
+                <a href="hotels.html" >الفنادق</a>
+                <a href="../screen/profile.html">الملف الشخصي</a>
+                <a href="#contact">اتصل بنا</a>
+            </nav>
+            
+            <!-- هذا الزر سيختفي في شاشة الهاتف -->
+            <button class="btn-primary">حجز طيران</button>
+             <button class="hamburger-menu" id="hamburgerBtn">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <!-- القائمة الجانبية للهواتف -->
+    <nav class="sidebar-nav" id="sidebarNav">
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-nav-links">
+            <a href="../index.html">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="trips.html">
+                <i class="fas fa-suitcase-rolling"></i>
+                <span>الرحلات</span>
+            </a>
+            <a href="offers.html" class="active">
+                <i class="fas fa-tags"></i>
+                <span>العروض</span>
+            </a>
+            <a href="hotels.html">
+                <i class="fas fa-hotel"></i>
+                <span>الفنادق</span>
+            </a>
+            <a href="../screen/profile.html">
+                <i class="fas fa-user-circle"></i>
+                <span>الملف الشخصي</span>
+            </a>
+            <a href="#contact">
+                <i class="fas fa-envelope"></i>
+                <span>اتصل بنا</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- طبقة الخلفية المعتمة -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- قسم الهيرو مع خلفية فيديو -->
+    <section class="offers-hero">
+        <div class="offers-video-background">
+            <video autoplay muted loop playsinline id="offersHeroVideo">
+                <source src="../vid/vecteezy_london-skyline-on-thames-river-with-shard-in-the-background_5174637.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="offers-header-overlay"></div>
+        <div class="offers-header-content">
+            <h1> عروض اللحظة الأخيرة</h1>
+            <p>وفر الكثير مع باقاتنا المختارة بعناية</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div id="offers-list" class="offers-grid">
+            <!-- سكيلتون أثناء التحميل -->
+            <div class="skeleton-offer">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-price"></div>
+                    <div class="skeleton-timer"></div>
+                    <div class="skeleton-btn"></div>
+                </div>
+            </div>
+            <div class="skeleton-offer">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-price"></div>
+                    <div class="skeleton-timer"></div>
+                    <div class="skeleton-btn"></div>
+                </div>
+            </div>
+            <div class="skeleton-offer">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-price"></div>
+                    <div class="skeleton-timer"></div>
+                    <div class="skeleton-btn"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- القائمة السفلية للأجهزة المحمولة -->
+    <nav class="mobile-nav">
+        <a href="../index.html">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="trips.html">
+            <i class="fas fa-suitcase-rolling"></i>
+            <span>الرحلات</span>
+        </a>
+        <a href="offers.html" class="active">
+            <i class="fas fa-tags"></i>
+            <span>العروض</span>
+        </a>
+        <a href="hotels.html">
+            <i class="fas fa-hotel"></i>
+            <span>الفنادق</span>
+        </a>
+        <a href="profile.html">
+            <i class="fas fa-user-circle"></i>
+            <span>حسابي</span>
+        </a>
+    </nav>
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Luxovia Tours | جميع الحقوق محفوظة</p>
+            <p style="font-size: 14px; margin-top: 10px;">شريكك الموثوق في السفر الفاخر</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { db } from "../js/firebase-config.js";
+        import { collection, getDocs, query } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        const offersContainer = document.getElementById('offers-list');
+        
+        // تأثير التمرير على الهيدر
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        function getTimeRemaining(endDate) {
+            const now = new Date();
+            const end = new Date(endDate);
+            const diff = end - now;
+            
+            if (diff <= 0) return { expired: true, days: 0, hours: 0, minutes: 0, seconds: 0 };
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (86400000)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (3600000)) / (1000 * 60));
+            const seconds = Math.floor((diff % (60000)) / 1000);
+            
+            return { expired: false, days, hours, minutes, seconds };
+        }
+
+        function showSkeleton() {
+            offersContainer.innerHTML = '';
+            for (let i = 0; i < 6; i++) {
+                const skeletonCard = `
+                    <div class="skeleton-offer">
+                        <div class="skeleton-img"></div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-title"></div>
+                            <div class="skeleton-price"></div>
+                            <div class="skeleton-timer"></div>
+                            <div class="skeleton-btn"></div>
+                        </div>
+                    </div>
+                `;
+                offersContainer.insertAdjacentHTML('beforeend', skeletonCard);
+            }
+        }
+
+        function createOfferCard(offer) {
+            const currentPrice = offer.current_price || offer.newPrice || 0;
+            const oldPrice = offer.old_price || offer.oldPrice || 0;
+            const discountPercent = Math.round(((oldPrice - currentPrice) / oldPrice) * 100) || 0;
+            const title = offer.title || 'عرض مميز';
+            const name = offer.name || '';
+            const description = offer.description || name;
+            const imageUrl = offer.image || offer.img || 'https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image';
+            const endDate = offer.end_date || offer.expiryDate;
+            
+            let timerHtml = '<div class="offer-timer"><i class="fas fa-hourglass-half"></i> عرض محدود الكمية</div>';
+            if (endDate) {
+                const timeLeft = getTimeRemaining(endDate);
+                if (!timeLeft.expired) {
+                    let timerText = '';
+                    if (timeLeft.days > 0) timerText += `${timeLeft.days} يوم `;
+                    if (timeLeft.hours > 0) timerText += `${timeLeft.hours} ساعة `;
+                    if (timeLeft.minutes > 0) timerText += `${timeLeft.minutes} دقيقة`;
+                    timerHtml = `<div class="offer-timer"><i class="fas fa-clock"></i> ينتهي خلال: ${timerText || 'أقل من دقيقة'}</div>`;
+                } else {
+                    timerHtml = '<div class="offer-timer" style="background:#fee2e2; color:#dc2626;"><i class="fas fa-ban"></i> انتهى العرض</div>';
+                }
+            }
+            
+            return `
+                <div class="offer-card" onclick="window.location.href='trip-details.html?id=${offer.id}'">
+                    <div class="discount-badge"><i class="fas fa-fire"></i> خصم ${discountPercent}%</div>
+                    <img src="${imageUrl}" class="offer-img" alt="${title}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image'">
+                    <div class="offer-body">
+                        <h3>${title}</h3>
+                        ${description ? `<div class="offer-description"><i class="fas fa-map-marker-alt" style="color:#D4AF37; margin-left:5px;"></i> ${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</div>` : ''}
+                        <div class="price-container">
+                            <span class="new-price">${currentPrice.toLocaleString()} <span>ر.س</span></span>
+                            <span class="old-price">${oldPrice.toLocaleString()} ر.س</span>
+                        </div>
+                        ${timerHtml}
+                        <button class="btn-offer"><i class="fas fa-gem"></i> اغتنم العرض الآن</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function fetchOffers() {
+            showSkeleton();
+            
+            try {
+                const offersQuery = query(collection(db, "offers"));
+                const querySnapshot = await getDocs(offersQuery);
+                offersContainer.innerHTML = ''; 
+
+                if (querySnapshot.empty) {
+                    offersContainer.innerHTML = `
+                        <div class="empty-offers">
+                            <i class="fas fa-gift"></i>
+                            <p style="font-size: 20px; font-weight: 600; margin: 16px 0;">لا توجد عروض حالية</p>
+                            <p style="font-size: 16px;">ترقبوا عروضنا الحصرية قريباً!</p>
+                            <button class="retry-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> تحديث الصفحة</button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const offers = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    offers.push({ 
+                        id: doc.id, 
+                        ...data,
+                        current_price: data.current_price || data.currentPrice,
+                        old_price: data.old_price || data.oldPrice,
+                        end_date: data.end_date || data.endDate,
+                        image: data.image || data.img
+                    });
+                });
+
+                offers.sort((a, b) => {
+                    const discountA = ((a.old_price - a.current_price) / a.old_price) || 0;
+                    const discountB = ((b.old_price - b.current_price) / b.old_price) || 0;
+                    return discountB - discountA;
+                });
+
+                offers.forEach((offer, index) => {
+                    const card = createOfferCard(offer);
+                    offersContainer.insertAdjacentHTML('beforeend', card);
+                });
+
+                const cards = document.querySelectorAll('.offer-card');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.6s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+                
+            } catch (error) {
+                console.error("خطأ في جلب العروض:", error);
+                offersContainer.innerHTML = `
+                    <div class="empty-offers">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p style="font-size: 20px; font-weight: 600; margin: 16px 0;">حدث خطأ أثناء تحميل العروض</p>
+                        <p style="font-size: 16px;">يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى</p>
+                        <button class="retry-btn" onclick="location.reload()"><i class="fas fa-redo-alt"></i> إعادة المحاولة</button>
+                    </div>
+                `;
+            }
+            // بعد جلب البيانات، أضف فلتر للعروض النشطة
+const now = new Date();
+const activeOffers = offers.filter(offer => {
+    const endDate = offer.end_date ? new Date(offer.end_date) : null;
+    return !endDate || endDate > now;
+});
+        }
+
+        fetchOffers();
+    </script>
+
+    <script>
+        // زر الهمبرجر والقائمة الجانبية
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarNav = document.getElementById('sidebarNav');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const body = document.body;
+
+        function openSidebar() {
+            sidebarNav.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            hamburgerBtn.classList.add('active');
+            body.classList.add('no-scroll');
+        }
+
+        function closeSidebar() {
+            sidebarNav.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            hamburgerBtn.classList.remove('active');
+            body.classList.remove('no-scroll');
+        }
+
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', openSidebar);
+        }
+
+        if (sidebarClose) {
+            sidebarClose.addEventListener('click', closeSidebar);
+        }
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', closeSidebar);
+        }
+
+        // إغلاق القائمة عند الضغط على رابط
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav-links a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', closeSidebar);
+        });
+
+        // إغلاق القائمة عند تغيير حجم الشاشة إلى أكبر من 768px
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+        });
+    </script>
+</body>
+</html>

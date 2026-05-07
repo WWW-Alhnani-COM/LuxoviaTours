@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>لوكسوفيا تورز | Luxovia Tours - رحلات فاخرة بلمسة ذهبية</title>
+    
+    <!-- استيراد ملف التنسيقات الخارجي -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (مجاني للأيقونات) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header class="main-header" id="mainHeader">
+        <div class="container flex-header">
+            <div class="logo">
+                <img src="img/logo.jpg" alt="Luxovia" class="logo-icon-img" onerror="this.src='https://placehold.co/48/1a56db/d4af37?text=L'">
+                <h1>Luxovia Tours</h1>
+            </div>
+            <nav class="desktop-nav">
+                <a href="#" style="color: #D4AF37;">الرئيسية</a>
+                <a href="screen/trips.html">الرحلات</a>
+                <a href="screen/offers.html">العروض</a>
+                <a href="screen/hotels.html">الفنادق</a>
+                <a href="#profile">الملف الشخصي</a>
+                <a href="#contact">اتصل بنا</a>
+            </nav>
+            <button class="btn-primary">حجز طيران</button>
+        </div>
+    </header>
+
+    <!-- Hero Section مع خلفية فيديو متحركة -->
+    <section class="hero-video-section" id="heroVideoSection">
+        <div class="video-background" id="videoBackground">
+            <video id="heroVideo" autoplay muted playsinline loop style="opacity: 1;">
+                <source src="https://cdn.pixabay.com/video/2023/06/20/168670-841718518_large.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content-video">
+            <h1>اكتشف العالم بأناقة Luxovia</h1>
+            <p>رحلات حصرية، باقات عمرة، وجولات سياحية فاخرة بأعلى معايير الجودة</p>
+            <div class="search-bar-video">
+                <input type="text" placeholder="إلى أين تريد الذهاب؟" id="searchInput">
+                <select id="tripTypeSelect">
+                    <option value="all">جميع الرحلات</option>
+                    <option value="umrah">حج وعمرة</option>
+                    <option value="group">كروبات سياحية</option>
+                    <option value="flight">طيران</option>
+                    <option value="land">رحلات برية</option>
+                </select>
+                <button class="btn-search-video" id="searchBtnVideo">ابحث الآن</button>
+            </div>
+        </div>
+        <div class="video-indicators" id="videoIndicators">
+            <div class="video-dot active" data-index="0"></div>
+            <div class="video-dot" data-index="1"></div>
+            <div class="video-dot" data-index="2"></div>
+            <div class="video-dot" data-index="3"></div>
+            <div class="video-dot" data-index="4"></div>
+        </div>
+    </section>
+
+    <!-- أقسام الكاتيجوريز - صور دائرية كبيرة في النصف العلوي -->
+    <section class="container categories-grid">
+        <div class="category-card" data-category="umrah">
+            <div class="icon">
+                <img src="img/haj.jpg" alt="حج وعمرة" class="category-icon" loading="lazy" onerror="this.src='https://placehold.co/110/1a56db/white?text=🕋'">
+            </div>
+            <h3>حج وعمرة</h3>
+            <p>باقات متميزة بأفضل الأسعار</p>
+        </div>
+        
+        <div class="category-card" data-category="flight">
+            <div class="icon">
+                <img src="img/pl.jpg" alt="تذاكر طيران" class="category-icon" loading="lazy" onerror="this.src='https://placehold.co/110/1a56db/white?text=✈️'">
+            </div>
+            <h3>تذاكر طيران</h3>
+            <p>أفضل العروض على الخطوط العالمية</p>
+        </div>
+        
+        <div class="category-card" data-category="land">
+            <div class="icon">
+                <img src="img/bus.webp" alt="رحلات برية" class="category-icon" loading="lazy" onerror="this.src='https://placehold.co/110/1a56db/white?text=🚌'">
+            </div>
+            <h3>رحلات برية</h3>
+            <p>مغامرات ساحرة في الطبيعة</p>
+        </div>
+        
+        <div class="category-card" data-category="group">
+            <div class="icon">
+                <img src="img/gru.webp" alt="كروبات سياحية" class="category-icon" loading="lazy" onerror="this.src='https://placehold.co/110/1a56db/white?text=🌍'">
+            </div>
+            <h3>كروبات سياحية</h3>
+            <p>برفقة مرشدين محترفين</p>
+        </div>
+    </section>
+
+    <!-- قسم الرحلات -->
+    <main class="container" id="trips">
+        <h2 class="section-title"> أحدث العروض والرحلات </h2>
+        <div id="trips-container" class="trips-grid"></div>
+    </main>
+
+    <!-- الموبايل ناف - أيقونات حقيقية بنفس الألوان الرئيسية -->
+    <nav class="mobile-nav">
+        <a href="#" class="active">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </a>
+        <a href="#trips">
+            <i class="fas fa-suitcase-rolling"></i>
+            <span>الرحلات</span>
+        </a>
+        <a href="#offers">
+            <i class="fas fa-tags"></i>
+            <span>العروض</span>
+        </a>
+        <a href="#profile">
+            <i class="fas fa-user-circle"></i>
+            <span>حسابي</span>
+        </a>
+    </nav>
+
+    <!-- واتساب عائم -->
+    <a href="https://wa.me/966500000000" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Luxovia Tours | جميع الحقوق محفوظة</p>
+            <p style="font-size: 14px; margin-top: 10px;">شريكك الموثوق في السفر الفاخر</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        // ============================================
+        // استيراد Firebase
+        // ============================================
+        import { db } from "./js/firebase-config.js";
+        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        // ============================================
+        // 1. نظام تبديل الفيديو كل 7 ثواني
+        // ============================================
+        
+        const videoList = [
+            "vid/vecteezy_bursa-turkey-2023-ornaments-in-the-traditional-interior_26731036.mp4",
+            "vid/vecteezy_london-skyline-on-thames-river-with-shard-in-the-background_5174637.mp4",
+            "vid/vecteezy_the-federal-territory-mosque-or-masjid-wilayah-persekutuan_2020069.mp4",
+         
+        ];
+        
+        let currentVideoIndex = 0;
+        let videoInterval;
+        const heroVideo = document.getElementById('heroVideo');
+        let videoDots = document.querySelectorAll('.video-dot');
+        
+        function changeVideo(index) {
+            if (index === currentVideoIndex) return;
+            currentVideoIndex = index;
+            const newVideoSrc = videoList[currentVideoIndex];
+            heroVideo.style.opacity = '0';
+            setTimeout(() => {
+                heroVideo.src = newVideoSrc;
+                heroVideo.load();
+                heroVideo.play().catch(e => console.log("Auto-play prevented:", e));
+                heroVideo.style.opacity = '1';
+            }, 500);
+            updateActiveDot(currentVideoIndex);
+        }
+        
+        function updateActiveDot(index) {
+            videoDots.forEach((dot, i) => {
+                dot.classList.remove('active');
+                if (i === index) dot.classList.add('active');
+            });
+        }
+        
+        function resetVideoTimer() {
+            if (videoInterval) clearInterval(videoInterval);
+            videoInterval = setInterval(() => {
+                let nextIndex = (currentVideoIndex + 1) % videoList.length;
+                changeVideo(nextIndex);
+            }, 7000);
+        }
+        
+        function initVideoBackground() {
+            heroVideo.src = videoList[0];
+            heroVideo.load();
+            heroVideo.play().catch(e => console.log("Auto-play prevented"));
+            videoDots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    resetVideoTimer();
+                    changeVideo(i);
+                });
+            });
+            resetVideoTimer();
+        }
+        
+        document.addEventListener('click', function enableAutoPlay() {
+            if (heroVideo.paused) heroVideo.play().catch(e => console.log("Play failed"));
+        }, { once: true });
+        
+        initVideoBackground();
+        
+        // ============================================
+        // 2. جلب وعرض الرحلات (الخدمات) من Firebase
+        // ============================================
+        const tripsContainer = document.getElementById('trips-container');
+        
+        // أسماء الفئات بالعربية
+        const categoryNames = {
+            umrah: 'عمرة',
+            hajj: 'حج',
+            group: 'كروبات سياحية',
+            flight: 'طيران',
+            land: 'رحلات برية'
+        };
+        
+        async function fetchAndDisplayTrips(filterCategory = 'all') {
+            if (!tripsContainer) return;
+            
+            try {
+                const servicesQuery = query(collection(db, "services"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(servicesQuery);
+                
+                if (querySnapshot.empty) {
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد رحلات حالياً</div>`;
+                    return;
+                }
+                
+                const services = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    services.push({
+                        id: doc.id,
+                        title: data.title || 'رحلة مميزة',
+                        price: data.price || 0,
+                        category: data.category || 'group',
+                        description: data.description || '',
+                        img: data.img || 'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=500',
+                        start_date: data.start_date,
+                        end_date: data.end_date,
+                        available_seats: data.available_seats || 0
+                    });
+                });
+                
+                // فلتر حسب الفئة
+                let filteredServices = services;
+                if (filterCategory !== 'all') {
+                    filteredServices = services.filter(s => s.category === filterCategory);
+                }
+                
+                if (filteredServices.length === 0) {
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد رحلات في هذا القسم</div>`;
+                    return;
+                }
+                
+                tripsContainer.innerHTML = filteredServices.map(service => `
+                    <div class="trip-card" data-category="${service.category}" onclick="window.location.href='screen/trip-details.html?id=${service.id}'">
+                        <div class="trip-img" style="background-image: url('${service.img}'); background-size: cover; background-position: center;"></div>
+                        <div class="trip-info">
+                            <span style="display: inline-block; background: #D4AF37; color: #003366; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-bottom: 8px;">
+                                ${categoryNames[service.category] || service.category}
+                            </span>
+                            <h3 style="font-size:1.3rem; margin-bottom: 8px;">${service.title.length > 40 ? service.title.substring(0, 40) + '...' : service.title}</h3>
+                            <div class="trip-price">${service.price.toLocaleString()} ر.س</div>
+                            ${service.available_seats > 0 ? `<div style="font-size: 12px; color: #28a745; margin-top: 5px;">🪑 ${service.available_seats} مقعد متاح</div>` : '<div style="font-size: 12px; color: #dc3545; margin-top: 5px;">❌ اكتمل العدد</div>'}
+                            <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">احجز الآن</button>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error("خطأ في جلب الرحلات:", error);
+                tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">⚠️ حدث خطأ في تحميل الرحلات</div>`;
+            }
+        }
+        
+        // ============================================
+        // 3. جلب وعرض العروض من Firebase
+        // ============================================
+        // إضافة قسم العروض بعد قسم الرحلات
+        const mainContainer = document.querySelector('#trips').parentNode;
+        const offersSection = document.createElement('main');
+        offersSection.className = 'container';
+        offersSection.id = 'offers';
+        offersSection.style.marginTop = '60px';
+        offersSection.innerHTML = `
+            <h2 class="section-title">🎁 عروض حصرية بخصومات تصل إلى 50%</h2>
+            <div id="offers-container" class="trips-grid"></div>
+        `;
+        mainContainer.insertBefore(offersSection, document.querySelector('.mobile-nav'));
+        
+        const offersContainer = document.getElementById('offers-container');
+        
+        // دالة حساب نسبة الخصم
+        function calculateDiscount(oldPrice, currentPrice) {
+            if (!oldPrice || !currentPrice || oldPrice <= 0) return 0;
+            return Math.round(((oldPrice - currentPrice) / oldPrice) * 100);
+        }
+        
+        async function fetchAndDisplayOffers() {
+            if (!offersContainer) return;
+            
+            try {
+                const offersQuery = query(collection(db, "offers"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(offersQuery);
+                
+                if (querySnapshot.empty) {
+                    offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">🎁 لا توجد عروض حالياً، تابعونا قريباً!</div>`;
+                    return;
+                }
+                
+                const offers = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    offers.push({
+                        id: doc.id,
+                        title: data.title || 'عرض مميز',
+                        name: data.name || '',
+                        description: data.description || data.name || '',
+                        current_price: data.current_price || data.currentPrice || 0,
+                        old_price: data.old_price || data.oldPrice || 0,
+                        img: data.image || data.img || 'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=500',
+                        start_date: data.start_date,
+                        end_date: data.end_date,
+                        is_active: data.is_active !== false
+                    });
+                });
+                
+                offersContainer.innerHTML = offers.map(offer => {
+                    const discountPercent = calculateDiscount(offer.old_price, offer.current_price);
+                    return `
+                        <div class="trip-card" onclick="window.location.href='screen/offer-details.html?id=${offer.id}'" style="position: relative;">
+                            <div style="position: absolute; top: 16px; right: 16px; background: linear-gradient(135deg, #D4AF37, #B8960C); color: #003366; padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; z-index: 10;">
+                                🔥 خصم ${discountPercent}%
+                            </div>
+                            <div class="trip-img" style="background-image: url('${offer.img}'); background-size: cover; background-position: center;"></div>
+                            <div class="trip-info">
+                                <h3 style="font-size:1.3rem; margin-bottom: 8px;">${offer.title.length > 35 ? offer.title.substring(0, 35) + '...' : offer.title}</h3>
+                                ${offer.description ? `<p style="color: #666; font-size: 13px; margin-bottom: 8px;">${offer.description.substring(0, 60)}${offer.description.length > 60 ? '...' : ''}</p>` : ''}
+                                <div style="display: flex; align-items: baseline; gap: 10px; margin: 10px 0;">
+                                    <span style="color: #D4AF37; font-size: 22px; font-weight: bold;">${offer.current_price.toLocaleString()} ر.س</span>
+                                    <span style="text-decoration: line-through; color: #999; font-size: 14px;">${offer.old_price.toLocaleString()} ر.س</span>
+                                </div>
+                                <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">اغتنم العرض 🚀</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error("خطأ في جلب العروض:", error);
+                offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">⚠️ حدث خطأ في تحميل العروض</div>`;
+            }
+        }
+        
+        // تصفية عند نقر البطاقات
+        document.querySelectorAll('.category-card').forEach((card, idx) => {
+            card.addEventListener('click', () => {
+                const categoryMap = ['umrah', 'flight', 'land', 'group'];
+                fetchAndDisplayTrips(categoryMap[idx]);
+                document.getElementById('trips').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // زر البحث
+        document.getElementById('searchBtnVideo')?.addEventListener('click', async () => {
+            const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+            const selectedType = document.getElementById('tripTypeSelect').value;
+            
+            if (!keyword && selectedType === 'all') {
+                fetchAndDisplayTrips('all');
+                return;
+            }
+            
+            try {
+                const servicesQuery = query(collection(db, "services"));
+                const querySnapshot = await getDocs(servicesQuery);
+                
+                const services = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    services.push({
+                        id: doc.id,
+                        title: data.title || '',
+                        price: data.price || 0,
+                        category: data.category || '',
+                        description: data.description || '',
+                        img: data.img || 'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=500',
+                        available_seats: data.available_seats || 0
+                    });
+                });
+                
+                let filtered = services;
+                
+                // فلتر حسب النوع
+                if (selectedType !== 'all') {
+                    filtered = filtered.filter(s => s.category === selectedType);
+                }
+                
+                // فلتر حسب البحث
+                if (keyword) {
+                    filtered = filtered.filter(s => 
+                        s.title.toLowerCase().includes(keyword) || 
+                        s.description.toLowerCase().includes(keyword)
+                    );
+                }
+                
+                if (filtered.length === 0) {
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد نتائج لبحثك</div>`;
+                } else {
+                    tripsContainer.innerHTML = filtered.map(service => `
+                        <div class="trip-card" onclick="window.location.href='screen/trip-details.html?id=${service.id}'">
+                            <div class="trip-img" style="background-image: url('${service.img}'); background-size: cover; background-position: center;"></div>
+                            <div class="trip-info">
+                                <span style="display: inline-block; background: #D4AF37; color: #003366; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-bottom: 8px;">
+                                    ${categoryNames[service.category] || service.category}
+                                </span>
+                                <h3 style="font-size:1.3rem; margin-bottom: 8px;">${service.title.length > 40 ? service.title.substring(0, 40) + '...' : service.title}</h3>
+                                <div class="trip-price">${service.price.toLocaleString()} ر.س</div>
+                                ${service.available_seats > 0 ? `<div style="font-size: 12px; color: #28a745; margin-top: 5px;">🪑 ${service.available_seats} مقعد متاح</div>` : '<div style="font-size: 12px; color: #dc3545; margin-top: 5px;">❌ اكتمل العدد</div>'}
+                                <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">احجز الآن</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+                
+            } catch (error) {
+                console.error("خطأ في البحث:", error);
+            }
+        });
+        
+        // أنيميشن ظهور البطاقات عند التمرير
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.category-card').forEach(card => observer.observe(card));
+        
+        // تأثير الهيدر عند السكرول
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if(window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+        
+        // تهيئة عرض الرحلات والعروض
+        fetchAndDisplayTrips('all');
+        fetchAndDisplayOffers();
+    </script>
+</body>
+</html>
