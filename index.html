@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
     <!-- SEO Meta Tags -->
-    <title>قافلة الضيافة | Luxovia Tours - رحلات فاخرة بلمسة ذهبية</title>
-    <meta name="description" content="قافلة الضيافة - وكالة سفر فاخرة تقدم باقات حج وعمرة، تذاكر طيران، كروبات سياحية، ورحلات برية بأفضل الأسعار">
-    <meta name="keywords" content="قافلة الضيافة, حج وعمرة, تذاكر طيران, كروبات سياحية, رحلات برية, سفر فاخر, Luxovia Tours">
+    <title>لوكسوفيا تورز | Luxovia Tours - رحلات فاخرة بلمسة ذهبية</title>
+    <meta name="description" content="لوكسوفيا تورز - وكالة سفر فاخرة تقدم باقات حج وعمرة، تذاكر طيران، كروبات سياحية، ورحلات برية بأفضل الأسعار">
+    <meta name="keywords" content="لوكسوفيا تورز, حج وعمرة, تذاكر طيران, كروبات سياحية, رحلات برية, سفر فاخر, Luxovia Tours">
     <meta name="author" content="Luxovia Tours">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="قافلة الضيافة | Luxovia Tours - رحلات فاخرة بلمسة ذهبية">
-    <meta property="og:description" content="قافلة الضيافة - وكالة سفر فاخرة تقدم باقات حج وعمرة، تذاكر طيران، كروبات سياحية ورحلات برية">
+    <meta property="og:title" content="لوكسوفيا تورز | Luxovia Tours - رحلات فاخرة بلمسة ذهبية">
+    <meta property="og:description" content="لوكسوفيا تورز - وكالة سفر فاخرة تقدم باقات حج وعمرة، تذاكر طيران، كروبات سياحية ورحلات برية">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://luxovia-tours.vercel.app/">
     <meta property="og:locale" content="ar_AR">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="قافلة الضيافة | Luxovia Tours - رحلات فاخرة">
+    <meta name="twitter:title" content="لوكسوفيا تورز | Luxovia Tours - رحلات فاخرة">
     <meta name="twitter:description" content="وكالة سفر فاخرة تقدم باقات حج وعمرة، تذاكر طيران وكروبات سياحية">
     
     <!-- Favicon -->
@@ -48,7 +48,7 @@
     {
         "@context": "https://schema.org",
         "@type": "TravelAgency",
-        "name": "قافلة الضيافة",
+        "name": "لوكسوفيا تورز",
         "alternateName": "Luxovia Tours",
         "description": "وكالة سفر فاخرة تقدم باقات حج وعمرة، تذاكر طيران، كروبات سياحية ورحلات برية",
         "url": "https://luxovia-tours.vercel.app/",
@@ -61,23 +61,31 @@
 <body>
 
     <!-- الهيدر -->
-    <header class="main-header" id="mainHeader">
-        <div class="container flex-header">
-            <div class="logo">
-                <img src="img/logo.jpg" alt="Luxovia" class="logo-icon-img" onerror="this.src='https://placehold.co/48/1a56db/d4af37?text=L'">
-                <h1>Luxovia Tours</h1>
-            </div>
-            <nav class="desktop-nav">
-                <a href="#" style="color: #D4AF37;">الرئيسية</a>
-                <a href="screen/trips.html">الرحلات</a>
-                <a href="screen/offers.html">العروض</a>
-                <a href="screen/hotels.html">الفنادق</a>
-                <a href="#profile">الملف الشخصي</a>
-                <a href="#contact">اتصل بنا</a>
-            </nav>
-            <button class="btn-primary">حجز طيران</button>
+  <header class="main-header" id="mainHeader">
+    <div class="container flex-header">
+        <div class="logo">
+            <img src="img/logo.jpg" alt="Luxovia" class="logo-icon-img" onerror="this.src='https://placehold.co/48/1a56db/d4af37?text=L'">
+            <h1>Luxovia Tours</h1>
         </div>
-    </header>
+        <button class="hamburger-menu" id="hamburgerBtn">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <nav class="desktop-nav">
+            <a href="#" style="color: #D4AF37;">الرئيسية</a>
+            <a href="screen/trips.html">الرحلات</a>
+            <a href="screen/offers.html">العروض</a>
+            <a href="screen/hotels.html">الفنادق</a>
+            <a href="#profile">الملف الشخصي</a>
+            <a href="#contact">اتصل بنا</a>
+        </nav>
+        <button class="btn-primary">حجز طيران</button>
+    </div>
+</header>
+<!-- ...existing code... -->
 
     <!-- Hero Section مع خلفية فيديو متحركة -->
     <section class="hero-video-section" id="heroVideoSection">
@@ -278,7 +286,7 @@
                 const querySnapshot = await getDocs(servicesQuery);
                 
                 if (querySnapshot.empty) {
-                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> لا توجد رحلات حالياً</div>`;
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد رحلات حالياً</div>`;
                     return;
                 }
                 
@@ -305,7 +313,7 @@
                 }
                 
                 if (filteredServices.length === 0) {
-                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> لا توجد رحلات في هذا القسم</div>`;
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد رحلات في هذا القسم</div>`;
                     return;
                 }
                 
@@ -318,7 +326,7 @@
                             </span>
                             <h3 style="font-size:1.3rem; margin-bottom: 8px;">${service.title.length > 40 ? service.title.substring(0, 40) + '...' : service.title}</h3>
                             <div class="trip-price">${service.price.toLocaleString()} ر.س</div>
-                            ${service.available_seats > 0 ? `<div style="font-size: 12px; color: #28a745; margin-top: 5px;"> ${service.available_seats} مقعد متاح</div>` : '<div style="font-size: 12px; color: #dc3545; margin-top: 5px;">❌ اكتمل العدد</div>'}
+                            ${service.available_seats > 0 ? `<div style="font-size: 12px; color: #28a745; margin-top: 5px;">🪑 ${service.available_seats} مقعد متاح</div>` : '<div style="font-size: 12px; color: #dc3545; margin-top: 5px;">❌ اكتمل العدد</div>'}
                             <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">احجز الآن</button>
                         </div>
                     </div>
@@ -326,7 +334,7 @@
                 
             } catch (error) {
                 console.error("خطأ في جلب الرحلات:", error);
-                tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> حدث خطأ في تحميل الرحلات</div>`;
+                tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">⚠️ حدث خطأ في تحميل الرحلات</div>`;
             }
         }
         
@@ -340,7 +348,7 @@
         offersSection.id = 'offers';
         offersSection.style.marginTop = '60px';
         offersSection.innerHTML = `
-            <h2 class="section-title"> عروض حصرية بخصومات تصل إلى 50%</h2>
+            <h2 class="section-title">🎁 عروض حصرية بخصومات تصل إلى 50%</h2>
             <div id="offers-container" class="trips-grid"></div>
         `;
         mainContainer.insertBefore(offersSection, document.querySelector('.mobile-nav'));
@@ -361,7 +369,7 @@
                 const querySnapshot = await getDocs(offersQuery);
                 
                 if (querySnapshot.empty) {
-                    offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> لا توجد عروض حالياً، تابعونا قريباً!</div>`;
+                    offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">🎁 لا توجد عروض حالياً، تابعونا قريباً!</div>`;
                     return;
                 }
                 
@@ -387,7 +395,7 @@
                     return `
                         <div class="trip-card" onclick="window.location.href='screen/offer-details.html?id=${offer.id}'" style="position: relative;">
                             <div style="position: absolute; top: 16px; right: 16px; background: linear-gradient(135deg, #D4AF37, #B8960C); color: #003366; padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; z-index: 10;">
-                                 خصم ${discountPercent}%
+                                🔥 خصم ${discountPercent}%
                             </div>
                             <div class="trip-img" style="background-image: url('${offer.img}'); background-size: cover; background-position: center;"></div>
                             <div class="trip-info">
@@ -397,7 +405,7 @@
                                     <span style="color: #D4AF37; font-size: 22px; font-weight: bold;">${offer.current_price.toLocaleString()} ر.س</span>
                                     <span style="text-decoration: line-through; color: #999; font-size: 14px;">${offer.old_price.toLocaleString()} ر.س</span>
                                 </div>
-                                <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">اغتنم العرض</button>
+                                <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">اغتنم العرض 🚀</button>
                             </div>
                         </div>
                     `;
@@ -405,7 +413,7 @@
                 
             } catch (error) {
                 console.error("خطأ في جلب العروض:", error);
-                offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> حدث خطأ في تحميل العروض</div>`;
+                offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">⚠️ حدث خطأ في تحميل العروض</div>`;
             }
         }
         
@@ -462,7 +470,7 @@
                 }
                 
                 if (filtered.length === 0) {
-                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> لا توجد نتائج لبحثك</div>`;
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد نتائج لبحثك</div>`;
                 } else {
                     tripsContainer.innerHTML = filtered.map(service => `
                         <div class="trip-card" onclick="window.location.href='screen/trip-details.html?id=${service.id}'">
@@ -473,7 +481,7 @@
                                 </span>
                                 <h3 style="font-size:1.3rem; margin-bottom: 8px;">${service.title.length > 40 ? service.title.substring(0, 40) + '...' : service.title}</h3>
                                 <div class="trip-price">${service.price.toLocaleString()} ر.س</div>
-                                ${service.available_seats > 0 ? `<div style="font-size: 12px; color: #28a745; margin-top: 5px;"> ${service.available_seats} مقعد متاح</div>` : '<div style="font-size: 12px; color: #dc3545; margin-top: 5px;">❌ اكتمل العدد</div>'}
+                                ${service.available_seats > 0 ? `<div style="font-size: 12px; color: #28a745; margin-top: 5px;">🪑 ${service.available_seats} مقعد متاح</div>` : '<div style="font-size: 12px; color: #dc3545; margin-top: 5px;">❌ اكتمل العدد</div>'}
                                 <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">احجز الآن</button>
                             </div>
                         </div>
@@ -501,6 +509,25 @@
             else header.classList.remove('scrolled');
         });
         
+        // تحكم في زر الهمبرجر والقائمة الجانبية
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarNav = document.querySelector('.sidebar-nav');
+        const sidebarOverlay = document.querySelector('.sidebar-overlay');
+
+        hamburgerBtn?.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            sidebarNav.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+        });
+
+        sidebarOverlay?.addEventListener('click', () => {
+            hamburgerBtn.classList.remove('active');
+            sidebarNav.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        });
+
         // تهيئة عرض الرحلات والعروض
         fetchAndDisplayTrips('all');
         fetchAndDisplayOffers();
