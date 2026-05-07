@@ -302,7 +302,7 @@ initGifBackground();
                 }
                 
                 if (filteredServices.length === 0) {
-                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد رحلات في هذا القسم</div>`;
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> لا توجد رحلات في هذا القسم</div>`;
                     return;
                 }
                 
@@ -323,7 +323,7 @@ initGifBackground();
                 
             } catch (error) {
                 console.error("خطأ في جلب الرحلات:", error);
-                tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">⚠️ حدث خطأ في تحميل الرحلات</div>`;
+                tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> حدث خطأ في تحميل الرحلات</div>`;
             }
         }
         
@@ -358,7 +358,7 @@ initGifBackground();
                 const querySnapshot = await getDocs(offersQuery);
                 
                 if (querySnapshot.empty) {
-                    offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">🎁 لا توجد عروض حالياً، تابعونا قريباً!</div>`;
+                    offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> لا توجد عروض حالياً، تابعونا قريباً!</div>`;
                     return;
                 }
                 
@@ -394,7 +394,7 @@ initGifBackground();
                                     <span style="color: #D4AF37; font-size: 22px; font-weight: bold;">${offer.current_price.toLocaleString()} ر.س</span>
                                     <span style="text-decoration: line-through; color: #999; font-size: 14px;">${offer.old_price.toLocaleString()} ر.س</span>
                                 </div>
-                                <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">اغتنم العرض 🚀</button>
+                                <button class="btn-search-video" style="padding:10px 20px; font-size:14px; margin-top: 10px; cursor: pointer;">اغتنم العرض </button>
                             </div>
                         </div>
                     `;
@@ -402,7 +402,7 @@ initGifBackground();
                 
             } catch (error) {
                 console.error("خطأ في جلب العروض:", error);
-                offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">⚠️ حدث خطأ في تحميل العروض</div>`;
+                offersContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> حدث خطأ في تحميل العروض</div>`;
             }
         }
         
@@ -459,7 +459,7 @@ initGifBackground();
                 }
                 
                 if (filtered.length === 0) {
-                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;">😢 لا توجد نتائج لبحثك</div>`;
+                    tripsContainer.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding: 60px;"> لا توجد نتائج لبحثك</div>`;
                 } else {
                     tripsContainer.innerHTML = filtered.map(service => `
                         <div class="trip-card" onclick="window.location.href='screen/trip-details.html?id=${service.id}'">
