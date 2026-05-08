@@ -18,23 +18,23 @@
            تنسيقات خاصة بصفحة العروض فقط (ليست في الملف الخارجي)
         ============================================================ */
         
-        /* خلفية الفيديو لقسم العروض */
+        /* خلفية الصور الثابتة للهيرو */
         .offers-hero {
             position: relative;
             text-align: center;
-            padding: 140px 24px 100px;
+            padding: 160px 24px 120px;
             color: white;
             margin-bottom: 40px;
             overflow: hidden;
             isolation: isolate;
-            min-height: 500px;
+            min-height: 550px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* خلفية الـ GIF */
-        .offers-gif-background {
+        /* خلفية الصور الثابتة */
+        .offers-slideshow-bg {
             position: absolute;
             top: 0;
             left: 0;
@@ -43,17 +43,23 @@
             z-index: 0;
         }
 
-        .offers-gif-background img {
+        .offers-slideshow-bg .slide {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: cover;
-            transition: opacity 1s ease-in-out;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 2.5s ease-in-out; /* انتقال بطيء وسلس (2.5 ثانية) */
+            will-change: opacity;
+        }
+
+        .offers-slideshow-bg .slide.active {
+            opacity: 1;
+            z-index: 1;
         }
 
         /* طبقة التدرج فوق الخلفية */
@@ -64,10 +70,10 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, 
-                rgba(10, 25, 47, 0.3) 0%, 
-                rgba(212, 175, 55, 0.1) 50%,
-                rgba(10, 25, 47, 0.3) 100%);
-            z-index: 1;
+                rgba(10, 25, 47, 0.5) 0%, 
+                rgba(212, 175, 55, 0.2) 50%,
+                rgba(10, 25, 47, 0.6) 100%);
+            z-index: 2;
         }
 
         /* عناصر الزينة الدائرية */
@@ -82,7 +88,7 @@
             opacity: 0.15;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 2;
+            z-index: 3;
             animation: floatGlow 8s ease-in-out infinite;
         }
 
@@ -97,7 +103,7 @@
             opacity: 0.12;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 2;
+            z-index: 3;
             animation: floatGlow 10s ease-in-out infinite reverse;
         }
 
@@ -119,7 +125,7 @@
 
         .offers-header-content {
             position: relative;
-            z-index: 3;
+            z-index: 4;
             max-width: 800px;
             margin: 0 auto;
             animation: fadeInUpHeader 0.8s ease-out;
@@ -149,30 +155,48 @@
             animation: fadeInUpHeader 0.8s ease-out 0.2s both;
         }
 
-        /* مؤشرات GIF */
-        .gif-indicator-offers {
+        /* مؤشرات الصور */
+        .slideshow-indicator-offers {
             position: absolute;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             gap: 12px;
-            z-index: 3;
+            z-index: 4;
             direction: ltr;
         }
 
-        .gif-dot-offers {
+        .slideshow-dot-offers {
             width: 40px;
             height: 4px;
             background: rgba(255,255,255,0.4);
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .gif-dot-offers.active {
+        .slideshow-dot-offers.active {
             background: #D4AF37;
             width: 60px;
+        }
+
+        .slideshow-dot-offers.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+            animation: progressBar 10s linear forwards; /* 10 ثواني لكل صورة */
+        }
+
+        @keyframes progressBar {
+            from { width: 100%; }
+            to { width: 0%; }
         }
 
         /* شبكة العروض */
@@ -400,7 +424,7 @@
         @media (max-width: 768px) {
             .offers-hero {
                 padding: 120px 20px 80px;
-                min-height: 400px;
+                min-height: 450px;
             }
             
             .offers-hero h1 {
@@ -428,11 +452,11 @@
                 font-size: 1.5rem;
             }
 
-            .gif-dot-offers {
+            .slideshow-dot-offers {
                 width: 30px;
             }
             
-            .gif-dot-offers.active {
+            .slideshow-dot-offers.active {
                 width: 45px;
             }
         }
@@ -453,11 +477,11 @@
                 padding: 16px;
             }
 
-            .gif-dot-offers {
+            .slideshow-dot-offers {
                 width: 25px;
             }
             
-            .gif-dot-offers.active {
+            .slideshow-dot-offers.active {
                 width: 35px;
             }
         }
@@ -548,21 +572,23 @@
     </nav>
 
     <!-- ============================================ -->
-    <!-- قسم الهيرو مع خلفية GIF -->
+    <!-- قسم الهيرو مع خلفية صور ثابتة (JPG) وانتقال بطيء -->
     <!-- ============================================ -->
     <section class="offers-hero">
-        <div class="offers-gif-background" id="offersGifBackground">
-            <img id="offersHeaderGif" src="../img/12449638_3840_2160_120fps.gif" alt="خلفية متحركة" style="width: 100%; height: 100%; object-fit: cover; opacity: 1;">
+        <div class="offers-slideshow-bg" id="offersSlideshowBg">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600');"></div>
         </div>
         <div class="offers-header-overlay"></div>
         <div class="offers-header-content">
             <h1>عروض اللحظة الأخيرة</h1>
             <p>وفر الكثير مع باقاتنا المختارة بعناية</p>
         </div>
-        <div class="gif-indicator-offers" id="gifIndicatorsOffers">
-            <div class="gif-dot-offers active" data-index="0"></div>
-            <div class="gif-dot-offers" data-index="1"></div>
-            <div class="gif-dot-offers" data-index="2"></div>
+        <div class="slideshow-indicator-offers" id="slideshowIndicatorsOffers">
+            <div class="slideshow-dot-offers active" data-index="0"></div>
+            <div class="slideshow-dot-offers" data-index="1"></div>
+            <div class="slideshow-dot-offers" data-index="2"></div>
         </div>
     </section>
 
@@ -637,60 +663,73 @@
         const offersContainer = document.getElementById('offers-list');
         
         // ============================================
-        // 1. نظام تبديل الـ GIF
+        // 1. نظام تبديل الخلفيات (صور JPG - انتقال بطيء 2.5 ثانية)
         // ============================================
-        const gifList = [
-            "../img/12449638_3840_2160_120fps.gif",
-            "../img/12449638_3840_2160_120fps.gif",
-            "../img/12449638_3840_2160_120fps.gif"
-        ];
-        
-        let currentGifIndex = 0;
-        let gifInterval;
-        const gifImg = document.getElementById('offersHeaderGif');
-        const gifDots = document.querySelectorAll('.gif-dot-offers');
+        const slides = document.querySelectorAll('.offers-slideshow-bg .slide');
+        const dots = document.querySelectorAll('.slideshow-dot-offers');
+        let currentIndex = 0;
+        let slideInterval;
+        const SLIDE_DURATION = 10000; // 10 ثواني لكل صورة
+        const FADE_DURATION = 2500;    // 2.5 ثانية لتأثير التلاشي
 
-        function changeGif(index) {
-            if (index === currentGifIndex) return;
-            currentGifIndex = index;
-            const newGifSrc = gifList[currentGifIndex];
-            gifImg.style.opacity = '0';
+        function changeSlide(index) {
+            if (index === currentIndex) return;
+            
+            // إزالة الـ active من الشريحة الحالية
+            slides[currentIndex].classList.remove('active');
+            // إزالة الـ active من النقطة الحالية
+            dots[currentIndex].classList.remove('active');
+            // إعادة تعيين animation للـ dot الجديد
+            dots[currentIndex].style.animation = 'none';
+            
+            // تحديث المؤشر الحالي
+            currentIndex = index;
+            
+            // إضافة الـ active للشريحة الجديدة
+            slides[currentIndex].classList.add('active');
+            // إضافة الـ active للنقطة الجديدة
+            dots[currentIndex].classList.add('active');
+            
+            // إعادة تشغيل animation للـ dot الجديد
+            dots[currentIndex].style.animation = 'none';
             setTimeout(() => {
-                gifImg.src = newGifSrc;
-                gifImg.style.opacity = '1';
-            }, 500);
-            updateActiveDot(currentGifIndex);
+                dots[currentIndex].style.animation = '';
+            }, 10);
         }
 
-        function updateActiveDot(index) {
-            gifDots.forEach((dot, i) => {
-                dot.classList.remove('active');
-                if (i === index) dot.classList.add('active');
+        function nextSlide() {
+            let nextIndex = (currentIndex + 1) % slides.length;
+            changeSlide(nextIndex);
+        }
+
+        function resetSlideTimer() {
+            if (slideInterval) clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, SLIDE_DURATION);
+        }
+
+        function initSlideshow() {
+            // التأكد من أن الشريحة الأولى فقط هي النشطة في البداية
+            slides.forEach((slide, i) => {
+                if (i === 0) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
             });
-        }
-
-        function resetGifTimer() {
-            if (gifInterval) clearInterval(gifInterval);
-            gifInterval = setInterval(() => {
-                let nextIndex = (currentGifIndex + 1) % gifList.length;
-                changeGif(nextIndex);
-            }, 7000);
-        }
-
-        function initGifBackground() {
-            if (gifImg) {
-                gifImg.src = gifList[0];
-            }
-            gifDots.forEach((dot, i) => {
+            
+            // إضافة مستمعي الأحداث للنقاط
+            dots.forEach((dot, i) => {
                 dot.addEventListener('click', () => {
-                    resetGifTimer();
-                    changeGif(i);
+                    resetSlideTimer();
+                    changeSlide(i);
                 });
             });
-            resetGifTimer();
+            
+            // بدء التبديل التلقائي
+            resetSlideTimer();
         }
 
-        initGifBackground();
+        initSlideshow();
 
         // ============================================
         // 2. زر الهمبرجر والقائمة الجانبية
