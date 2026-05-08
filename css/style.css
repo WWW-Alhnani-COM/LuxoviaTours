@@ -1945,7 +1945,7 @@ body.no-scroll {
                 display: none;
             }
             
-            /* إخفاء زر "حجز طيران" في الهاتف */
+            /* إخفاء زر "EN" في الهاتف */
             .main-header .btn-primary {
                 display: none;
             }
@@ -2018,4 +2018,54 @@ body.no-scroll {
             }
         }
 
-        
+     /* ============================================================
+   واتساب عائم - باستخدام SVG
+   ============================================================ */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+    z-index: 99;
+    text-decoration: none;
+    background: transparent; /* إزالة الخلفية الخضراء */
+    box-shadow: none;
+}
+
+/* تنسيق صورة SVG داخل الزر */
+.whatsapp-icon {
+    width: 55px;
+    height: 55px;
+    display: block;
+    transition: all var(--transition-base);
+    border-radius: 50%;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-float:hover .whatsapp-icon {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 12px rgba(37, 211, 102, 0.4));
+}
+
+/* تحسين للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 85px;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .whatsapp-icon {
+        width: 48px;
+        height: 48px;
+    }
+} 
