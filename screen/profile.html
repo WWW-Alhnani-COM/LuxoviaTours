@@ -7,26 +7,279 @@
     
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- رابط Font Awesome احتياطي متعدد المصادر -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" onerror="this.onerror=null;this.href='https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
         /* ============================================================
-           أنماط خاصة بصفحة الملف الشخصي
+           RESET & BASE - إصلاح كامل للهيدر
         ============================================================ */
-        
-        html, body {
-            min-height: 100vh;
+        * {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100% ;)         }
-        
+            box-sizing: border-box;
+        }
+
         body {
+            font-family: 'Cairo', sans-serif;
+            background: #f5f7fa;
+            overflow-x: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        /* ========== الهيدر الثابت المثبت ========== */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* إزالة أي هامش أو ازاحة جانبية */
+        .main-header .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .flex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            gap: 20px;
+        }
+
+        /* اللوجو */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .logo-icon-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #003366, #D4AF37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* قائمة سطح المكتب */
+        .desktop-nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.3s ease;
+        }
+
+        .desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        .desktop-nav a:hover {
+            color: #D4AF37;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #003366, #1e3a8a);
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #D4AF37, #b8960c);
+            color: #003366;
+            transform: translateY(-2px);
+        }
+
+        /* هامبورجر */
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger-icon {
+            width: 30px;
+            height: 24px;
+            position: relative;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #003366;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-icon span:nth-child(1) { top: 0; }
+        .hamburger-icon span:nth-child(2) { top: 10px; }
+        .hamburger-icon span:nth-child(3) { top: 20px; }
+
+        .hamburger-menu.active .hamburger-icon span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 10px;
+        }
+        .hamburger-menu.active .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-menu.active .hamburger-icon span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 10px;
+        }
+
+        /* سايدبار */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .sidebar-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background: white;
+            z-index: 1002;
+            padding: 80px 25px 30px;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar-nav.active {
+            right: 0;
+        }
+        .sidebar-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #003366;
+        }
+        .sidebar-nav-links {
             display: flex;
             flex-direction: column;
+            gap: 20px;
         }
-        
+        .sidebar-nav-links a {
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar-nav-links a i {
+            width: 24px;
+        }
+        .sidebar-nav-links a:hover,
+        .sidebar-nav-links a.active {
+            background: rgba(212, 175, 55, 0.1);
+            color: #D4AF37;
+        }
+
+        /* موبايل ناف */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 12px 20px;
+            justify-content: space-around;
+            box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+        .mobile-nav a {
+            text-decoration: none;
+            color: #64748b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        .mobile-nav a i {
+            font-size: 22px;
+        }
+        .mobile-nav a.active {
+            color: #D4AF37;
+        }
+
+        /* باقي محتوى الصفحة - إضافة padding top للهيدر */
+        .auth-wrapper,
+        .profile-wrapper {
+            margin-top: 80px;
+        }
+
         .auth-wrapper {
             flex: 1;
             display: flex;
@@ -71,14 +324,8 @@
         }
         
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .auth-container h2, .register-container h2 {
@@ -150,13 +397,8 @@
             gap: 8px;
         }
         
-        .password-requirements.valid {
-            color: #10b981;
-        }
-        
-        .password-requirements.invalid {
-            color: #ef4444;
-        }
+        .password-requirements.valid { color: #10b981; }
+        .password-requirements.invalid { color: #ef4444; }
         
         .btn-auth {
             width: 100%;
@@ -207,11 +449,7 @@
             align-items: center;
             gap: 10px;
         }
-        
-        .error-message.show {
-            display: flex;
-        }
-        
+        .error-message.show { display: flex; }
         .success-message {
             background: #dcfce7;
             color: #16a34a;
@@ -223,16 +461,10 @@
             align-items: center;
             gap: 10px;
         }
+        .success-message.show { display: flex; }
+        .hidden { display: none !important; }
         
-        .success-message.show {
-            display: flex;
-        }
-        
-        .hidden {
-            display: none !important;
-        }
-        
-        /* باقي التنسيقات كما هي */
+        /* بروفايل */
         .profile-wrapper {
             flex: 1;
             min-height: calc(100vh - 160px);
@@ -245,66 +477,6 @@
             text-align: center;
             position: relative;
             margin-bottom: 20px;
-        }
-        
-        .profile-header::before {
-            content: "";
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
-            opacity: 0.12;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        
-        .profile-header::after {
-            content: "";
-            position: absolute;
-            bottom: -20%;
-            left: -10%;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
-            opacity: 0.1;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        
-        .user-avatar {
-            width: 120px;
-            height: 120px;
-            background: white;
-            border: 4px solid #D4AF37;
-            border-radius: 50%;
-            margin: 0 auto -50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .user-avatar:hover {
-            transform: scale(1.05);
-        }
-        
-        .profile-header h2 {
-            margin-top: 60px;
-            font-size: 26px;
-            font-weight: 800;
-        }
-        
-        .profile-header p {
-            opacity: 0.9;
-            margin-top: 8px;
-            font-size: 14px;
         }
         
         .profile-content {
@@ -340,9 +512,7 @@
             padding-right: 15px;
         }
         
-        .info-card h3 i {
-            color: #D4AF37;
-        }
+        .info-card h3 i { color: #D4AF37; }
         
         .loyalty-box {
             background: linear-gradient(135deg, #D4AF37, #b8960c);
@@ -354,13 +524,6 @@
             box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
         }
         
-        .loyalty-box h3 {
-            font-size: 42px;
-            font-weight: 800;
-            margin: 0;
-            color: #003366;
-        }
-        
         .info-row {
             display: flex;
             justify-content: space-between;
@@ -368,26 +531,9 @@
             padding: 12px 0;
             border-bottom: 1px solid #f1f5f9;
         }
-        
-        .info-row:last-child {
-            border-bottom: none;
-        }
-        
-        .info-label {
-            font-weight: 600;
-            color: #64748b;
-        }
-        
-        .info-value {
-            color: #003366;
-            font-weight: 500;
-        }
-        
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
-            margin: 15px 0;
-        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { font-weight: 600; color: #64748b; }
+        .info-value { color: #003366; font-weight: 500; }
         
         .btn-outline {
             background: transparent;
@@ -404,34 +550,13 @@
             gap: 10px;
             width: 100%;
         }
-        
         .btn-outline:hover {
             border-color: #D4AF37;
             background: rgba(212, 175, 55, 0.1);
             color: #003366;
-            transform: translateY(-3px);
         }
-        
-        .btn-danger {
-            border-color: #fee2e2;
-            color: #dc2626;
-        }
-        
-        .btn-danger:hover {
-            background: #fee2e2;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #94a3b8;
-        }
-        
-        .empty-state i {
-            font-size: 48px;
-            margin-bottom: 16px;
-            color: #D4AF37;
-        }
+        .btn-danger { border-color: #fee2e2; color: #dc2626; }
+        .btn-danger:hover { background: #fee2e2; }
         
         .booking-item {
             display: flex;
@@ -440,38 +565,15 @@
             padding: 16px 0;
             border-bottom: 1px solid #e2e8f0;
         }
-        
-        .booking-item:last-child {
-            border-bottom: none;
-        }
-        
-        .booking-info p {
-            font-weight: 700;
-            color: #003366;
-            margin-bottom: 5px;
-        }
-        
-        .booking-info small {
-            color: #64748b;
-            font-size: 12px;
-        }
-        
         .status-badge {
             padding: 6px 16px;
             border-radius: 50px;
             font-size: 12px;
             font-weight: 700;
         }
-        
-        .status-confirmed {
-            background: #dcfce7;
-            color: #16a34a;
-        }
-        
-        .status-pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
+        .status-confirmed { background: #dcfce7; color: #16a34a; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .empty-state { text-align: center; padding: 40px; color: #94a3b8; }
         
         .footer {
             background: linear-gradient(135deg, #1a1a2e 0%, #003366 100%);
@@ -479,52 +581,30 @@
             text-align: center;
             padding: 30px 0 25px;
             margin-top: auto;
-            position: relative;
         }
         
-        .footer::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #D4AF37, transparent, #D4AF37);
+        @media (max-width: 992px) {
+            .desktop-nav { display: none; }
+            .hamburger-menu { display: block; }
+            .mobile-nav { display: flex; }
+            .main-header .container { padding: 0 20px; }
         }
         
         @media (max-width: 768px) {
-            .register-grid {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-            
-            .full-width {
-                grid-column: span 1;
-            }
-            
-            .country-code-wrapper {
-                flex-direction: column;
-            }
-            
-            .country-select, .phone-input {
-                width: 100%;
-            }
-            
-            .auth-container, .register-container {
-                padding: 30px 20px;
-            }
-            
-            .booking-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
+            .register-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .country-code-wrapper { flex-direction: column; }
+            .country-select, .phone-input { width: 100%; }
+            .auth-container, .register-container { padding: 30px 20px; }
+            .booking-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .flex-header { height: 70px; }
+            .auth-wrapper, .profile-wrapper { margin-top: 70px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر -->
+    <!-- ========== الهيدر المعدل بالكامل ========== -->
     <header class="main-header" id="mainHeader">
         <div class="container flex-header">
             <div class="logo">
@@ -550,7 +630,6 @@
         </div>
     </header>
 
-    <!-- القائمة الجانبية -->
     <div class="sidebar-overlay"></div>
     <nav class="sidebar-nav">
         <button class="sidebar-close"><i class="fas fa-times"></i></button>
@@ -564,17 +643,13 @@
         </div>
     </nav>
 
-    <!-- ============================================ -->
-    <!-- واجهة تسجيل الدخول / إنشاء حساب -->
-    <!-- ============================================ -->
+    <!-- محتوى الصفحة كما هو -->
     <div id="authSection">
         <div class="auth-wrapper">
-            <!-- نموذج تسجيل الدخول -->
             <div id="loginContainer" class="auth-container">
                 <h2><i class="fas fa-user-circle" style="color: #D4AF37; margin-left: 10px;"></i> تسجيل الدخول</h2>
                 <div id="errorMessage" class="error-message"></div>
                 <div id="successMessage" class="success-message"></div>
-                
                 <div class="input-group">
                     <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
                     <input type="email" id="loginEmail" placeholder="example@email.com">
@@ -587,12 +662,10 @@
                 <p class="auth-switch" id="toggleToRegister"><i class="fas fa-user-plus"></i> ليس لديك حساب؟ إنشاء حساب جديد</p>
             </div>
             
-            <!-- نموذج إنشاء حساب (بحجم أكبر) -->
             <div id="registerContainer" class="register-container" style="display: none;">
                 <h2><i class="fas fa-user-plus" style="color: #D4AF37; margin-left: 10px;"></i> إنشاء حساب جديد</h2>
                 <div id="errorMessageRegister" class="error-message"></div>
                 <div id="successMessageRegister" class="success-message"></div>
-                
                 <div class="register-grid">
                     <div class="input-group full-width">
                         <label><i class="fas fa-user"></i> الاسم الكامل</label>
@@ -647,24 +720,20 @@
         </div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- واجهة الملف الشخصي -->
-    <!-- ============================================ -->
     <div id="profileSection" class="hidden">
         <div class="profile-wrapper">
             <div class="profile-header">
+                <br><br><br>
                 <h2 id="userNameDisplay">جاري التحميل...</h2>
                 <p id="userEmailDisplay">...</p>
             </div>
             <div class="profile-content">
                 <div class="loyalty-box">
-                                        <h3><i ></i> بيانات الحساب</h3>
-
+                    <h3><i></i> بيانات الحساب</h3>
                 </div>
                 <div class="info-card">
                     <div class="info-row"><span class="info-label"><i class="fas fa-user"></i> الاسم الكامل</span><span class="info-value" id="userFullName">---</span></div>
                     <div class="info-row"><span class="info-label"><i class="fas fa-phone"></i> رقم الجوال</span><span class="info-value" id="userPhone">لم يتم الربط</span></div>
-                    <!-- <div class="info-row"><span class="info-label"><i class="fas fa-calendar-alt"></i> تاريخ الانضمام</span><span class="info-value" id="userJoinDate">---</span></div> -->
                     <div class="divider"></div>
                     <button class="btn-outline" id="editProfileBtn"><i class="fas fa-pen"></i> تعديل البيانات</button>
                 </div>
@@ -682,16 +751,14 @@
         </div>
     </div>
 
-    <!-- الموبايل ناف -->
-    <nav class="mobile-nav">
+    <!-- <nav class="mobile-nav">
         <a href="../index.html"><i class="fas fa-home"></i><span>الرئيسية</span></a>
         <a href="trips.html"><i class="fas fa-suitcase-rolling"></i><span>الرحلات</span></a>
         <a href="offers.html"><i class="fas fa-tags"></i><span>العروض</span></a>
         <a href="hotels.html"><i class="fas fa-hotel"></i><span>الفنادق</span></a>
         <a href="profile.html" class="active"><i class="fas fa-user-circle"></i><span>حسابي</span></a>
-    </nav>
+    </nav> -->
 
-    <!-- الفوتر -->
     <footer class="footer">
         <div class="container">
             <p>© 2026 Luxovia Tours | جميع الحقوق محفوظة</p>
@@ -707,7 +774,6 @@
         } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
         import { doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-        // عناصر الصفحة
         const loginContainer = document.getElementById('loginContainer');
         const registerContainer = document.getElementById('registerContainer');
         const toggleToRegister = document.getElementById('toggleToRegister');
@@ -733,7 +799,6 @@
             return password.length >= 8;
         }
         
-        // تحديث متطلبات كلمة المرور
         document.getElementById('registerPassword')?.addEventListener('input', (e) => {
             const reqDiv = document.getElementById('passwordReq');
             if (validatePassword(e.target.value)) {
@@ -745,13 +810,6 @@
                 reqDiv.classList.remove('valid');
                 reqDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> يجب أن تحتوي على 8 أحرف على الأقل';
             }
-        });
-
-        // تأثير الهيدر
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.main-header');
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
         });
 
         // الهامبرجر
@@ -782,7 +840,6 @@
             }
         }
 
-        // التبديل بين النماذج
         toggleToRegister.addEventListener('click', () => {
             loginContainer.style.display = 'none';
             registerContainer.style.display = 'block';
@@ -792,7 +849,6 @@
             registerContainer.style.display = 'none';
         });
 
-        // تسجيل الدخول
         loginBtn.addEventListener('click', async () => {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
@@ -814,7 +870,6 @@
             }
         });
 
-        // إنشاء حساب
         registerBtn.addEventListener('click', async () => {
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('registerEmail').value;
@@ -845,7 +900,6 @@
                 });
                 showSuccess('successMessageRegister', 'تم إنشاء حسابك بنجاح!');
                 
-                // تفريغ الحقول والتبديل لتسجيل الدخول
                 ['fullName', 'registerEmail', 'phoneNumber', 'registerPassword', 'confirmPassword'].forEach(id => {
                     document.getElementById(id).value = '';
                 });
@@ -862,7 +916,6 @@
             }
         });
 
-        // مراقب حالة المستخدم
         onAuthStateChanged(auth, async (user) => {
             const authSection = document.getElementById('authSection');
             const profileSection = document.getElementById('profileSection');
@@ -888,24 +941,15 @@
                     document.getElementById('userNameDisplay').innerText = data.name || 'مسافر Luxovia';
                     document.getElementById('userFullName').innerText = data.name || '---';
                     document.getElementById('userPhone').innerHTML = data.phone ? `<i class="fas fa-phone"></i> ${data.phone}` : '<i class="fas fa-plus-circle"></i> إضافة رقم';
-                    document.getElementById('userPoints').innerHTML = `${data.points || 0} <span>نقطة</span>`;
-                    if (data.createdAt) {
-                        const date = data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
-                        document.getElementById('userJoinDate').innerHTML = date.toLocaleDateString('ar-EG');
-                    }
                 }
             } catch (error) { console.error("خطأ في تحميل البيانات:", error); }
         }
 
-        // جلب الحجوزات - بدون orderBy لتجنب الحاجة إلى فهرس
         async function loadUserBookings(uid) {
             const bookingsList = document.getElementById('bookingsList');
             try {
-                // استعلام بدون orderBy لتجنب الحاجة إلى فهرس مركب
                 const q = collection(db, "bookings");
                 const querySnapshot = await getDocs(q);
-                
-                // تصفية النتائج يدوياً
                 const userBookings = [];
                 querySnapshot.forEach((doc) => {
                     const booking = doc.data();
@@ -913,8 +957,6 @@
                         userBookings.push({ id: doc.id, ...booking });
                     }
                 });
-                
-                // ترتيب يدوياً حسب التاريخ (الأحدث أولاً)
                 userBookings.sort((a, b) => {
                     const dateA = a.bookingDate?.toDate ? a.bookingDate.toDate() : new Date(a.bookingDate);
                     const dateB = b.bookingDate?.toDate ? b.bookingDate.toDate() : new Date(b.bookingDate);
@@ -948,7 +990,6 @@
             }
         }
 
-        // تسجيل الخروج
         document.getElementById('logoutBtn')?.addEventListener('click', async () => {
             try { await signOut(auth); } catch(e) { console.error(e); }
         });
