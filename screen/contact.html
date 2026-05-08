@@ -203,17 +203,34 @@
             box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15);
         }
 
-        .info-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #1e3a8a, #0f3b8a);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-        }
+       .info-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #1e3a8a, #0f3b8a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    transition: all 0.3s ease;
+}
+.info-card:hover .info-icon {
+    background: linear-gradient(135deg, #D4AF37, #b8960c);
+    transform: translateY(-5px);
+}
 
+/* تنسيق أيقونات الصور */
+.info-icon-img {
+    width: 40px;
+    height: 40px;
+    display: block;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover .info-icon-img {
+    transform: scale(1.1);
+}
         .info-icon i {
             font-size: 32px;
             color: #D4AF37;
@@ -675,41 +692,42 @@
     <div class="contact-wrapper">
         <!-- بطاقات معلومات التواصل -->
         <div class="contact-info-grid">
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-phone-alt"></i>
-                </div>
-                <h3>اتصل بنا</h3>
-                <p><a href="tel:+966500000000">+966 50 000 0000</a></p>
-                <p><a href="tel:+966500000001">+966 50 000 0001</a></p>
-            </div>
-            
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fab fa-whatsapp"></i>
-                </div>
-                <h3>واتساب</h3>
-                <p><a href="https://wa.me/966500000000" target="_blank">+966 50 000 0000</a></p>
-                <p>خدمة عملاء 24 ساعة</p>
-            </div>
-            
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <h3>البريد الإلكتروني</h3>
-                <p><a href="mailto:info@luxovia.com">info@luxovia.com</a></p>
-                <p><a href="mailto:support@luxovia.com">support@luxovia.com</a></p>
-            </div>
-            
-            <div class="info-card">
-    <div class="info-icon">
-        <i class="fas fa-map-marker-alt"></i>
-    </div>
-    <h3>الموقع</h3>
-    <p>السليمانية، العراق</p>
-            </div>
+    <div class="info-card">
+        <div class="info-icon">
+            <img src="../img/phone-icon.svg" alt="اتصل بنا" class="info-icon-img">
         </div>
+        <h3>اتصل بنا</h3>
+        <p><a href="tel:+966500000000">+966 50 000 0000</a></p>
+        <p><a href="tel:+966500000001">+966 50 000 0001</a></p>
+    </div>
+    
+    <div class="info-card">
+        <div class="info-icon">
+            <img src="../img/whatsapp-color-icon.svg" alt="واتساب" class="info-icon-img">
+        </div>
+        <h3>واتساب</h3>
+        <p><a href="https://wa.me/9647846383227" target="_blank">+964 784 638 3227</a></p>
+        <p>خدمة عملاء 24 ساعة</p>
+    </div>
+    
+    <div class="info-card">
+        <div class="info-icon">
+            <img src="../img/envelope-icon.svg" alt="البريد الإلكتروني" class="info-icon-img">
+        </div>
+        <h3>البريد الإلكتروني</h3>
+        <p><a href="mailto:info@luxovia.com">info@luxovia.com</a></p>
+        <p><a href="mailto:support@luxovia.com">support@luxovia.com</a></p>
+    </div>
+    
+    <div class="info-card">
+        <div class="info-icon">
+            <img src="../img/maps-pin-black-icon.svg" alt="الموقع" class="info-icon-img">
+        </div>
+        <h3>الموقع</h3>
+        <p>السليمانية، العراق</p>
+        <p>35.566268°N, 45.372218°E</p>
+    </div>
+</div>
         
         <!-- نموذج الاتصال والخريطة -->
         <div class="contact-form-section">
@@ -763,12 +781,12 @@
             </div>
             
             <div class="map-container">
-    <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5379.586460455955!2d45.3688682!3d35.566268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40003483f0ca71f7%3A0x64c2ac0c6c480b6e!2zMzXCsDMzJzU4LjYiTiA0NcKwMjInMjAuMCJF!5e0!3m2!1sar!2s!4v1700000000000!5m2!1sar!2s" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.989109079338!2d46.6754!3d24.7136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f0389d48b6f6b%3A0xd3c8e6b8e5c6e9f5!2sKing%20Fahd%20Road%2C%20Riyadh%20Saudi%20Arabia!5e0!3m2!1sen!2seg!4v1700000000000!5m2!1sar!2seg" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
         
