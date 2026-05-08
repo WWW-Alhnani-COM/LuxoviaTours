@@ -2,250 +2,967 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>الملف الشخصي | Luxovia Tours</title>
+    
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- رابط Font Awesome احتياطي متعدد المصادر -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" onerror="this.onerror=null;this.href='https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css'">
+    
     <style>
-        :root { --gold: #D4AF37; --blue: #003366; }
-        body { background-color: #f8f9fa; font-family: 'Cairo', sans-serif; }
+        /* ============================================================
+           أنماط خاصة بصفحة الملف الشخصي
+        ============================================================ */
         
-        /* قسم تسجيل الدخول */
-        .auth-container { max-width: 400px; margin: 100px auto; padding: 30px; background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .auth-container h2 { text-align: center; color: var(--blue); margin-bottom: 25px; }
-        .input-group { margin-bottom: 15px; }
-        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; }
-        .btn-auth { width: 100%; padding: 12px; background: var(--blue); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        .auth-switch { text-align: center; margin-top: 15px; font-size: 14px; color: #666; cursor: pointer; }
-
-        /* قسم الملف الشخصي */
-        .profile-header { background: var(--blue); color: white; padding: 60px 20px 100px; text-align: center; border-radius: 0 0 50px 50px; position: relative; }
-        .user-avatar { width: 100px; height: 100px; background: white; border: 4px solid var(--gold); border-radius: 50%; margin: 0 auto -50px; display: flex; align-items: center; justify-content: center; font-size: 40px; position: relative; z-index: 2; overflow: hidden; }
-        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-        .profile-content { max-width: 600px; margin: 60px auto 100px; padding: 0 20px; }
-        .info-card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        html, body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100% ;)         }
         
-        /* سجل الحجوزات */
-        .booking-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
-        .booking-item:last-child { border-bottom: none; }
-        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-confirmed { background: #d4edda; color: #155724; }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
         
-        .loyalty-box { background: linear-gradient(135deg, var(--gold), #b8960c); color: white; padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 20px; }
+        .auth-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 160px);
+            padding: 40px 20px;
+        }
         
-        .hidden { display: none; }
+        .auth-container {
+            max-width: 550px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-top: 5px solid #D4AF37;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .register-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-top: 5px solid #D4AF37;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .register-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .full-width {
+            grid-column: span 2;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .auth-container h2, .register-container h2 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 35px;
+            font-size: 28px;
+            font-weight: 800;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+        
+        .input-group label i {
+            color: #D4AF37;
+            margin-left: 6px;
+        }
+        
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #f8fafc;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #D4AF37;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        
+        .country-code-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .country-select {
+            width: 35%;
+            min-width: 140px;
+        }
+        
+        .phone-input {
+            width: 65%;
+        }
+        
+        .password-requirements {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .password-requirements.valid {
+            color: #10b981;
+        }
+        
+        .password-requirements.invalid {
+            color: #ef4444;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #003366, #1e3a8a);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .btn-auth:hover {
+            background: linear-gradient(135deg, #D4AF37, #b8960c);
+            color: #003366;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+        
+        .auth-switch {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 30px;
+        }
+        
+        .auth-switch:hover {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .error-message.show {
+            display: flex;
+        }
+        
+        .success-message {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .success-message.show {
+            display: flex;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* باقي التنسيقات كما هي */
+        .profile-wrapper {
+            flex: 1;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #003366 0%, #1e3a8a 100%);
+            color: white;
+            padding: 50px 20px 90px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .profile-header::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            opacity: 0.12;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .profile-header::after {
+            content: "";
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border: 4px solid #D4AF37;
+            border-radius: 50%;
+            margin: 0 auto -50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-header h2 {
+            margin-top: 60px;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        
+        .profile-header p {
+            opacity: 0.9;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .profile-content {
+            max-width: 800px;
+            margin: 50px auto 60px;
+            padding: 0 24px;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card h3 {
+            color: #003366;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 3px solid #D4AF37;
+            padding-right: 15px;
+        }
+        
+        .info-card h3 i {
+            color: #D4AF37;
+        }
+        
+        .loyalty-box {
+            background: linear-gradient(135deg, #D4AF37, #b8960c);
+            color: #003366;
+            padding: 30px;
+            border-radius: 28px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
+        }
+        
+        .loyalty-box h3 {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 0;
+            color: #003366;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #64748b;
+        }
+        
+        .info-value {
+            color: #003366;
+            font-weight: 500;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 15px 0;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn-outline:hover {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+            color: #003366;
+            transform: translateY(-3px);
+        }
+        
+        .btn-danger {
+            border-color: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .btn-danger:hover {
+            background: #fee2e2;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #D4AF37;
+        }
+        
+        .booking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+        
+        .booking-info p {
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 5px;
+        }
+        
+        .booking-info small {
+            color: #64748b;
+            font-size: 12px;
+        }
+        
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .status-confirmed {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #003366 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 0 25px;
+            margin-top: auto;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37, transparent, #D4AF37);
+        }
+        
+        @media (max-width: 768px) {
+            .register-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .full-width {
+                grid-column: span 1;
+            }
+            
+            .country-code-wrapper {
+                flex-direction: column;
+            }
+            
+            .country-select, .phone-input {
+                width: 100%;
+            }
+            
+            .auth-container, .register-container {
+                padding: 30px 20px;
+            }
+            
+            .booking-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. واجهة تسجيل الدخول (تظهر إذا لم يكن مسجلاً) -->
-    <div id="authSection" class="auth-container hidden">
-        <h2 id="authTitle">تسجيل الدخول</h2>
-        <div class="input-group">
-            <input type="email" id="email" placeholder="البريد الإلكتروني">
-        </div>
-        <div class="input-group">
-            <input type="password" id="password" placeholder="كلمة المرور">
-        </div>
-        <button class="btn-auth" id="mainAuthBtn">دخول</button>
-        <p class="auth-switch" id="toggleAuth">ليس لديك حساب؟ إنشاء حساب جديد</p>
-    </div>
-
-    <!-- 2. واجهة الملف الشخصي (تظهر إذا كان مسجلاً) -->
-    <div id="profileSection" class="hidden">
-        <div class="profile-header">
-            <div class="user-avatar" id="avatarBox">👤</div>
-            <h2 id="userNameDisplay">جاري التحميل...</h2>
-            <p id="userEmailDisplay">...</p>
-        </div>
-
-        <div class="profile-content">
-            <!-- نقاط الولاء -->
-            <div class="loyalty-box">
-                <p>رصيد نقاط Luxovia</p>
-                <h3 id="userPoints">1250 نقطة</h3>
+    <!-- الهيدر -->
+    <header class="main-header" id="mainHeader">
+        <div class="container flex-header">
+            <div class="logo">
+                <img src="../img/logo1.jpg" alt="Luxovia" class="logo-icon-img" onerror="this.src='https://placehold.co/48/1a56db/d4af37?text=L'">
+                <h1>Luxovia Tours</h1>
             </div>
-
-            <!-- معلومات التواصل -->
-            <div class="info-card">
-                <h3 style="color: var(--blue); margin-bottom: 15px;">بيانات الحساب</h3>
-                <p><strong>رقم الجوال:</strong> <span id="userPhone">07XXXXXXXX</span></p>
-                <button class="btn-outline" style="margin-top: 10px; width: 100%;">تعديل البيانات</button>
-            </div>
-
-            <!-- سجل الحجوزات -->
-            <div class="info-card">
-                <h3 style="color: var(--blue); margin-bottom: 15px;">حجوزاتي 🎒</h3>
-                <div id="bookingsList">
-                    <!-- نموذج لحجز واحد -->
-                    <div class="booking-item">
-                        <div>
-                            <p style="font-weight: bold;">رحلة عمرة رمضان</p>
-                            <small>3 أشخاص | 1500$</small>
-                        </div>
-                        <span class="status-badge status-pending">قيد الانتظار ⏳</span>
-                    </div>
+            <button class="hamburger-menu" id="hamburgerBtn">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
-            </div>
-
-            <!-- إعدادات -->
-            <div class="info-card">
-                <button class="btn-outline" style="width: 100%; text-align: right; margin-bottom: 10px; border:none; border-bottom: 1px solid #eee; border-radius: 0;">تغيير كلمة المرور</button>
-                <button class="btn-outline" style="width: 100%; text-align: right; color: #e63946; border:none;">تسجيل الخروج</button>
-            </div>
+            </button>
+            <nav class="desktop-nav">
+                <a href="../index.html">الرئيسية</a>
+                <a href="trips.html">الرحلات</a>
+                <a href="offers.html">العروض</a>
+                <a href="hotels.html">الفنادق</a>
+                <a href="profile.html" style="color: #D4AF37;">الملف الشخصي</a>
+                <a href="#contact">اتصل بنا</a>
+            </nav>
+            <button class="btn-primary">حجز طيران</button>
         </div>
-    </div>
+    </header>
 
-    <!-- Nav الموبايل -->
-    <nav class="mobile-nav">
-        <a href="index.html">🏠<span>الرئيسية</span></a>
-        <a href="trips.html">🎒<span>الرحلات</span></a>
-        <a href="hotels.html">🏨<span>الفنادق</span></a>
-        <a href="profile.html" class="active">👤<span>حسابي</span></a>
+    <!-- القائمة الجانبية -->
+    <div class="sidebar-overlay"></div>
+    <nav class="sidebar-nav">
+        <button class="sidebar-close"><i class="fas fa-times"></i></button>
+        <div class="sidebar-nav-links">
+            <a href="../index.html"><i class="fas fa-home"></i>الرئيسية</a>
+            <a href="trips.html"><i class="fas fa-suitcase-rolling"></i>الرحلات</a>
+            <a href="offers.html"><i class="fas fa-tags"></i>العروض</a>
+            <a href="hotels.html"><i class="fas fa-building"></i>الفنادق</a>
+            <a href="profile.html" class="active"><i class="fas fa-user-circle"></i>الملف الشخصي</a>
+            <a href="#contact"><i class="fas fa-phone"></i>اتصل بنا</a>
+        </div>
     </nav>
 
-    <!-- البرمجة -->
- <script type="module">
-   // استيراد إعداداتك الخاصة
-    import { auth, db } from "../js/firebase-config.js"; 
-
-    // استيراد الدوال من نفس الإصدار (10.7.0)
-    import { 
-        onAuthStateChanged, 
-        signOut, 
-        createUserWithEmailAndPassword, 
-        signInWithEmailAndPassword 
-    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-    
-    import { 
-        doc, getDoc, setDoc, collection, query, where, getDocs 
-    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-
-    // العناصر
-    const authSection = document.getElementById('authSection');
-    const profileSection = document.getElementById('profileSection');
-    const toggleAuth = document.getElementById('toggleAuth');
-    const authTitle = document.getElementById('authTitle');
-    const mainAuthBtn = document.getElementById('mainAuthBtn');
-    
-    let isSignUp = false; // متغير لمتابعة الحالة (تسجيل دخول أم إنشاء حساب)
-
-    // 1. مراقب حالة المستخدم (الحالة الأصلية)
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            authSection.classList.add('hidden');
-            profileSection.classList.remove('hidden');
-            loadUserData(user);
-            loadUserBookings(user.uid);
-        } else {
-            profileSection.classList.add('hidden');
-            authSection.classList.remove('hidden');
-        }
-    });
-
-    // 2. وظيفة التبديل بين (دخول / إنشاء حساب)
-    toggleAuth.addEventListener('click', () => {
-        isSignUp = !isSignUp;
-        if (isSignUp) {
-            authTitle.innerText = "إنشاء حساب جديد";
-            mainAuthBtn.innerText = "تسجيل الحساب";
-            toggleAuth.innerText = "لديك حساب بالفعل؟ سجل دخولك";
-            
-            // إضافة حقل الاسم ديناميكياً
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'input-group';
-            nameDiv.id = 'nameInputGroup';
-            nameDiv.innerHTML = '<input type="text" id="regName" placeholder="الاسم الكامل">';
-            authSection.insertBefore(nameDiv, document.getElementById('email').parentNode);
-        } else {
-            authTitle.innerText = "تسجيل الدخول";
-            mainAuthBtn.innerText = "دخول";
-            toggleAuth.innerText = "ليس لديك حساب؟ إنشاء حساب جديد";
-            const nameGroup = document.getElementById('nameInputGroup');
-            if (nameGroup) nameGroup.remove();
-        }
-    });
-
-    // 3. تنفيذ الدخول أو التسجيل عند الضغط على الزر
-    mainAuthBtn.addEventListener('click', async () => {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-
-        if (!email || !password) return alert("يرجى ملء جميع الحقول");
-
-        try {
-            if (isSignUp) {
-                const name = document.getElementById('regName').value;
-                if (!name) return alert("يرجى إدخال الاسم");
+    <!-- ============================================ -->
+    <!-- واجهة تسجيل الدخول / إنشاء حساب -->
+    <!-- ============================================ -->
+    <div id="authSection">
+        <div class="auth-wrapper">
+            <!-- نموذج تسجيل الدخول -->
+            <div id="loginContainer" class="auth-container">
+                <h2><i class="fas fa-user-circle" style="color: #D4AF37; margin-left: 10px;"></i> تسجيل الدخول</h2>
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
                 
-                // إنشاء حساب في Auth
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                // حفظ بيانات المستخدم في Firestore
-                await setDoc(doc(db, "users", userCredential.user.uid), {
-                    name: name,
-                    email: email,
-                    points: 1250, // رصيد افتراضي ترحيبي
-                    createdAt: new Date()
-                });
-                alert("تم إنشاء حسابك بنجاح!");
-            } else {
-                // تسجيل دخول
-                await signInWithEmailAndPassword(auth, email, password);
-            }
-        } catch (error) {
-            console.error(error);
-            alert("خطأ: " + error.message);
-        }
-    });
-
-    // 4. وظيفة جلب بيانات الملف الشخصي
-    async function loadUserData(user) {
-        document.getElementById('userEmailDisplay').innerText = user.email;
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            document.getElementById('userNameDisplay').innerText = docSnap.data().name;
-            document.getElementById('userPhone').innerText = docSnap.data().phone || 'لم يتم الربط';
-            document.getElementById('userPoints').innerText = `${docSnap.data().points || 0} نقطة`;
-        }
-    }
-
-    // 5. وظيفة جلب الحجوزات
-    async function loadUserBookings(uid) {
-        const bList = document.getElementById('bookingsList');
-        const q = query(collection(db, "bookings"), where("userId", "==", uid));
-        const querySnapshot = await getDocs(q);
-        
-        bList.innerHTML = '';
-        if (querySnapshot.empty) {
-            bList.innerHTML = '<p style="text-align:center; padding:10px;">لا توجد حجوزات سابقة.</p>';
-            return;
-        }
-
-        querySnapshot.forEach((doc) => {
-            const b = doc.data();
-            bList.innerHTML += `
-                <div class="booking-item">
-                    <div>
-                        <p style="font-weight: bold;">${b.itemName}</p>
-                        <small>${b.peopleCount} أشخاص | ${b.totalPrice}$</small>
-                    </div>
-                    <span class="status-badge ${b.status === 'confirmed' ? 'status-confirmed' : 'status-pending'}">
-                        ${b.status === 'confirmed' ? 'تم التأكيد ✅' : 'قيد الانتظار ⏳'}
-                    </span>
+                <div class="input-group">
+                    <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                    <input type="email" id="loginEmail" placeholder="example@email.com">
                 </div>
-            `;
-        });
-    }
+                <div class="input-group">
+                    <label><i class="fas fa-lock"></i> كلمة المرور</label>
+                    <input type="password" id="loginPassword" placeholder="********">
+                </div>
+                <button class="btn-auth" id="loginBtn"><i class="fas fa-sign-in-alt"></i> دخول</button>
+                <p class="auth-switch" id="toggleToRegister"><i class="fas fa-user-plus"></i> ليس لديك حساب؟ إنشاء حساب جديد</p>
+            </div>
+            
+            <!-- نموذج إنشاء حساب (بحجم أكبر) -->
+            <div id="registerContainer" class="register-container" style="display: none;">
+                <h2><i class="fas fa-user-plus" style="color: #D4AF37; margin-left: 10px;"></i> إنشاء حساب جديد</h2>
+                <div id="errorMessageRegister" class="error-message"></div>
+                <div id="successMessageRegister" class="success-message"></div>
+                
+                <div class="register-grid">
+                    <div class="input-group full-width">
+                        <label><i class="fas fa-user"></i> الاسم الكامل</label>
+                        <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
+                    </div>
+                    <div class="input-group full-width">
+                        <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                        <input type="email" id="registerEmail" placeholder="example@email.com">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-globe"></i> رمز الدولة</label>
+                        <select id="countryCode">
+                            <option value="+966">🇸🇦 السعودية (+966)</option>
+                            <option value="+20">🇪🇬 مصر (+20)</option>
+                            <option value="+971">🇦🇪 الإمارات (+971)</option>
+                            <option value="+974">🇶🇦 قطر (+974)</option>
+                            <option value="+965">🇰🇼 الكويت (+965)</option>
+                            <option value="+968">🇴🇲 عمان (+968)</option>
+                            <option value="+973">🇧🇭 البحرين (+973)</option>
+                            <option value="+962">🇯🇴 الأردن (+962)</option>
+                            <option value="+961">🇱🇧 لبنان (+961)</option>
+                            <option value="+963">🇸🇾 سوريا (+963)</option>
+                            <option value="+970">🇵🇸 فلسطين (+970)</option>
+                            <option value="+218">🇱🇾 ليبيا (+218)</option>
+                            <option value="+216">🇹🇳 تونس (+216)</option>
+                            <option value="+213">🇩🇿 الجزائر (+213)</option>
+                            <option value="+212">🇲🇦 المغرب (+212)</option>
+                            <option value="+222">🇲🇷 موريتانيا (+222)</option>
+                            <option value="+249">🇸🇩 السودان (+249)</option>
+                            <option value="+967">🇾🇪 اليمن (+967)</option>
+                            <option value="+964">🇮🇶 العراق (+964)</option>
+                            <option value="+90">🇹🇷 تركيا (+90)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-phone"></i> رقم الهاتف</label>
+                        <input type="tel" id="phoneNumber" placeholder="500000000">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-lock"></i> كلمة المرور</label>
+                        <input type="password" id="registerPassword" placeholder="********">
+                        <div class="password-requirements" id="passwordReq"><i class="fas fa-info-circle"></i> يجب أن تحتوي على 8 أحرف على الأقل</div>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-check-circle"></i> تأكيد كلمة المرور</label>
+                        <input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور">
+                    </div>
+                </div>
+                <button class="btn-auth" id="registerBtn"><i class="fas fa-user-check"></i> إنشاء حساب</button>
+                <p class="auth-switch" id="toggleToLogin"><i class="fas fa-sign-in-alt"></i> لديك حساب بالفعل؟ تسجيل الدخول</p>
+            </div>
+        </div>
+    </div>
 
-    // 6. تسجيل الخروج
-    document.querySelectorAll('.btn-outline').forEach(btn => {
-        if (btn.innerText === "تسجيل الخروج") {
-            btn.onclick = () => signOut(auth);
+    <!-- ============================================ -->
+    <!-- واجهة الملف الشخصي -->
+    <!-- ============================================ -->
+    <div id="profileSection" class="hidden">
+        <div class="profile-wrapper">
+            <div class="profile-header">
+                <div class="user-avatar"><i class="fas fa-user-circle" style="font-size: 60px; color: #D4AF37;"></i></div>
+                <h2 id="userNameDisplay">جاري التحميل...</h2>
+                <p id="userEmailDisplay">...</p>
+            </div>
+            <div class="profile-content">
+                <div class="loyalty-box">
+                    <p><i class="fas fa-gem"></i> رصيد نقاط Luxovia</p>
+                    <h3 id="userPoints">0 <span style="font-size: 16px;">نقطة</span></h3>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-user-edit"></i> بيانات الحساب</h3>
+                    <div class="info-row"><span class="info-label"><i class="fas fa-user"></i> الاسم الكامل</span><span class="info-value" id="userFullName">---</span></div>
+                    <div class="info-row"><span class="info-label"><i class="fas fa-phone"></i> رقم الجوال</span><span class="info-value" id="userPhone">لم يتم الربط</span></div>
+                    <div class="info-row"><span class="info-label"><i class="fas fa-calendar-alt"></i> تاريخ الانضمام</span><span class="info-value" id="userJoinDate">---</span></div>
+                    <div class="divider"></div>
+                    <button class="btn-outline" id="editProfileBtn"><i class="fas fa-pen"></i> تعديل البيانات</button>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-ticket-alt"></i> حجوزاتي</h3>
+                    <div id="bookingsList"><div class="empty-state"><i class="fas fa-calendar-alt"></i><p>لا توجد حجوزات سابقة</p></div></div>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-cog"></i> الإعدادات</h3>
+                    <button class="btn-outline" id="changePasswordBtn"><i class="fas fa-key"></i> تغيير كلمة المرور</button>
+                    <div class="divider"></div>
+                    <button class="btn-outline btn-danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الموبايل ناف -->
+    <nav class="mobile-nav">
+        <a href="../index.html"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="trips.html"><i class="fas fa-suitcase-rolling"></i><span>الرحلات</span></a>
+        <a href="offers.html"><i class="fas fa-tags"></i><span>العروض</span></a>
+        <a href="hotels.html"><i class="fas fa-hotel"></i><span>الفنادق</span></a>
+        <a href="profile.html" class="active"><i class="fas fa-user-circle"></i><span>حسابي</span></a>
+    </nav>
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Luxovia Tours | جميع الحقوق محفوظة</p>
+            <p style="font-size: 14px; margin-top: 10px;">شريكك الموثوق في السفر الفاخر</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { auth, db } from "../js/firebase-config.js";
+        import { 
+            onAuthStateChanged, signOut, createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, sendPasswordResetEmail 
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        // عناصر الصفحة
+        const loginContainer = document.getElementById('loginContainer');
+        const registerContainer = document.getElementById('registerContainer');
+        const toggleToRegister = document.getElementById('toggleToRegister');
+        const toggleToLogin = document.getElementById('toggleToLogin');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        
+        function showError(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 5000);
         }
-    });
-</script>
+        
+        function showSuccess(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+        
+        // تحديث متطلبات كلمة المرور
+        document.getElementById('registerPassword')?.addEventListener('input', (e) => {
+            const reqDiv = document.getElementById('passwordReq');
+            if (validatePassword(e.target.value)) {
+                reqDiv.classList.add('valid');
+                reqDiv.classList.remove('invalid');
+                reqDiv.innerHTML = '<i class="fas fa-check-circle"></i> كلمة مرور قوية';
+            } else {
+                reqDiv.classList.add('invalid');
+                reqDiv.classList.remove('valid');
+                reqDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> يجب أن تحتوي على 8 أحرف على الأقل';
+            }
+        });
+
+        // تأثير الهيدر
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // الهامبرجر
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarNav = document.querySelector('.sidebar-nav');
+        const sidebarOverlay = document.querySelector('.sidebar-overlay');
+        if (hamburgerBtn && sidebarNav && sidebarOverlay) {
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.toggle('active');
+                sidebarNav.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            });
+            sidebarOverlay.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                sidebarNav.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+            const sidebarClose = document.querySelector('.sidebar-close');
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', () => {
+                    hamburgerBtn.classList.remove('active');
+                    sidebarNav.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                });
+            }
+        }
+
+        // التبديل بين النماذج
+        toggleToRegister.addEventListener('click', () => {
+            loginContainer.style.display = 'none';
+            registerContainer.style.display = 'block';
+        });
+        toggleToLogin.addEventListener('click', () => {
+            loginContainer.style.display = 'block';
+            registerContainer.style.display = 'none';
+        });
+
+        // تسجيل الدخول
+        loginBtn.addEventListener('click', async () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            if (!email || !password) {
+                showError('errorMessage', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور');
+                return;
+            }
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                showSuccess('successMessage', 'تم تسجيل الدخول بنجاح');
+            } catch (error) {
+                let msg = 'حدث خطأ في تسجيل الدخول';
+                if (error.code === 'auth/user-not-found') msg = 'البريد الإلكتروني غير مسجل';
+                else if (error.code === 'auth/wrong-password') msg = 'كلمة المرور غير صحيحة';
+                else if (error.code === 'auth/invalid-email') msg = 'البريد الإلكتروني غير صالح';
+                showError('errorMessage', msg);
+            }
+        });
+
+        // إنشاء حساب
+        registerBtn.addEventListener('click', async () => {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('registerEmail').value;
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!fullName || !email || !phoneNumber || !password) {
+                showError('errorMessageRegister', 'الرجاء ملء جميع الحقول');
+                return;
+            }
+            if (!validatePassword(password)) {
+                showError('errorMessageRegister', 'كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+                return;
+            }
+            if (password !== confirmPassword) {
+                showError('errorMessageRegister', 'كلمة المرور وتأكيدها غير متطابقين');
+                return;
+            }
+            
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const fullPhoneNumber = countryCode + phoneNumber;
+                await setDoc(doc(db, "users", userCredential.user.uid), {
+                    name: fullName, email: email, phone: fullPhoneNumber,
+                    countryCode: countryCode, points: 1250, createdAt: new Date()
+                });
+                showSuccess('successMessageRegister', 'تم إنشاء حسابك بنجاح!');
+                
+                // تفريغ الحقول والتبديل لتسجيل الدخول
+                ['fullName', 'registerEmail', 'phoneNumber', 'registerPassword', 'confirmPassword'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                setTimeout(() => {
+                    loginContainer.style.display = 'block';
+                    registerContainer.style.display = 'none';
+                }, 2000);
+            } catch (error) {
+                let msg = 'حدث خطأ في إنشاء الحساب';
+                if (error.code === 'auth/email-already-in-use') msg = 'البريد الإلكتروني مستخدم بالفعل';
+                else if (error.code === 'auth/invalid-email') msg = 'البريد الإلكتروني غير صالح';
+                else if (error.code === 'auth/weak-password') msg = 'كلمة المرور ضعيفة';
+                showError('errorMessageRegister', msg);
+            }
+        });
+
+        // مراقب حالة المستخدم
+        onAuthStateChanged(auth, async (user) => {
+            const authSection = document.getElementById('authSection');
+            const profileSection = document.getElementById('profileSection');
+            if (user) {
+                authSection.classList.add('hidden');
+                profileSection.classList.remove('hidden');
+                await loadUserData(user);
+                await loadUserBookings(user.uid);
+            } else {
+                profileSection.classList.add('hidden');
+                authSection.classList.remove('hidden');
+                loginContainer.style.display = 'block';
+                registerContainer.style.display = 'none';
+            }
+        });
+
+        async function loadUserData(user) {
+            try {
+                document.getElementById('userEmailDisplay').innerHTML = `<i class="fas fa-envelope"></i> ${user.email}`;
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('userNameDisplay').innerText = data.name || 'مسافر Luxovia';
+                    document.getElementById('userFullName').innerText = data.name || '---';
+                    document.getElementById('userPhone').innerHTML = data.phone ? `<i class="fas fa-phone"></i> ${data.phone}` : '<i class="fas fa-plus-circle"></i> إضافة رقم';
+                    document.getElementById('userPoints').innerHTML = `${data.points || 0} <span>نقطة</span>`;
+                    if (data.createdAt) {
+                        const date = data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                        document.getElementById('userJoinDate').innerHTML = date.toLocaleDateString('ar-EG');
+                    }
+                }
+            } catch (error) { console.error("خطأ في تحميل البيانات:", error); }
+        }
+
+        // جلب الحجوزات - بدون orderBy لتجنب الحاجة إلى فهرس
+        async function loadUserBookings(uid) {
+            const bookingsList = document.getElementById('bookingsList');
+            try {
+                // استعلام بدون orderBy لتجنب الحاجة إلى فهرس مركب
+                const q = collection(db, "bookings");
+                const querySnapshot = await getDocs(q);
+                
+                // تصفية النتائج يدوياً
+                const userBookings = [];
+                querySnapshot.forEach((doc) => {
+                    const booking = doc.data();
+                    if (booking.userId === uid) {
+                        userBookings.push({ id: doc.id, ...booking });
+                    }
+                });
+                
+                // ترتيب يدوياً حسب التاريخ (الأحدث أولاً)
+                userBookings.sort((a, b) => {
+                    const dateA = a.bookingDate?.toDate ? a.bookingDate.toDate() : new Date(a.bookingDate);
+                    const dateB = b.bookingDate?.toDate ? b.bookingDate.toDate() : new Date(b.bookingDate);
+                    return dateB - dateA;
+                });
+                
+                if (userBookings.length === 0) {
+                    bookingsList.innerHTML = `<div class="empty-state"><i class="fas fa-calendar-alt"></i><p>لا توجد حجوزات سابقة</p></div>`;
+                    return;
+                }
+                
+                bookingsList.innerHTML = '';
+                userBookings.forEach((booking) => {
+                    const statusClass = booking.status === 'confirmed' ? 'status-confirmed' : 'status-pending';
+                    const statusText = booking.status === 'confirmed' ? 'تم التأكيد ✅' : 'قيد الانتظار ⏳';
+                    const bookingDate = booking.bookingDate?.toDate ? booking.bookingDate.toDate() : new Date(booking.bookingDate);
+                    bookingsList.innerHTML += `
+                        <div class="booking-item">
+                            <div class="booking-info">
+                                <p><i class="fas fa-plane"></i> ${booking.tripName || 'رحلة سياحية'}</p>
+                                <small><i class="fas fa-calendar"></i> ${bookingDate.toLocaleDateString('ar-EG')}</small>
+                                <small><i class="fas fa-users"></i> ${booking.travelers || 1} أشخاص | ${booking.totalPrice || 0} ر.س</small>
+                            </div>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("خطأ في جلب الحجوزات:", error);
+                bookingsList.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>حدث خطأ في تحميل الحجوزات</p></div>`;
+            }
+        }
+
+        // تسجيل الخروج
+        document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+            try { await signOut(auth); } catch(e) { console.error(e); }
+        });
+        document.getElementById('editProfileBtn')?.addEventListener('click', () => alert("📝 سيتم إضافة واجهة تعديل البيانات قريباً"));
+        document.getElementById('changePasswordBtn')?.addEventListener('click', async () => {
+            if (auth.currentUser?.email) {
+                try {
+                    await sendPasswordResetEmail(auth, auth.currentUser.email);
+                    alert("📧 تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني");
+                } catch(e) { alert("حدث خطأ أثناء إرسال رابط إعادة التعيين"); }
+            }
+        });
+    </script>
 </body>
 </html>
