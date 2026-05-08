@@ -3,515 +3,528 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>عروض لوكسوفيا تورز الحصرية | Luxovia Tours</title>
+    <title>الملف الشخصي | Luxovia Tours</title>
     
-    <!-- استيراد ملف التنسيقات الخارجي (يحتوي على الهيدر والهامبرجر) -->
     <link rel="stylesheet" href="../css/style.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- رابط Font Awesome احتياطي متعدد المصادر -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" onerror="this.onerror=null;this.href='https://use.fontawesome.com/releases/v6.0.0-beta3/css/all.css'">
     
     <style>
         /* ============================================================
-           تنسيقات خاصة بصفحة العروض فقط (ليست في الملف الخارجي)
+           أنماط خاصة بصفحة الملف الشخصي
         ============================================================ */
         
-        /* خلفية الصور الثابتة للهيرو */
-        .offers-hero {
-            position: relative;
-            text-align: center;
-            padding: 160px 24px 120px;
-            color: white;
-            margin-bottom: 40px;
-            overflow: hidden;
-            isolation: isolate;
-            min-height: 550px;
+        html, body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100% ;)         }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .auth-wrapper {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: calc(100vh - 160px);
+            padding: 40px 20px;
         }
-
-        /* خلفية الصور الثابتة */
-        .offers-slideshow-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        
+        .auth-container {
+            max-width: 550px;
             width: 100%;
-            height: 100%;
-            z-index: 0;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-top: 5px solid #D4AF37;
+            animation: fadeInUp 0.6s ease-out;
         }
-
-        .offers-slideshow-bg .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
+        
+        .register-container {
+            max-width: 800px;
             width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 2.5s ease-in-out; /* انتقال بطيء وسلس (2.5 ثانية) */
-            will-change: opacity;
+            margin: 0 auto;
+            padding: 40px;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-top: 5px solid #D4AF37;
+            animation: fadeInUp 0.6s ease-out;
         }
-
-        .offers-slideshow-bg .slide.active {
-            opacity: 1;
-            z-index: 1;
+        
+        .register-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
-
-        /* طبقة التدرج فوق الخلفية */
-        .offers-header-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, 
-                rgba(10, 25, 47, 0.5) 0%, 
-                rgba(212, 175, 55, 0.2) 50%,
-                rgba(10, 25, 47, 0.6) 100%);
-            z-index: 2;
+        
+        .full-width {
+            grid-column: span 2;
         }
-
-        /* عناصر الزينة الدائرية */
-        .offers-hero::before {
-            content: "";
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--color-gold-500) 0%, transparent 70%);
-            opacity: 0.15;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 3;
-            animation: floatGlow 8s ease-in-out infinite;
-        }
-
-        .offers-hero::after {
-            content: "";
-            position: absolute;
-            bottom: -20%;
-            left: -10%;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, var(--color-blue-400) 0%, transparent 70%);
-            opacity: 0.12;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 3;
-            animation: floatGlow 10s ease-in-out infinite reverse;
-        }
-
-        @keyframes floatGlow {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(20px, 20px) scale(1.05); }
-        }
-
-        @keyframes fadeInUpHeader {
+        
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        .offers-header-content {
-            position: relative;
-            z-index: 4;
-            max-width: 800px;
-            margin: 0 auto;
-            animation: fadeInUpHeader 0.8s ease-out;
-        }
-
-        .offers-hero h1 {
-            font-size: 3.5rem;
+        
+        .auth-container h2, .register-container h2 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 35px;
+            font-size: 28px;
             font-weight: 800;
+        }
+        
+        .input-group {
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff 0%, #D4AF37 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            animation: glowText 3s ease-in-out infinite;
         }
-
-        @keyframes glowText {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(212,175,55,0.3)); }
-            50% { filter: drop-shadow(0 0 20px rgba(212,175,55,0.6)); }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
         }
-
-        .offers-hero p {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-            animation: fadeInUpHeader 0.8s ease-out 0.2s both;
+        
+        .input-group label i {
+            color: #D4AF37;
+            margin-left: 6px;
         }
-
-        /* مؤشرات الصور */
-        .slideshow-indicator-offers {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+        
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #f8fafc;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #D4AF37;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+        
+        .country-code-wrapper {
             display: flex;
             gap: 12px;
-            z-index: 4;
-            direction: ltr;
+            align-items: center;
         }
-
-        .slideshow-dot-offers {
-            width: 40px;
-            height: 4px;
-            background: rgba(255,255,255,0.4);
-            border-radius: 4px;
+        
+        .country-select {
+            width: 35%;
+            min-width: 140px;
+        }
+        
+        .phone-input {
+            width: 65%;
+        }
+        
+        .password-requirements {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .password-requirements.valid {
+            color: #10b981;
+        }
+        
+        .password-requirements.invalid {
+            color: #ef4444;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #003366, #1e3a8a);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .btn-auth:hover {
+            background: linear-gradient(135deg, #D4AF37, #b8960c);
+            color: #003366;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+        
+        .auth-switch {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #64748b;
             cursor: pointer;
             transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 30px;
+        }
+        
+        .auth-switch:hover {
+            color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .error-message.show {
+            display: flex;
+        }
+        
+        .success-message {
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 12px 16px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .success-message.show {
+            display: flex;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* باقي التنسيقات كما هي */
+        .profile-wrapper {
+            flex: 1;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #003366 0%, #1e3a8a 100%);
+            color: white;
+            padding: 50px 20px 90px;
+            text-align: center;
             position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .profile-header::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            opacity: 0.12;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .profile-header::after {
+            content: "";
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border: 4px solid #D4AF37;
+            border-radius: 50%;
+            margin: 0 auto -50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            position: relative;
+            z-index: 2;
             overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
         }
-
-        .slideshow-dot-offers.active {
-            background: #D4AF37;
-            width: 60px;
+        
+        .user-avatar:hover {
+            transform: scale(1.05);
         }
-
-        .slideshow-dot-offers.active::before {
-            content: '';
+        
+        .profile-header h2 {
+            margin-top: 60px;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        
+        .profile-header p {
+            opacity: 0.9;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .profile-content {
+            max-width: 800px;
+            margin: 50px auto 60px;
+            padding: 0 24px;
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card h3 {
+            color: #003366;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 3px solid #D4AF37;
+            padding-right: 15px;
+        }
+        
+        .info-card h3 i {
+            color: #D4AF37;
+        }
+        
+        .loyalty-box {
+            background: linear-gradient(135deg, #D4AF37, #b8960c);
+            color: #003366;
+            padding: 30px;
+            border-radius: 28px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
+        }
+        
+        .loyalty-box h3 {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 0;
+            color: #003366;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #64748b;
+        }
+        
+        .info-value {
+            color: #003366;
+            font-weight: 500;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 15px 0;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn-outline:hover {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+            color: #003366;
+            transform: translateY(-3px);
+        }
+        
+        .btn-danger {
+            border-color: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .btn-danger:hover {
+            background: #fee2e2;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #D4AF37;
+        }
+        
+        .booking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+        
+        .booking-info p {
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 5px;
+        }
+        
+        .booking-info small {
+            color: #64748b;
+            font-size: 12px;
+        }
+        
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .status-confirmed {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #003366 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 0 25px;
+            margin-top: auto;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.3);
-            animation: progressBar 10s linear forwards; /* 10 ثواني لكل صورة */
-        }
-
-        @keyframes progressBar {
-            from { width: 100%; }
-            to { width: 0%; }
-        }
-
-        /* شبكة العروض */
-        .offers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 30px;
-            margin-bottom: 80px;
-            padding-bottom: 20px;
-        }
-
-        /* بطاقة العرض */
-        .offer-card {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-top: 3px solid #D4AF37;
-            cursor: pointer;
-        }
-
-        .offer-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        /* شارة الخصم */
-        .discount-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: linear-gradient(135deg, #D4AF37, #FFD700);
-            color: #1a2a3a;
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-weight: 800;
-            z-index: 10;
-            font-size: 0.85rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            backdrop-filter: blur(4px);
-        }
-
-        /* صورة العرض */
-        .offer-img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .offer-card:hover .offer-img {
-            transform: scale(1.05);
-        }
-
-        /* محتوى البطاقة */
-        .offer-body {
-            padding: 24px;
-        }
-
-        .offer-body h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #1a56db;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .offer-description {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-
-        /* حاوية الأسعار */
-        .price-container {
-            display: flex;
-            align-items: baseline;
-            gap: 12px;
-            margin: 12px 0;
-            flex-wrap: wrap;
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        .new-price {
-            color: #D4AF37;
-            font-size: 1.8rem;
-            font-weight: 800;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37, transparent, #D4AF37);
         }
         
-        .new-price span {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* مؤقت العرض */
-        .offer-timer {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            color: #92400e;
-            padding: 10px 14px;
-            border-radius: 16px;
-            text-align: center;
-            font-size: 0.85rem;
-            margin: 15px 0;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        /* زر العرض */
-        .btn-offer {
-            display: block;
-            width: 100%;
-            background: linear-gradient(135deg, #1a56db, #0f3b8a);
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .btn-offer:hover {
-            background: linear-gradient(135deg, #D4AF37, #b8960c);
-            color: #1a2a3a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        /* حالة عدم وجود بيانات */
-        .empty-offers {
-            text-align: center;
-            grid-column: 1 / -1;
-            padding: 80px 24px;
-            background: white;
-            border-radius: 28px;
-            color: #64748b;
-        }
-
-        .empty-offers i {
-            font-size: 64px;
-            margin-bottom: 20px;
-            display: inline-block;
-            color: #D4AF37;
-        }
-
-        /* سكيلتون */
-        .skeleton-offer {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            border-top: 3px solid #D4AF37;
-        }
-
-        .skeleton-img {
-            height: 240px;
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-
-        .skeleton-body {
-            padding: 24px;
-        }
-
-        .skeleton-title {
-            height: 24px;
-            width: 70%;
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .skeleton-price {
-            height: 36px;
-            width: 50%;
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-            margin: 12px 0;
-        }
-
-        .skeleton-timer {
-            height: 44px;
-            width: 100%;
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 16px;
-            margin: 15px 0;
-        }
-
-        .skeleton-btn {
-            height: 50px;
-            width: 100%;
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 50px;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* التصميم المتجاوب */
         @media (max-width: 768px) {
-            .offers-hero {
-                padding: 120px 20px 80px;
-                min-height: 450px;
-            }
-            
-            .offers-hero h1 {
-                font-size: 2rem;
-            }
-            
-            .offers-hero p {
-                font-size: 1rem;
-            }
-            
-            .offers-grid {
+            .register-grid {
                 grid-template-columns: 1fr;
-                gap: 24px;
+                gap: 0;
             }
             
-            .offer-img {
-                height: 200px;
+            .full-width {
+                grid-column: span 1;
             }
             
-            .offer-body h3 {
-                font-size: 1.2rem;
+            .country-code-wrapper {
+                flex-direction: column;
             }
             
-            .new-price {
-                font-size: 1.5rem;
-            }
-
-            .slideshow-dot-offers {
-                width: 30px;
+            .country-select, .phone-input {
+                width: 100%;
             }
             
-            .slideshow-dot-offers.active {
-                width: 45px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .offers-hero h1 {
-                font-size: 1.6rem;
+            .auth-container, .register-container {
+                padding: 30px 20px;
             }
             
-            .discount-badge {
-                top: 12px;
-                right: 12px;
-                padding: 4px 12px;
-                font-size: 0.75rem;
+            .booking-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
-            
-            .offer-body {
-                padding: 16px;
-            }
-
-            .slideshow-dot-offers {
-                width: 25px;
-            }
-            
-            .slideshow-dot-offers.active {
-                width: 35px;
-            }
-        }
-
-        /* زر إعادة المحاولة */
-        .retry-btn {
-            margin-top: 20px;
-            padding: 10px 28px;
-            background: linear-gradient(135deg, #1a56db, #0f3b8a);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .retry-btn:hover {
-            background: linear-gradient(135deg, #D4AF37, #b8960c);
-            color: #1a2a3a;
-            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================ -->
-    <!-- الهيدر - التنسيقات من ملف style.css -->
-    <!-- ============================================ -->
+    <!-- الهيدر -->
     <header class="main-header" id="mainHeader">
         <div class="container flex-header">
             <div class="logo">
@@ -528,128 +541,154 @@
             <nav class="desktop-nav">
                 <a href="../index.html">الرئيسية</a>
                 <a href="trips.html">الرحلات</a>
-                <a href="offers.html" style="color: #D4AF37;">العروض</a>
+                <a href="offers.html">العروض</a>
                 <a href="hotels.html">الفنادق</a>
-                <a href="profile.html">الملف الشخصي</a>
+                <a href="profile.html" style="color: #D4AF37;">الملف الشخصي</a>
                 <a href="contact.html">اتصل بنا</a>
             </nav>
             <button class="btn-primary">EN</button>
         </div>
     </header>
 
-    <!-- القائمة الجانبية - التنسيقات من ملف style.css -->
+    <!-- القائمة الجانبية -->
     <div class="sidebar-overlay"></div>
     <nav class="sidebar-nav">
-        <button class="sidebar-close">
-            <i class="fas fa-times"></i>
-        </button>
+        <button class="sidebar-close"><i class="fas fa-times"></i></button>
         <div class="sidebar-nav-links">
-            <a href="../index.html">
-                <i class="fas fa-home"></i>
-                الرئيسية
-            </a>
-            <a href="trips.html">
-                <i class="fas fa-suitcase-rolling"></i>
-                الرحلات
-            </a>
-            <a href="offers.html" class="active">
-                <i class="fas fa-tags"></i>
-                العروض
-            </a>
-            <a href="hotels.html">
-                <i class="fas fa-building"></i>
-                الفنادق
-            </a>
-            <a href="profile.html">
-                <i class="fas fa-user-circle"></i>
-                الملف الشخصي
-            </a>
-            <a href="contact.html">
-                <i class="fas fa-phone"></i>
-                اتصل بنا
-            </a>
+            <a href="../index.html"><i class="fas fa-home"></i>الرئيسية</a>
+            <a href="trips.html"><i class="fas fa-suitcase-rolling"></i>الرحلات</a>
+            <a href="offers.html"><i class="fas fa-tags"></i>العروض</a>
+            <a href="hotels.html"><i class="fas fa-building"></i>الفنادق</a>
+            <a href="profile.html" class="active"><i class="fas fa-user-circle"></i>الملف الشخصي</a>
+            <a href="contact.html"><i class="fas fa-phone"></i>اتصل بنا</a>
         </div>
     </nav>
 
     <!-- ============================================ -->
-    <!-- قسم الهيرو مع خلفية صور ثابتة (JPG) وانتقال بطيء -->
+    <!-- واجهة تسجيل الدخول / إنشاء حساب -->
     <!-- ============================================ -->
-    <section class="offers-hero">
-        <div class="offers-slideshow-bg" id="offersSlideshowBg">
-            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600');"></div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600');"></div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600');"></div>
+    <div id="authSection">
+        <div class="auth-wrapper">
+            <!-- نموذج تسجيل الدخول -->
+            <div id="loginContainer" class="auth-container">
+                <h2><i class="fas fa-user-circle" style="color: #D4AF37; margin-left: 10px;"></i> تسجيل الدخول</h2>
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                    <input type="email" id="loginEmail" placeholder="example@email.com">
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-lock"></i> كلمة المرور</label>
+                    <input type="password" id="loginPassword" placeholder="********">
+                </div>
+                <button class="btn-auth" id="loginBtn"><i class="fas fa-sign-in-alt"></i> دخول</button>
+                <p class="auth-switch" id="toggleToRegister"><i class="fas fa-user-plus"></i> ليس لديك حساب؟ إنشاء حساب جديد</p>
+            </div>
+            
+            <!-- نموذج إنشاء حساب (بحجم أكبر) -->
+            <div id="registerContainer" class="register-container" style="display: none;">
+                <h2><i class="fas fa-user-plus" style="color: #D4AF37; margin-left: 10px;"></i> إنشاء حساب جديد</h2>
+                <div id="errorMessageRegister" class="error-message"></div>
+                <div id="successMessageRegister" class="success-message"></div>
+                
+                <div class="register-grid">
+                    <div class="input-group full-width">
+                        <label><i class="fas fa-user"></i> الاسم الكامل</label>
+                        <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
+                    </div>
+                    <div class="input-group full-width">
+                        <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                        <input type="email" id="registerEmail" placeholder="example@email.com">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-globe"></i> رمز الدولة</label>
+                        <select id="countryCode">
+                            <option value="+966">🇸🇦 السعودية (+966)</option>
+                            <option value="+20">🇪🇬 مصر (+20)</option>
+                            <option value="+971">🇦🇪 الإمارات (+971)</option>
+                            <option value="+974">🇶🇦 قطر (+974)</option>
+                            <option value="+965">🇰🇼 الكويت (+965)</option>
+                            <option value="+968">🇴🇲 عمان (+968)</option>
+                            <option value="+973">🇧🇭 البحرين (+973)</option>
+                            <option value="+962">🇯🇴 الأردن (+962)</option>
+                            <option value="+961">🇱🇧 لبنان (+961)</option>
+                            <option value="+963">🇸🇾 سوريا (+963)</option>
+                            <option value="+970">🇵🇸 فلسطين (+970)</option>
+                            <option value="+218">🇱🇾 ليبيا (+218)</option>
+                            <option value="+216">🇹🇳 تونس (+216)</option>
+                            <option value="+213">🇩🇿 الجزائر (+213)</option>
+                            <option value="+212">🇲🇦 المغرب (+212)</option>
+                            <option value="+222">🇲🇷 موريتانيا (+222)</option>
+                            <option value="+249">🇸🇩 السودان (+249)</option>
+                            <option value="+967">🇾🇪 اليمن (+967)</option>
+                            <option value="+964">🇮🇶 العراق (+964)</option>
+                            <option value="+90">🇹🇷 تركيا (+90)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-phone"></i> رقم الهاتف</label>
+                        <input type="tel" id="phoneNumber" placeholder="500000000">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-lock"></i> كلمة المرور</label>
+                        <input type="password" id="registerPassword" placeholder="********">
+                        <div class="password-requirements" id="passwordReq"><i class="fas fa-info-circle"></i> يجب أن تحتوي على 8 أحرف على الأقل</div>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-check-circle"></i> تأكيد كلمة المرور</label>
+                        <input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور">
+                    </div>
+                </div>
+                <button class="btn-auth" id="registerBtn"><i class="fas fa-user-check"></i> إنشاء حساب</button>
+                <p class="auth-switch" id="toggleToLogin"><i class="fas fa-sign-in-alt"></i> لديك حساب بالفعل؟ تسجيل الدخول</p>
+            </div>
         </div>
-        <div class="offers-header-overlay"></div>
-        <div class="offers-header-content">
-            <h1>عروض اللحظة الأخيرة</h1>
-            <p>وفر الكثير مع باقاتنا المختارة بعناية</p>
-        </div>
-        <div class="slideshow-indicator-offers" id="slideshowIndicatorsOffers">
-            <div class="slideshow-dot-offers active" data-index="0"></div>
-            <div class="slideshow-dot-offers" data-index="1"></div>
-            <div class="slideshow-dot-offers" data-index="2"></div>
-        </div>
-    </section>
+    </div>
 
-    <main class="container">
-        <div id="offers-list" class="offers-grid">
-            <div class="skeleton-offer">
-                <div class="skeleton-img"></div>
-                <div class="skeleton-body">
-                    <div class="skeleton-title"></div>
-                    <div class="skeleton-price"></div>
-                    <div class="skeleton-timer"></div>
-                    <div class="skeleton-btn"></div>
-                </div>
+    <!-- ============================================ -->
+    <!-- واجهة الملف الشخصي -->
+    <!-- ============================================ -->
+    <div id="profileSection" class="hidden">
+        <div class="profile-wrapper">
+            <div class="profile-header">
+                <h2 id="userNameDisplay">جاري التحميل...</h2>
+                <p id="userEmailDisplay">...</p>
             </div>
-            <div class="skeleton-offer">
-                <div class="skeleton-img"></div>
-                <div class="skeleton-body">
-                    <div class="skeleton-title"></div>
-                    <div class="skeleton-price"></div>
-                    <div class="skeleton-timer"></div>
-                    <div class="skeleton-btn"></div>
+            <div class="profile-content">
+                <div class="loyalty-box">
+                                        <h3><i ></i> بيانات الحساب</h3>
+
                 </div>
-            </div>
-            <div class="skeleton-offer">
-                <div class="skeleton-img"></div>
-                <div class="skeleton-body">
-                    <div class="skeleton-title"></div>
-                    <div class="skeleton-price"></div>
-                    <div class="skeleton-timer"></div>
-                    <div class="skeleton-btn"></div>
+                <div class="info-card">
+                    <div class="info-row"><span class="info-label"><i class="fas fa-user"></i> الاسم الكامل</span><span class="info-value" id="userFullName">---</span></div>
+                    <div class="info-row"><span class="info-label"><i class="fas fa-phone"></i> رقم الجوال</span><span class="info-value" id="userPhone">لم يتم الربط</span></div>
+                    <!-- <div class="info-row"><span class="info-label"><i class="fas fa-calendar-alt"></i> تاريخ الانضمام</span><span class="info-value" id="userJoinDate">---</span></div> -->
+                    <div class="divider"></div>
+                    <button class="btn-outline" id="editProfileBtn"><i class="fas fa-pen"></i> تعديل البيانات</button>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-ticket-alt"></i> حجوزاتي</h3>
+                    <div id="bookingsList"><div class="empty-state"><i class="fas fa-calendar-alt"></i><p>لا توجد حجوزات سابقة</p></div></div>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-cog"></i> الإعدادات</h3>
+                    <button class="btn-outline" id="changePasswordBtn"><i class="fas fa-key"></i> تغيير كلمة المرور</button>
+                    <div class="divider"></div>
+                    <button class="btn-outline btn-danger" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <!-- الموبايل ناف -->
     <nav class="mobile-nav">
-        <a href="../index.html">
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-        </a>
-        <a href="trips.html">
-            <i class="fas fa-suitcase-rolling"></i>
-            <span>الرحلات</span>
-        </a>
-        <a href="offers.html" class="active">
-            <i class="fas fa-tags"></i>
-            <span>العروض</span>
-        </a>
-        <a href="hotels.html">
-            <i class="fas fa-hotel"></i>
-            <span>الفنادق</span>
-        </a>
-        <a href="profile.html">
-            <i class="fas fa-user-circle"></i>
-            <span>حسابي</span>
-        </a>
-        <a href="contact.html">
-            <i class="fas fa-user-circle"></i>
-            <span>اتصل بنا </span>
-        </a>
+        <a href="../index.html"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="trips.html"><i class="fas fa-suitcase-rolling"></i><span>الرحلات</span></a>
+        <a href="offers.html"><i class="fas fa-tags"></i><span>العروض</span></a>
+        <a href="hotels.html"><i class="fas fa-hotel"></i><span>الفنادق</span></a>
+        <a href="profile.html" class="active"><i class="fas fa-user-circle"></i><span>حسابي</span></a>
     </nav>
 
     <!-- الفوتر -->
@@ -661,87 +700,64 @@
     </footer>
 
     <script type="module">
-        import { db } from "../js/firebase-config.js";
-        import { collection, getDocs, query } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import { auth, db } from "../js/firebase-config.js";
+        import { 
+            onAuthStateChanged, signOut, createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, sendPasswordResetEmail 
+        } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-        const offersContainer = document.getElementById('offers-list');
+        // عناصر الصفحة
+        const loginContainer = document.getElementById('loginContainer');
+        const registerContainer = document.getElementById('registerContainer');
+        const toggleToRegister = document.getElementById('toggleToRegister');
+        const toggleToLogin = document.getElementById('toggleToLogin');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
         
-        // ============================================
-        // 1. نظام تبديل الخلفيات (صور JPG - انتقال بطيء 2.5 ثانية)
-        // ============================================
-        const slides = document.querySelectorAll('.offers-slideshow-bg .slide');
-        const dots = document.querySelectorAll('.slideshow-dot-offers');
-        let currentIndex = 0;
-        let slideInterval;
-        const SLIDE_DURATION = 10000; // 10 ثواني لكل صورة
-        const FADE_DURATION = 2500;    // 2.5 ثانية لتأثير التلاشي
-
-        function changeSlide(index) {
-            if (index === currentIndex) return;
-            
-            // إزالة الـ active من الشريحة الحالية
-            slides[currentIndex].classList.remove('active');
-            // إزالة الـ active من النقطة الحالية
-            dots[currentIndex].classList.remove('active');
-            // إعادة تعيين animation للـ dot الجديد
-            dots[currentIndex].style.animation = 'none';
-            
-            // تحديث المؤشر الحالي
-            currentIndex = index;
-            
-            // إضافة الـ active للشريحة الجديدة
-            slides[currentIndex].classList.add('active');
-            // إضافة الـ active للنقطة الجديدة
-            dots[currentIndex].classList.add('active');
-            
-            // إعادة تشغيل animation للـ dot الجديد
-            dots[currentIndex].style.animation = 'none';
-            setTimeout(() => {
-                dots[currentIndex].style.animation = '';
-            }, 10);
+        function showError(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 5000);
+        }
+        
+        function showSuccess(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 3000);
         }
 
-        function nextSlide() {
-            let nextIndex = (currentIndex + 1) % slides.length;
-            changeSlide(nextIndex);
+        function validatePassword(password) {
+            return password.length >= 8;
         }
+        
+        // تحديث متطلبات كلمة المرور
+        document.getElementById('registerPassword')?.addEventListener('input', (e) => {
+            const reqDiv = document.getElementById('passwordReq');
+            if (validatePassword(e.target.value)) {
+                reqDiv.classList.add('valid');
+                reqDiv.classList.remove('invalid');
+                reqDiv.innerHTML = '<i class="fas fa-check-circle"></i> كلمة مرور قوية';
+            } else {
+                reqDiv.classList.add('invalid');
+                reqDiv.classList.remove('valid');
+                reqDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> يجب أن تحتوي على 8 أحرف على الأقل';
+            }
+        });
 
-        function resetSlideTimer() {
-            if (slideInterval) clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, SLIDE_DURATION);
-        }
+        // تأثير الهيدر
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
 
-        function initSlideshow() {
-            // التأكد من أن الشريحة الأولى فقط هي النشطة في البداية
-            slides.forEach((slide, i) => {
-                if (i === 0) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
-            });
-            
-            // إضافة مستمعي الأحداث للنقاط
-            dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => {
-                    resetSlideTimer();
-                    changeSlide(i);
-                });
-            });
-            
-            // بدء التبديل التلقائي
-            resetSlideTimer();
-        }
-
-        initSlideshow();
-
-        // ============================================
-        // 2. زر الهمبرجر والقائمة الجانبية
-        // ============================================
+        // الهامبرجر
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const sidebarNav = document.querySelector('.sidebar-nav');
         const sidebarOverlay = document.querySelector('.sidebar-overlay');
-
         if (hamburgerBtn && sidebarNav && sidebarOverlay) {
             hamburgerBtn.addEventListener('click', () => {
                 hamburgerBtn.classList.toggle('active');
@@ -749,14 +765,12 @@
                 sidebarOverlay.classList.toggle('active');
                 document.body.classList.toggle('no-scroll');
             });
-
             sidebarOverlay.addEventListener('click', () => {
                 hamburgerBtn.classList.remove('active');
                 sidebarNav.classList.remove('active');
                 sidebarOverlay.classList.remove('active');
                 document.body.classList.remove('no-scroll');
             });
-
             const sidebarClose = document.querySelector('.sidebar-close');
             if (sidebarClose) {
                 sidebarClose.addEventListener('click', () => {
@@ -768,165 +782,185 @@
             }
         }
 
-        // ============================================
-        // 3. تأثير الهيدر عند السكرول
-        // ============================================
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+        // التبديل بين النماذج
+        toggleToRegister.addEventListener('click', () => {
+            loginContainer.style.display = 'none';
+            registerContainer.style.display = 'block';
+        });
+        toggleToLogin.addEventListener('click', () => {
+            loginContainer.style.display = 'block';
+            registerContainer.style.display = 'none';
+        });
+
+        // تسجيل الدخول
+        loginBtn.addEventListener('click', async () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            if (!email || !password) {
+                showError('errorMessage', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور');
+                return;
+            }
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                showSuccess('successMessage', 'تم تسجيل الدخول بنجاح');
+            } catch (error) {
+                let msg = 'حدث خطأ في تسجيل الدخول';
+                if (error.code === 'auth/user-not-found') msg = 'البريد الإلكتروني غير مسجل';
+                else if (error.code === 'auth/wrong-password') msg = 'كلمة المرور غير صحيحة';
+                else if (error.code === 'auth/invalid-email') msg = 'البريد الإلكتروني غير صالح';
+                showError('errorMessage', msg);
             }
         });
 
-        // ============================================
-        // 4. دوال العروض
-        // ============================================
-        function getTimeRemaining(endDate) {
-            const now = new Date();
-            const end = new Date(endDate);
-            const diff = end - now;
+        // إنشاء حساب
+        registerBtn.addEventListener('click', async () => {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('registerEmail').value;
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
             
-            if (diff <= 0) return { expired: true, days: 0, hours: 0, minutes: 0, seconds: 0 };
-            
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (86400000)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (3600000)) / (1000 * 60));
-            const seconds = Math.floor((diff % (60000)) / 1000);
-            
-            return { expired: false, days, hours, minutes, seconds };
-        }
-
-        function showSkeleton() {
-            offersContainer.innerHTML = '';
-            for (let i = 0; i < 6; i++) {
-                const skeletonCard = `
-                    <div class="skeleton-offer">
-                        <div class="skeleton-img"></div>
-                        <div class="skeleton-body">
-                            <div class="skeleton-title"></div>
-                            <div class="skeleton-price"></div>
-                            <div class="skeleton-timer"></div>
-                            <div class="skeleton-btn"></div>
-                        </div>
-                    </div>
-                `;
-                offersContainer.insertAdjacentHTML('beforeend', skeletonCard);
+            if (!fullName || !email || !phoneNumber || !password) {
+                showError('errorMessageRegister', 'الرجاء ملء جميع الحقول');
+                return;
             }
-        }
-
-        function createOfferCard(offer) {
-            const currentPrice = offer.current_price || offer.newPrice || 0;
-            const oldPrice = offer.old_price || offer.oldPrice || 0;
-            const discountPercent = Math.round(((oldPrice - currentPrice) / oldPrice) * 100) || 0;
-            const title = offer.title || 'عرض مميز';
-            const name = offer.name || '';
-            const description = offer.description || name;
-            const imageUrl = offer.image || offer.img || 'https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image';
-            const endDate = offer.end_date || offer.expiryDate;
-            
-            let timerHtml = '<div class="offer-timer"><i class="fas fa-hourglass-half"></i> عرض محدود الكمية</div>';
-            if (endDate) {
-                const timeLeft = getTimeRemaining(endDate);
-                if (!timeLeft.expired) {
-                    let timerText = '';
-                    if (timeLeft.days > 0) timerText += `${timeLeft.days} يوم `;
-                    if (timeLeft.hours > 0) timerText += `${timeLeft.hours} ساعة `;
-                    if (timeLeft.minutes > 0) timerText += `${timeLeft.minutes} دقيقة`;
-                    timerHtml = `<div class="offer-timer"><i class="fas fa-clock"></i> ينتهي خلال: ${timerText || 'أقل من دقيقة'}</div>`;
-                } else {
-                    timerHtml = '<div class="offer-timer" style="background:#fee2e2; color:#dc2626;"><i class="fas fa-ban"></i> انتهى العرض</div>';
-                }
+            if (!validatePassword(password)) {
+                showError('errorMessageRegister', 'كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+                return;
             }
-            
-            return `
-                <div class="offer-card" onclick="window.location.href='trip-details.html?id=${offer.id}'">
-                    <div class="discount-badge"><i class="fas fa-fire"></i> خصم ${discountPercent}%</div>
-                    <img src="${imageUrl}" class="offer-img" alt="${title}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image'">
-                    <div class="offer-body">
-                        <h3>${title}</h3>
-                        ${description ? `<div class="offer-description"><i class="fas fa-map-marker-alt" style="color:#D4AF37; margin-left:5px;"></i> ${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</div>` : ''}
-                        <div class="price-container">
-                            <span class="new-price">${currentPrice.toLocaleString()} <span>ر.س</span></span>
-                            <span class="old-price">${oldPrice.toLocaleString()} ر.س</span>
-                        </div>
-                        ${timerHtml}
-                        <button class="btn-offer"><i class="fas fa-gem"></i> اغتنم العرض الآن</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        async function fetchOffers() {
-            showSkeleton();
+            if (password !== confirmPassword) {
+                showError('errorMessageRegister', 'كلمة المرور وتأكيدها غير متطابقين');
+                return;
+            }
             
             try {
-                const offersQuery = query(collection(db, "offers"));
-                const querySnapshot = await getDocs(offersQuery);
-                offersContainer.innerHTML = ''; 
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const fullPhoneNumber = countryCode + phoneNumber;
+                await setDoc(doc(db, "users", userCredential.user.uid), {
+                    name: fullName, email: email, phone: fullPhoneNumber,
+                    countryCode: countryCode, points: 1250, createdAt: new Date()
+                });
+                showSuccess('successMessageRegister', 'تم إنشاء حسابك بنجاح!');
+                
+                // تفريغ الحقول والتبديل لتسجيل الدخول
+                ['fullName', 'registerEmail', 'phoneNumber', 'registerPassword', 'confirmPassword'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                setTimeout(() => {
+                    loginContainer.style.display = 'block';
+                    registerContainer.style.display = 'none';
+                }, 2000);
+            } catch (error) {
+                let msg = 'حدث خطأ في إنشاء الحساب';
+                if (error.code === 'auth/email-already-in-use') msg = 'البريد الإلكتروني مستخدم بالفعل';
+                else if (error.code === 'auth/invalid-email') msg = 'البريد الإلكتروني غير صالح';
+                else if (error.code === 'auth/weak-password') msg = 'كلمة المرور ضعيفة';
+                showError('errorMessageRegister', msg);
+            }
+        });
 
-                if (querySnapshot.empty) {
-                    offersContainer.innerHTML = `
-                        <div class="empty-offers">
-                            <i class="fas fa-gift"></i>
-                            <p style="font-size: 20px; font-weight: 600; margin: 16px 0;">لا توجد عروض حالية</p>
-                            <p style="font-size: 16px;">ترقبوا عروضنا الحصرية قريباً!</p>
-                            <button class="retry-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i> تحديث الصفحة</button>
-                        </div>
-                    `;
-                    return;
+        // مراقب حالة المستخدم
+        onAuthStateChanged(auth, async (user) => {
+            const authSection = document.getElementById('authSection');
+            const profileSection = document.getElementById('profileSection');
+            if (user) {
+                authSection.classList.add('hidden');
+                profileSection.classList.remove('hidden');
+                await loadUserData(user);
+                await loadUserBookings(user.uid);
+            } else {
+                profileSection.classList.add('hidden');
+                authSection.classList.remove('hidden');
+                loginContainer.style.display = 'block';
+                registerContainer.style.display = 'none';
+            }
+        });
+
+        async function loadUserData(user) {
+            try {
+                document.getElementById('userEmailDisplay').innerHTML = `<i class="fas fa-envelope"></i> ${user.email}`;
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('userNameDisplay').innerText = data.name || 'مسافر Luxovia';
+                    document.getElementById('userFullName').innerText = data.name || '---';
+                    document.getElementById('userPhone').innerHTML = data.phone ? `<i class="fas fa-phone"></i> ${data.phone}` : '<i class="fas fa-plus-circle"></i> إضافة رقم';
+                    document.getElementById('userPoints').innerHTML = `${data.points || 0} <span>نقطة</span>`;
+                    if (data.createdAt) {
+                        const date = data.createdAt.toDate ? data.createdAt.toDate() : new Date(data.createdAt);
+                        document.getElementById('userJoinDate').innerHTML = date.toLocaleDateString('ar-EG');
+                    }
                 }
+            } catch (error) { console.error("خطأ في تحميل البيانات:", error); }
+        }
 
-                const offers = [];
+        // جلب الحجوزات - بدون orderBy لتجنب الحاجة إلى فهرس
+        async function loadUserBookings(uid) {
+            const bookingsList = document.getElementById('bookingsList');
+            try {
+                // استعلام بدون orderBy لتجنب الحاجة إلى فهرس مركب
+                const q = collection(db, "bookings");
+                const querySnapshot = await getDocs(q);
+                
+                // تصفية النتائج يدوياً
+                const userBookings = [];
                 querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    offers.push({ 
-                        id: doc.id, 
-                        ...data,
-                        current_price: data.current_price || data.currentPrice,
-                        old_price: data.old_price || data.oldPrice,
-                        end_date: data.end_date || data.endDate,
-                        image: data.image || data.img
-                    });
-                });
-
-                offers.sort((a, b) => {
-                    const discountA = ((a.old_price - a.current_price) / a.old_price) || 0;
-                    const discountB = ((b.old_price - b.current_price) / b.old_price) || 0;
-                    return discountB - discountA;
-                });
-
-                offers.forEach((offer, index) => {
-                    const card = createOfferCard(offer);
-                    offersContainer.insertAdjacentHTML('beforeend', card);
-                });
-
-                const cards = document.querySelectorAll('.offer-card');
-                cards.forEach((card, index) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(30px)';
-                    setTimeout(() => {
-                        card.style.transition = 'all 0.6s ease';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, index * 100);
+                    const booking = doc.data();
+                    if (booking.userId === uid) {
+                        userBookings.push({ id: doc.id, ...booking });
+                    }
                 });
                 
+                // ترتيب يدوياً حسب التاريخ (الأحدث أولاً)
+                userBookings.sort((a, b) => {
+                    const dateA = a.bookingDate?.toDate ? a.bookingDate.toDate() : new Date(a.bookingDate);
+                    const dateB = b.bookingDate?.toDate ? b.bookingDate.toDate() : new Date(b.bookingDate);
+                    return dateB - dateA;
+                });
+                
+                if (userBookings.length === 0) {
+                    bookingsList.innerHTML = `<div class="empty-state"><i class="fas fa-calendar-alt"></i><p>لا توجد حجوزات سابقة</p></div>`;
+                    return;
+                }
+                
+                bookingsList.innerHTML = '';
+                userBookings.forEach((booking) => {
+                    const statusClass = booking.status === 'confirmed' ? 'status-confirmed' : 'status-pending';
+                    const statusText = booking.status === 'confirmed' ? 'تم التأكيد ✅' : 'قيد الانتظار ⏳';
+                    const bookingDate = booking.bookingDate?.toDate ? booking.bookingDate.toDate() : new Date(booking.bookingDate);
+                    bookingsList.innerHTML += `
+                        <div class="booking-item">
+                            <div class="booking-info">
+                                <p><i class="fas fa-plane"></i> ${booking.tripName || 'رحلة سياحية'}</p>
+                                <small><i class="fas fa-calendar"></i> ${bookingDate.toLocaleDateString('ar-EG')}</small>
+                                <small><i class="fas fa-users"></i> ${booking.travelers || 1} أشخاص | ${booking.totalPrice || 0} ر.س</small>
+                            </div>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                    `;
+                });
             } catch (error) {
-                console.error("خطأ في جلب العروض:", error);
-                offersContainer.innerHTML = `
-                    <div class="empty-offers">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p style="font-size: 20px; font-weight: 600; margin: 16px 0;">حدث خطأ أثناء تحميل العروض</p>
-                        <p style="font-size: 16px;">يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى</p>
-                        <button class="retry-btn" onclick="location.reload()"><i class="fas fa-redo-alt"></i> إعادة المحاولة</button>
-                    </div>
-                `;
+                console.error("خطأ في جلب الحجوزات:", error);
+                bookingsList.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>حدث خطأ في تحميل الحجوزات</p></div>`;
             }
         }
 
-        fetchOffers();
+        // تسجيل الخروج
+        document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+            try { await signOut(auth); } catch(e) { console.error(e); }
+        });
+        document.getElementById('editProfileBtn')?.addEventListener('click', () => alert("📝 سيتم إضافة واجهة تعديل البيانات قريباً"));
+        document.getElementById('changePasswordBtn')?.addEventListener('click', async () => {
+            if (auth.currentUser?.email) {
+                try {
+                    await sendPasswordResetEmail(auth, auth.currentUser.email);
+                    alert("📧 تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني");
+                } catch(e) { alert("حدث خطأ أثناء إرسال رابط إعادة التعيين"); }
+            }
+        });
     </script>
 </body>
 </html>
