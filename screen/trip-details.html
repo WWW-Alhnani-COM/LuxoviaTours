@@ -7,7 +7,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
     
     <style>
         :root {
@@ -499,6 +499,19 @@
         const loadingOverlay = document.getElementById('loadingOverlay');
         const confirmModal = document.getElementById('confirmModal');
         
+        // دالة لاستخراج السعر كرقم من أي صيغة (نص أو رقم)
+        function extractPrice(price) {
+            if (!price) return 0;
+            if (typeof price === 'number') return price;
+            if (typeof price === 'string') {
+                // إزالة أي أحرف غير رقمية (ما عدا النقاط)
+                const cleaned = price.replace(/[^0-9.]/g, '');
+                const num = parseFloat(cleaned);
+                return isNaN(num) ? 0 : num;
+            }
+            return 0;
+        }
+        
         // أسماء الفئات
         const categoryNames = {
             umrah: '🇸🇦 عمرة',
@@ -534,14 +547,17 @@
             }
             
             try {
+                console.log("جاري جلب الرحلة بالـ ID:", tripId);
                 const tripRef = doc(db, "trips", tripId);
                 const tripSnap = await getDoc(tripRef);
                 
                 if (!tripSnap.exists()) {
+                    console.log("الرحلة غير موجودة في قاعدة البيانات");
                     tripContent.innerHTML = `
                         <div style="text-align: center; padding: 80px 20px;">
                             <i class="fas fa-exclamation-triangle" style="font-size: 64px; color: #D4AF37;"></i>
                             <h2 style="margin-top: 20px; color: #003366;">الرحلة غير موجودة</h2>
+                            <p style="margin: 20px 0; color: #64748b;">عذراً، لم نتمكن من العثور على الرحلة المطلوبة</p>
                             <a href="trips.html" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px; text-decoration: none;">العودة إلى الرحلات</a>
                         </div>
                     `;
@@ -550,15 +566,23 @@
                     return;
                 }
                 
-                currentTrip = { id: tripSnap.id, ...tripSnap.data() };
+                const tripData = tripSnap.data();
+                console.log("تم جلب الرحلة بنجاح:", tripData);
+                
+                currentTrip = { id: tripSnap.id, ...tripData };
+                // استخراج السعر كرقم
+                currentTrip.priceValue = extractPrice(currentTrip.price);
+                console.log("السعر المستخرج:", currentTrip.priceValue);
+                
                 renderTripDetails();
                 
             } catch (error) {
-                console.error("خطأ:", error);
+                console.error("خطأ في جلب تفاصيل الرحلة:", error);
                 tripContent.innerHTML = `
                     <div style="text-align: center; padding: 80px 20px;">
                         <i class="fas fa-exclamation-circle" style="font-size: 64px; color: #dc2626;"></i>
-                        <h2>حدث خطأ</h2>
+                        <h2 style="margin-top: 20px;">حدث خطأ</h2>
+                        <p style="margin: 20px 0; color: #64748b;">${error.message}</p>
                         <button onclick="location.reload()" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px;">إعادة المحاولة</button>
                     </div>
                 `;
@@ -573,6 +597,8 @@
             const mainImage = trip.img || 'https://placehold.co/1200x600/e2e8f0/475569?text=No+Image';
             const categoryIcon = getCategoryIcon(trip.category);
             const categoryText = categoryNames[trip.category] || trip.category || 'رحلة سياحية';
+            const priceValue = trip.priceValue || 0;
+            const priceDisplay = trip.price || priceValue;
             
             // مميزات الرحلة الافتراضية
             const features = [
@@ -614,10 +640,6 @@
                     
                     <div>
                         <div class="booking-card" id="bookingCard">
-                            <div class="price-box">
-                                <div class="price-label">سعر الرحلة للفرد</div>
-                                <div class="price-value">${(trip.price || 0).toLocaleString()} <small>ر.س</small></div>
-                            </div>
                             <div id="bookingFormContainer"></div>
                         </div>
                     </div>
@@ -636,6 +658,7 @@
             if (!container) return;
             
             const trip = currentTrip;
+            const priceValue = trip.priceValue || 0;
             const isLoggedIn = !!currentUser;
             
             if (!isLoggedIn) {
@@ -649,6 +672,11 @@
             }
             
             container.innerHTML = `
+                <div class="price-box">
+                    <div class="price-label">سعر الرحلة للفرد</div>
+                    <div class="price-value">${priceValue.toLocaleString()} <small>ر.س</small></div>
+                </div>
+                
                 <div class="alert error" id="formAlert"></div>
                 
                 <div class="form-group">
@@ -677,7 +705,7 @@
                 </div>
                 
                 <div class="total-price">
-                    الإجمالي: <span id="totalPrice">${trip.price || 0}</span> <small>ر.س</small>
+                    الإجمالي: <span id="totalPrice">${priceValue.toLocaleString()}</span> <small>ر.س</small>
                 </div>
                 
                 <button class="btn-book" id="bookNowBtn">
@@ -695,7 +723,8 @@
                     if (val < 1) val = 1;
                     if (val > 20) val = 20;
                     travelersInput.value = val;
-                    totalSpan.innerText = ((trip.price || 0) * val).toLocaleString();
+                    const total = (currentTrip.priceValue || 0) * val;
+                    totalSpan.innerText = total.toLocaleString();
                 });
             }
             
@@ -738,7 +767,7 @@
             confirmModal.style.display = 'none';
             loadingOverlay.style.display = 'flex';
             
-            const totalAmount = (currentTrip.price || 0) * travelers;
+            const totalAmount = (currentTrip.priceValue || 0) * travelers;
             
             const categoryNamesAr = {
                 umrah: 'عمرة',
@@ -759,12 +788,14 @@
                 tripId: currentTrip.id,
                 tripCategory: categoryNamesAr[currentTrip.category] || currentTrip.category || 'رحلة',
                 tripName: currentTrip.title || 'رحلة سياحية',
-                tripPrice: currentTrip.price || 0,
+                tripPrice: currentTrip.priceValue || 0,
                 userEmail: currentUser.email,
                 userId: currentUser.uid,
                 userName: fullName,
                 userPhone: phone
             };
+            
+            console.log("بيانات الحجز:", bookingData);
             
             try {
                 await addDoc(collection(db, "bookings"), bookingData);
