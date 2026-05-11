@@ -959,6 +959,86 @@
             align-items: center;
             justify-content: space-between;
         }
+        /* ============================================================
+   تنسيق رسالة "لا توجد رحلات" (Empty State)
+   ============================================================ */
+.empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    margin: 40px auto;
+    grid-column: 1 / -1;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.empty-state-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #f0f2f5, #e2e8f0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.empty-state-icon i {
+    font-size: 48px;
+    color: #D4AF37;
+    opacity: 0.7;
+}
+
+.empty-state-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #003366;
+    margin-bottom: 12px;
+}
+
+.empty-state-message {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.empty-state-btn {
+    background: linear-gradient(135deg, #003366, #001a33);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Cairo', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.empty-state-btn:hover {
+    background: linear-gradient(135deg, #D4AF37, #b8960c);
+    color: #003366;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+}
     </style>
 </head>
 <body>
@@ -1056,6 +1136,7 @@
         <div class="filter-chip" data-category="land">رحلات برية</div>
         <div class="filter-chip" data-category="group">كروبات سياحية</div>
         <div class="filter-chip" data-category="international">سياحة خارجية</div>
+        <div class="filter-chip" data-category="flight">طيران</div>
     </div>
     <main class="container">
         
@@ -1659,13 +1740,18 @@
             const querySnapshot = await getDocs(tripsQuery);
             
             if (querySnapshot.empty) {
-                tripsGrid.innerHTML = `
-                    <div class="trips-empty-state">
-                        <i></i>
-                        <p>عذراً، لا توجد رحلات متاحة في هذه الفئة حالياً.</p>
-                        <button class="retry-btn" onclick="loadTrips('${category}')">إعادة المحاولة</button>
-                    </div>
-                `;
+tripsGrid.innerHTML = `
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="fas fa-plane-slash"></i>
+        </div>
+        <h3 class="empty-state-title">عذراً، لا توجد رحلات</h3>
+        <p class="empty-state-message">لا توجد رحلات متاحة في هذه الفئة حالياً.<br>يرجى المحاولة مرة أخرى لاحقاً أو اختيار فئة أخرى.</p>
+        <button class="empty-state-btn" onclick="loadTrips('${category}')">
+            <i class="fas fa-sync-alt"></i> إعادة المحاولة
+        </button>
+    </div>
+`;
                 return;
             }
             
