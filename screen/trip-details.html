@@ -10,11 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* تنسيقات صفحة تفاصيل الرحلة */
         :root {
             --primary-blue: #003366;
             --gold: #D4AF37;
-            --dark-bg: #0a192f;
         }
         
         * {
@@ -29,21 +27,19 @@
             direction: rtl;
         }
         
-        /* حاوية الصفحة */
         .trip-details-container {
             max-width: 1400px;
             margin: 120px auto 60px;
             padding: 0 24px;
         }
         
-        /* شبكة المحتوى */
         .trip-grid {
             display: grid;
             grid-template-columns: 1fr 450px;
             gap: 40px;
         }
         
-        /* ========== معرض الصور ========== */
+        /* معرض الصور */
         .gallery-section {
             background: white;
             border-radius: 24px;
@@ -58,30 +54,7 @@
             object-fit: cover;
         }
         
-        .thumbnail-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            padding: 15px;
-            background: white;
-        }
-        
-        .thumbnail {
-            width: 100%;
-            height: 90px;
-            object-fit: cover;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .thumbnail:hover, .thumbnail.active {
-            border-color: var(--gold);
-            transform: scale(0.98);
-        }
-        
-        /* ========== معلومات الرحلة ========== */
+        /* معلومات الرحلة */
         .trip-info {
             background: white;
             border-radius: 24px;
@@ -97,7 +70,7 @@
             margin-bottom: 15px;
         }
         
-        .trip-location {
+        .trip-category {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -109,7 +82,7 @@
             font-size: 0.9rem;
         }
         
-        .trip-location i {
+        .trip-category i {
             color: var(--gold);
         }
         
@@ -120,7 +93,7 @@
             font-size: 1rem;
         }
         
-        /* قائمة المميزات */
+        /* مميزات الرحلة */
         .features-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -150,36 +123,7 @@
             font-size: 1rem;
         }
         
-        /* التواريخ */
-        .dates-info {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 16px;
-            margin: 20px 0;
-        }
-        
-        .date-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .date-row:last-child {
-            border-bottom: none;
-        }
-        
-        .date-label {
-            font-weight: 600;
-            color: var(--primary-blue);
-        }
-        
-        .date-value {
-            color: #475569;
-        }
-        
-        /* ========== نموذج الحجز ========== */
+        /* بطاقة الحجز */
         .booking-card {
             background: white;
             border-radius: 24px;
@@ -283,7 +227,7 @@
             cursor: not-allowed;
         }
         
-        /* نافذة منبثقة للتأكيد */
+        /* نافذة منبثقة */
         .modal {
             display: none;
             position: fixed;
@@ -310,11 +254,6 @@
             font-size: 4rem;
             color: var(--gold);
             margin-bottom: 15px;
-        }
-        
-        .modal-content h3 {
-            color: var(--primary-blue);
-            margin-bottom: 10px;
         }
         
         .modal-buttons {
@@ -371,7 +310,6 @@
             to { transform: rotate(360deg); }
         }
         
-        /* رسائل الخطأ */
         .alert {
             padding: 15px;
             border-radius: 12px;
@@ -389,6 +327,20 @@
             background: #dcfce7;
             color: #16a34a;
             border-right: 4px solid #16a34a;
+        }
+        
+        .login-warning {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .login-warning a {
+            color: var(--gold);
+            font-weight: bold;
         }
         
         /* سكيلتون */
@@ -417,15 +369,9 @@
             .trip-grid {
                 grid-template-columns: 1fr;
             }
-            
             .booking-card {
                 position: static;
             }
-            
-            .trip-details-container {
-                margin-top: 100px;
-            }
-            
             .main-image {
                 height: 300px;
             }
@@ -435,24 +381,6 @@
             .trip-title {
                 font-size: 1.5rem;
             }
-            
-            .features-list {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .login-warning {
-            background: #fef3c7;
-            color: #92400e;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .login-warning a {
-            color: var(--gold);
-            font-weight: bold;
         }
     </style>
 </head>
@@ -504,7 +432,6 @@
     </div>
 
     <div class="trip-details-container" id="tripDetailsContainer">
-        <!-- سكيلتون -->
         <div id="skeletonLoader">
             <div class="trip-grid">
                 <div>
@@ -524,7 +451,6 @@
             </div>
         </div>
         
-        <!-- المحتوى الحقيقي (يظهر بعد التحميل) -->
         <div id="tripContent" style="display: none;"></div>
     </div>
 
@@ -562,21 +488,38 @@
         import { doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-        // استخراج ID الرحلة من رابط الصفحة
         const urlParams = new URLSearchParams(window.location.search);
         const tripId = urlParams.get('id');
         
         let currentTrip = null;
         let currentUser = null;
-        let selectedTravelers = 1;
         
-        // عناصر DOM
         const skeletonLoader = document.getElementById('skeletonLoader');
         const tripContent = document.getElementById('tripContent');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const confirmModal = document.getElementById('confirmModal');
         
-        // التحقق من تسجيل الدخول
+        // أسماء الفئات
+        const categoryNames = {
+            umrah: '🇸🇦 عمرة',
+            hajj: '🇸🇦 حج',
+            group: '👥 كروبات سياحية',
+            flight: '✈️ طيران',
+            land: '🚌 رحلات برية'
+        };
+        
+        // الحصول على أيقونة الفئة
+        function getCategoryIcon(category) {
+            const icons = {
+                umrah: 'fa-kaaba',
+                hajj: 'fa-mosque',
+                group: 'fa-users',
+                flight: 'fa-plane',
+                land: 'fa-bus'
+            };
+            return icons[category] || 'fa-globe';
+        }
+        
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             if (currentTrip && tripContent.style.display !== 'none') {
@@ -584,7 +527,6 @@
             }
         });
         
-        // جلب بيانات الرحلة
         async function fetchTripDetails() {
             if (!tripId) {
                 window.location.href = 'trips.html';
@@ -592,7 +534,7 @@
             }
             
             try {
-                const tripRef = doc(db, "services", tripId);
+                const tripRef = doc(db, "trips", tripId);
                 const tripSnap = await getDoc(tripRef);
                 
                 if (!tripSnap.exists()) {
@@ -600,8 +542,7 @@
                         <div style="text-align: center; padding: 80px 20px;">
                             <i class="fas fa-exclamation-triangle" style="font-size: 64px; color: #D4AF37;"></i>
                             <h2 style="margin-top: 20px; color: #003366;">الرحلة غير موجودة</h2>
-                            <p style="margin: 20px 0; color: #64748b;">عذراً، لم نتمكن من العثور على الرحلة المطلوبة</p>
-                            <a href="trips.html" class="btn-offer" style="display: inline-block; width: auto; padding: 12px 30px;">العودة إلى الرحلات</a>
+                            <a href="trips.html" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px; text-decoration: none;">العودة إلى الرحلات</a>
                         </div>
                     `;
                     skeletonLoader.style.display = 'none';
@@ -613,13 +554,12 @@
                 renderTripDetails();
                 
             } catch (error) {
-                console.error("خطأ في جلب تفاصيل الرحلة:", error);
+                console.error("خطأ:", error);
                 tripContent.innerHTML = `
                     <div style="text-align: center; padding: 80px 20px;">
                         <i class="fas fa-exclamation-circle" style="font-size: 64px; color: #dc2626;"></i>
-                        <h2 style="margin-top: 20px;">حدث خطأ</h2>
-                        <p style="margin: 20px 0;">${error.message}</p>
-                        <button onclick="location.reload()" class="btn-offer" style="display: inline-block; width: auto; padding: 12px 30px;">إعادة المحاولة</button>
+                        <h2>حدث خطأ</h2>
+                        <button onclick="location.reload()" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px;">إعادة المحاولة</button>
                     </div>
                 `;
                 skeletonLoader.style.display = 'none';
@@ -627,91 +567,57 @@
             }
         }
         
-        // عرض تفاصيل الرحلة
         function renderTripDetails() {
             const trip = currentTrip;
             
-            // صور متعددة (إذا وجدت)
             const mainImage = trip.img || 'https://placehold.co/1200x600/e2e8f0/475569?text=No+Image';
-            const images = trip.images || [mainImage];
+            const categoryIcon = getCategoryIcon(trip.category);
+            const categoryText = categoryNames[trip.category] || trip.category || 'رحلة سياحية';
             
-            // قائمة المميزات الافتراضية
-            const defaultFeatures = [
+            // مميزات الرحلة الافتراضية
+            const features = [
                 { icon: 'fa-plane', text: 'تذاكر طيران ذهاب وعودة' },
-                { icon: 'fa-hotel', text: 'إقامة 5 نجوم' },
+                { icon: 'fa-hotel', text: 'إقامة فاخرة' },
                 { icon: 'fa-utensils', text: 'وجبات إفطار وعشاء' },
                 { icon: 'fa-bus', text: 'مواصلات داخلية' },
                 { icon: 'fa-chalkboard-user', text: 'مرشد سياحي معتمد' },
                 { icon: 'fa-shield-alt', text: 'تأمين سفر شامل' }
             ];
             
-            const features = trip.features || defaultFeatures;
-            
             const html = `
                 <div class="trip-grid">
-                    <!-- العمود الأيمن: معرض الصور والمعلومات -->
                     <div>
-                        <!-- معرض الصور -->
                         <div class="gallery-section">
-                            <img id="mainGalleryImage" src="${images[0]}" alt="${trip.title}" class="main-image" onerror="this.src='https://placehold.co/1200x600/e2e8f0/475569?text=No+Image'">
-                            ${images.length > 1 ? `
-                                <div class="thumbnail-grid" id="thumbnailGrid">
-                                    ${images.map((img, idx) => `
-                                        <img src="${img}" class="thumbnail ${idx === 0 ? 'active' : ''}" data-image="${img}" alt="صورة ${idx + 1}" onerror="this.src='https://placehold.co/200x200/e2e8f0/475569?text=No+Image'">
-                                    `).join('')}
-                                </div>
-                            ` : ''}
+                            <img src="${mainImage}" alt="${trip.title}" class="main-image" onerror="this.src='https://placehold.co/1200x600/e2e8f0/475569?text=No+Image'">
                         </div>
                         
-                        <!-- معلومات الرحلة -->
                         <div class="trip-info">
                             <h1 class="trip-title">${trip.title || 'رحلة سياحية'}</h1>
-                            <div class="trip-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${trip.category === 'umrah' ? '🇸🇦 مكة المكرمة - المدينة المنورة' : 
-                                         trip.category === 'hajj' ? '🇸🇦 مكة المكرمة - مشاعر منى وعرفات' :
-                                         trip.location || 'وجهة سياحية مميزة'}</span>
+                            <div class="trip-category">
+                                <i class="fas ${categoryIcon}"></i>
+                                <span>${categoryText}</span>
                             </div>
                             <div class="trip-description">
                                 ${trip.description || 'رحلة سياحية فاخرة تشمل أفضل الفنادق والمواصلات ووجبات الطعام. استمتع بتجربة سفر لا تُنسى مع Luxovia Tours.'}
                             </div>
                             
-                            <!-- المميزات -->
                             <div class="features-list">
                                 ${features.map(feature => `
                                     <div class="feature-item">
-                                        <i class="fas ${feature.icon || 'fa-check-circle'}"></i>
-                                        <span>${typeof feature === 'string' ? feature : feature.text}</span>
+                                        <i class="fas ${feature.icon}"></i>
+                                        <span>${feature.text}</span>
                                     </div>
                                 `).join('')}
-                            </div>
-                            
-                            <!-- التواريخ -->
-                            <div class="dates-info">
-                                <div class="date-row">
-                                    <span class="date-label"><i class="fas fa-calendar-alt"></i> تاريخ البداية:</span>
-                                    <span class="date-value">${trip.start_date ? new Date(trip.start_date.toDate()).toLocaleDateString('ar') : 'قريباً'}</span>
-                                </div>
-                                <div class="date-row">
-                                    <span class="date-label"><i class="fas fa-calendar-check"></i> تاريخ النهاية:</span>
-                                    <span class="date-value">${trip.end_date ? new Date(trip.end_date.toDate()).toLocaleDateString('ar') : 'قريباً'}</span>
-                                </div>
-                                <div class="date-row">
-                                    <span class="date-label"><i class="fas fa-chair"></i> المقاعد المتاحة:</span>
-                                    <span class="date-value">${trip.available_seats || 'اتصل بنا'}</span>
-                                </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- العمود الأيسر: نموذج الحجز -->
                     <div>
                         <div class="booking-card" id="bookingCard">
                             <div class="price-box">
                                 <div class="price-label">سعر الرحلة للفرد</div>
                                 <div class="price-value">${(trip.price || 0).toLocaleString()} <small>ر.س</small></div>
                             </div>
-                            
                             <div id="bookingFormContainer"></div>
                         </div>
                     </div>
@@ -722,23 +628,9 @@
             skeletonLoader.style.display = 'none';
             tripContent.style.display = 'block';
             
-            // إضافة مستمعي الأحداث للصور المصغرة
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            const mainImageEl = document.getElementById('mainGalleryImage');
-            
-            thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', () => {
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-                    mainImageEl.src = thumb.dataset.image;
-                });
-            });
-            
-            // تحديث نموذج الحجز
             updateBookingForm();
         }
         
-        // تحديث نموذج الحجز
         function updateBookingForm() {
             const container = document.getElementById('bookingFormContainer');
             if (!container) return;
@@ -752,7 +644,6 @@
                         <i class="fas fa-sign-in-alt"></i> 
                         يرجى <a href="login.html">تسجيل الدخول</a> لإتمام عملية الحجز
                     </div>
-                    <div class="alert error" id="formAlert"></div>
                 `;
                 return;
             }
@@ -771,13 +662,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <label><i class="fas fa-phone"></i> رقم الهاتف (اختياري)</label>
-                    <input type="tel" id="phone" placeholder="مثال: 05XXXXXXXX">
+                    <label><i class="fas fa-phone"></i> رقم الهاتف</label>
+                    <input type="tel" id="phone" placeholder="مثال: 05XXXXXXXX" required>
                 </div>
                 
                 <div class="form-group">
                     <label><i class="fas fa-users"></i> عدد المسافرين</label>
-                    <input type="number" id="travelers" min="1" max="${trip.available_seats || 20}" value="1" step="1">
+                    <input type="number" id="travelers" min="1" max="20" value="1" step="1">
                 </div>
                 
                 <div class="form-group">
@@ -794,32 +685,24 @@
                 </button>
             `;
             
-            // مستمعي الأحداث
             const travelersInput = document.getElementById('travelers');
             const totalSpan = document.getElementById('totalPrice');
             const bookBtn = document.getElementById('bookNowBtn');
-            const formAlert = document.getElementById('formAlert');
             
             if (travelersInput) {
                 travelersInput.addEventListener('input', (e) => {
                     let val = parseInt(e.target.value) || 1;
-                    const maxSeats = trip.available_seats || 20;
-                    if (val > maxSeats) {
-                        val = maxSeats;
-                        travelersInput.value = maxSeats;
-                        showAlert(`الحد الأقصى للمسافرين هو ${maxSeats}`, 'error');
-                    }
-                    if (val < 1) {
-                        val = 1;
-                        travelersInput.value = 1;
-                    }
-                    selectedTravelers = val;
+                    if (val < 1) val = 1;
+                    if (val > 20) val = 20;
+                    travelersInput.value = val;
                     totalSpan.innerText = ((trip.price || 0) * val).toLocaleString();
                 });
             }
             
             if (bookBtn) {
-                bookBtn.addEventListener('click', () => openConfirmModal());
+                bookBtn.addEventListener('click', () => {
+                    confirmModal.style.display = 'flex';
+                });
             }
         }
         
@@ -834,11 +717,6 @@
             }
         }
         
-        function openConfirmModal() {
-            confirmModal.style.display = 'flex';
-        }
-        
-        // تأكيد الحجز
         async function confirmBooking() {
             if (!currentTrip || !currentUser) return;
             
@@ -852,10 +730,23 @@
                 return;
             }
             
+            if (!phone) {
+                showAlert('يرجى إدخال رقم الهاتف', 'error');
+                return;
+            }
+            
             confirmModal.style.display = 'none';
             loadingOverlay.style.display = 'flex';
             
             const totalAmount = (currentTrip.price || 0) * travelers;
+            
+            const categoryNamesAr = {
+                umrah: 'عمرة',
+                hajj: 'حج',
+                group: 'كروبات سياحية',
+                flight: 'طيران',
+                land: 'رحلات برية'
+            };
             
             const bookingData = {
                 bookingDate: new Date(),
@@ -866,9 +757,7 @@
                 totalPrice: totalAmount,
                 travelers: travelers,
                 tripId: currentTrip.id,
-                tripLocation: currentTrip.location || 
-                    (currentTrip.category === 'umrah' ? 'مكة المكرمة' : 
-                     currentTrip.category === 'hajj' ? 'مكة المكرمة' : 'وجهة سياحية'),
+                tripCategory: categoryNamesAr[currentTrip.category] || currentTrip.category || 'رحلة',
                 tripName: currentTrip.title || 'رحلة سياحية',
                 tripPrice: currentTrip.price || 0,
                 userEmail: currentUser.email,
@@ -882,7 +771,6 @@
                 
                 loadingOverlay.style.display = 'none';
                 
-                // رسالة نجاح
                 tripContent.innerHTML = `
                     <div style="text-align: center; padding: 80px 20px; background: white; border-radius: 24px;">
                         <i class="fas fa-check-circle" style="font-size: 80px; color: #28a745;"></i>
@@ -892,11 +780,11 @@
                             سيتم إرسال تفاصيل الحجز إلى بريدك الإلكتروني قريباً
                         </p>
                         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                            <a href="trips.html" class="btn-offer" style="display: inline-block; width: auto; padding: 12px 30px;">
-                                <i class="fas fa-search"></i> استكشاف رحلات أخرى
+                            <a href="trips.html" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px; text-decoration: none;">
+                                <i class="fas fa-search"></i> رحلات أخرى
                             </a>
-                            <a href="profile.html" class="btn-offer" style="display: inline-block; width: auto; padding: 12px 30px; background: linear-gradient(135deg, #003366, #001a33);">
-                                <i class="fas fa-user"></i> عرض حجوزاتي
+                            <a href="profile.html" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px; text-decoration: none; background: linear-gradient(135deg, #003366, #001a33); color: white;">
+                                <i class="fas fa-user"></i> حجوزاتي
                             </a>
                         </div>
                     </div>
@@ -914,14 +802,13 @@
             confirmModal.style.display = 'none';
         });
         
-        // إغلاق المودال عند النقر خارج المحتوى
         window.onclick = (event) => {
             if (event.target === confirmModal) {
                 confirmModal.style.display = 'none';
             }
         };
         
-        // الهيدر والهامبرجر
+        // الهامبرجر
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const sidebarNav = document.querySelector('.sidebar-nav');
         const sidebarOverlay = document.querySelector('.sidebar-overlay');
