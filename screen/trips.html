@@ -1694,109 +1694,123 @@
     }
     
     // تحميل الرحلات
-    async function loadTrips(category = 'all') {
-        if (!tripsGrid) return;
-        
-        tripsGrid.innerHTML = `
-            <div class="trips-skeleton-grid">
-                <div class="skeleton-card">
-                    <div class="skeleton-img"></div>
-                    <div class="skeleton-body">
-                        <div class="skeleton-line short"></div>
-                        <div class="skeleton-line medium"></div>
-                        <div class="skeleton-line large"></div>
-                        <div class="skeleton-line short"></div>
-                    </div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-img"></div>
-                    <div class="skeleton-body">
-                        <div class="skeleton-line short"></div>
-                        <div class="skeleton-line medium"></div>
-                        <div class="skeleton-line large"></div>
-                        <div class="skeleton-line short"></div>
-                    </div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-img"></div>
-                    <div class="skeleton-body">
-                        <div class="skeleton-line short"></div>
-                        <div class="skeleton-line medium"></div>
-                        <div class="skeleton-line large"></div>
-                        <div class="skeleton-line short"></div>
-                    </div>
+  // تحميل الرحلات
+async function loadTrips(category = 'all') {
+    if (!tripsGrid) return;
+    
+    tripsGrid.innerHTML = `
+        <div class="trips-skeleton-grid">
+            <div class="skeleton-card">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line medium"></div>
+                    <div class="skeleton-line large"></div>
+                    <div class="skeleton-line short"></div>
                 </div>
             </div>
-        `;
-        
-        try {
-            const tripsCollection = collection(db, "trips");
-            let tripsQuery = tripsCollection;
-            
-            if (category !== 'all') {
-                tripsQuery = query(tripsCollection, where("category", "==", category));
-            }
-            
-            const querySnapshot = await getDocs(tripsQuery);
-            
-            if (querySnapshot.empty) {
-tripsGrid.innerHTML = `
-    <div class="empty-state">
-        <div class="empty-state-icon">
-            <i class="fas fa-plane-slash"></i>
+            <div class="skeleton-card">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line medium"></div>
+                    <div class="skeleton-line large"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-body">
+                    <div class="skeleton-line short"></div>
+                    <div class="skeleton-line medium"></div>
+                    <div class="skeleton-line large"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
         </div>
-        <h3 class="empty-state-title">عذراً، لا توجد رحلات</h3>
-        <p class="empty-state-message">لا توجد رحلات متاحة في هذه الفئة حالياً.<br>يرجى المحاولة مرة أخرى لاحقاً أو اختيار فئة أخرى.</p>
-        <button class="empty-state-btn" onclick="loadTrips('${category}')">
-            <i class="fas fa-sync-alt"></i> إعادة المحاولة
-        </button>
-    </div>
-`;
-                return;
-            }
-            
-            tripsGrid.innerHTML = '';
-            
-            querySnapshot.forEach((doc) => {
-                const trip = doc.data();
-                const tripName = trip.title || trip.name || 'رحلة سياحية';
-                const imageUrl = trip.img || trip.image || 'https://placehold.co/600x400/e2e8f0/475569?text=Luxovia';
-                const locationName = trip.location || 'وجهة سياحية';
-                const priceValue = trip.price || '0';
-                const description = trip.description || '';
-                
-                const card = document.createElement('div');
-                card.className = 'trip-card';
-                card.innerHTML = `
-                    <div class="trip-image-box">
-                        <img src="${imageUrl}" alt="${tripName}" loading="lazy" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image'">
-                        <span class="trip-badge">⭐ ${locationName}</span>
-                    </div>
-                    <div class="trip-body">
-                        <div class="trip-location">📍 ${locationName}</div>
-                        <h3 class="trip-title">${tripName}</h3>
-                        ${description ? `<div class="trip-description">${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</div>` : ''}
-                        <div class="trip-footer">
-                            <div class="trip-price">${priceValue} <span>ر.س</span></div>
-                            <button class="btn-book-now" onclick="bookTrip('${doc.id}', '${tripName.replace(/'/g, "\\'")}', '${locationName.replace(/'/g, "\\'")}', '${priceValue}')">حجز الآن</button>
-                        </div>
-                    </div>
-                `;
-                tripsGrid.appendChild(card);
-            });
-            
-        } catch (error) {
-            console.error("خطأ:", error);
+    `;
+    
+    try {
+        const tripsCollection = collection(db, "trips");
+        let tripsQuery = tripsCollection;
+        
+        if (category !== 'all') {
+            tripsQuery = query(tripsCollection, where("category", "==", category));
+        }
+        
+        const querySnapshot = await getDocs(tripsQuery);
+        
+        if (querySnapshot.empty) {
             tripsGrid.innerHTML = `
-                <div class="trips-empty-state">
-                    <i>⚠️</i>
-                    <p>حدث خطأ أثناء تحميل الرحلات. حاول إعادة المحاولة.</p>
-                    <button class="retry-btn" onclick="loadTrips('${category}')">إعادة المحاولة</button>
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-plane-slash"></i>
+                    </div>
+                    <h3 class="empty-state-title">عذراً، لا توجد رحلات</h3>
+                    <p class="empty-state-message">لا توجد رحلات متاحة في هذه الفئة حالياً.<br>يرجى المحاولة مرة أخرى لاحقاً أو اختيار فئة أخرى.</p>
+                    <button class="empty-state-btn" onclick="loadTrips('${category}')">
+                        <i class="fas fa-sync-alt"></i> إعادة المحاولة
+                    </button>
                 </div>
             `;
+            return;
         }
+        
+        tripsGrid.innerHTML = '';
+        
+        querySnapshot.forEach((doc) => {
+            const trip = doc.data();
+            const tripName = trip.title || trip.name || 'رحلة سياحية';
+            const imageUrl = trip.img || trip.image || 'https://placehold.co/600x400/e2e8f0/475569?text=Luxovia';
+            const locationName = trip.location || 'وجهة سياحية';
+            const priceValue = trip.price || '0';
+            const description = trip.description || '';
+            
+            const card = document.createElement('div');
+            card.className = 'trip-card';
+            // لا نضيف cursor: pointer - نتركه كما هو (يعتمد على الـ hover الموجود في CSS)
+            // إضافة حدث النقر على البطاقة - الانتقال إلى صفحة التفاصيل
+            card.onclick = (e) => {
+                // التأكد أن المستخدم لم ينقر على زر الحجز
+                if (e.target.classList.contains('btn-book-now')) {
+                    return; // لا تفعل شيئاً، يبقى زر الحجز يعمل كما هو
+                }
+                window.location.href = `trip-details.html?id=${doc.id}`;
+            };
+            card.innerHTML = `
+                <div class="trip-image-box">
+                    <img src="${imageUrl}" alt="${tripName}" loading="lazy" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Image'">
+                    <span class="trip-badge">⭐ ${locationName}</span>
+                </div>
+                <div class="trip-body">
+                    <div class="trip-location">📍 ${locationName}</div>
+                    <h3 class="trip-title">${tripName}</h3>
+                    ${description ? `<div class="trip-description">${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</div>` : ''}
+                    <div class="trip-footer">
+                        <div class="trip-price">${priceValue} <span>ر.س</span></div>
+                        <button class="btn-book-now" onclick="event.stopPropagation(); bookTrip('${doc.id}', '${tripName.replace(/'/g, "\\'")}', '${locationName.replace(/'/g, "\\'")}', '${priceValue}')">حجز الآن</button>
+                    </div>
+                </div>
+            `;
+            tripsGrid.appendChild(card);
+        });
+        
+    } catch (error) {
+        console.error("خطأ:", error);
+        tripsGrid.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="empty-state-title">حدث خطأ</h3>
+                <p class="empty-state-message">حدث خطأ أثناء تحميل الرحلات. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.</p>
+                <button class="empty-state-btn" onclick="loadTrips('${category}')">
+                    <i class="fas fa-sync-alt"></i> إعادة المحاولة
+                </button>
+            </div>
+        `;
     }
-    
+}    
     // تفعيل الفلاتر
     filterChips.forEach(chip => {
         chip.addEventListener('click', () => {
