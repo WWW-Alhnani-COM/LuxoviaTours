@@ -41,15 +41,6 @@
         .sidebar::-webkit-scrollbar-track { background: #1a3a5c; }
         .sidebar::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
         
-        .sidebar h2 {
-            text-align: center;
-            color: var(--gold);
-            padding: 25px 20px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid rgba(212,175,55,0.3);
-            font-size: 1.5rem;
-        }
-        
         .nav-btn {
             width: 90%;
             margin: 8px auto;
@@ -359,7 +350,7 @@
             border-color: var(--gold);
         }
         
-        #imgPreview, #hotelImgPreview, #offerImgPreview {
+        #imgPreview, #hotelImgPreview, #offerImgPreview, #tripImgPreview {
             width: 100%;
             max-height: 200px;
             object-fit: cover;
@@ -368,72 +359,77 @@
             display: none;
         }
         /* ========== الشعار الدائري في القائمة الجانبية ========== */
-.sidebar-header {
-    text-align: center;
-    padding: 25px 20px;
-    border-bottom: 2px solid rgba(212,175,55,0.3);
-    margin-bottom: 20px;
-}
+        .sidebar-header {
+            text-align: center;
+            padding: 25px 20px;
+            border-bottom: 2px solid rgba(212,175,55,0.3);
+            margin-bottom: 20px;
+        }
 
-.logo-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
 
-.admin-logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--gold);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-}
+        .admin-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
 
-.admin-logo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(212,175,55,0.3);
-}
+        .admin-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212,175,55,0.3);
+        }
 
-.logo-container h2 {
-    color: var(--gold);
-    font-size: 1.3rem;
-    margin: 0;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
+        .logo-container h2 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
     <aside class="sidebar">
-    <div class="sidebar-header">
-        <div class="logo-container">
-            <img src="../img/logo.jpg" alt="Luxovia Tours" class="admin-logo" 
-                 onerror="this.src='https://via.placeholder.com/80/003366/D4AF37?text=L'">
-            <h2>Luxovia Admin</h2>
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <img src="../img/logo.jpg" alt="Luxovia Tours" class="admin-logo" 
+                     onerror="this.src='https://via.placeholder.com/80/003366/D4AF37?text=L'">
+                <h2>Luxovia Admin</h2>
+            </div>
         </div>
-    </div>
+        
+        <button class="nav-btn active" onclick="showSection('services-sec')">
+            <i class="fas fa-concierge-bell"></i> إدارة الخدمات
+        </button>
+        <button class="nav-btn" onclick="showSection('trips-sec')">
+            <i class="fas fa-bus"></i> إدارة الرحلات
+        </button>
+        <button class="nav-btn" onclick="showSection('hotels-sec')">
+            <i class="fas fa-hotel"></i> إدارة الفنادق
+        </button>
+        <button class="nav-btn" onclick="showSection('offers-sec')">
+            <i class="fas fa-tags"></i> إدارة العروض
+        </button>
+        <button class="nav-btn" onclick="showSection('bookings-sec')">
+            <i class="fas fa-calendar-check"></i> إدارة الحجوزات
+        </button>
+        <br><br>
+        <button class="nav-btn logout-btn" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+    </aside>
     
-    <button class="nav-btn active" onclick="showSection('services-sec')">
-        <i class="fas fa-concierge-bell"></i> إدارة الخدمات
-    </button>
-    <button class="nav-btn" onclick="showSection('hotels-sec')">
-        <i class="fas fa-hotel"></i> إدارة الفنادق
-    </button>
-    <button class="nav-btn" onclick="showSection('offers-sec')">
-        <i class="fas fa-tags"></i> إدارة العروض
-    </button>
-    <button class="nav-btn" onclick="showSection('bookings-sec')">
-        <i class="fas fa-calendar-check"></i> إدارة الحجوزات
-    </button>
-    <button class="nav-btn logout-btn" id="logoutBtn">
-        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
-    </button>
-</aside>
     <main class="main-content">
         
         <!-- ==================== قسم الخدمات ==================== -->
@@ -487,7 +483,56 @@
                 </div>
             </div>
         </section>
+        
+        <!-- ==================== قسم الرحلات ==================== -->
+        <section id="trips-sec" class="hidden">
+            <div class="card">
+                <h3><i class="fas fa-plus-circle"></i> إضافة رحلة جديدة</h3>
+                <form id="tripsForm">
+                    <input type="text" id="tripTitle" placeholder="📝 عنوان الرحلة" required>
+                    <textarea id="tripDescription" rows="4" placeholder="📄 وصف الرحلة بالتفصيل..." required></textarea>
+                    
+                    <div class="form-row">
+                        <div>
+                            <input type="text" id="tripPrice" placeholder="💰 السعر (مثال: 1200 أو $1200)" required>
+                        </div>
+                        <div>
+                            <select id="tripCategory" required>
+                                <option value="">اختر الفئة</option>
+                                <option value="umrah">عمرة</option>
+                                <option value="hajj">حج</option>
+                                <option value="group">كروبات سياحية</option>
+                                <option value="flight">طيران</option>
+                                <option value="land">رحلات برية</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <label class="file-label" for="tripImgInput">
+                        <i class="fas fa-cloud-upload-alt"></i> اختر صورة الرحلة
+                    </label>
+                    <input type="file" id="tripImgInput" accept="image/*" style="display: none;">
+                    <img id="tripImgPreview" alt="معاينة الصورة">
+                    
+                    <button type="submit" id="submitTripBtn" class="btn-save">
+                        <i class="fas fa-plus-circle"></i> إضافة الرحلة
+                    </button>
+                </form>
+            </div>
 
+            <div class="card">
+                <h3><i class="fas fa-list"></i> قائمة الرحلات</h3>
+                <div class="table-wrapper">
+                    <table id="tripsTable">
+                        <thead>
+                            <tr><th>الصورة</th><th>عنوان الرحلة</th><th>السعر</th><th>الفئة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr>
+                        </thead>
+                        <tbody id="tripsTableBody"><td><td colspan="6">جاري التحميل......</td></td></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
         <!-- ==================== قسم الفنادق ==================== -->
         <section id="hotels-sec" class="hidden">
             <div class="card">
@@ -579,7 +624,7 @@
             </div>
         </section>
 
-        <!-- ==================== قسم الحجوزات (الجديد) ==================== -->
+        <!-- ==================== قسم الحجوزات ==================== -->
         <section id="bookings-sec" class="hidden">
             <div class="card">
                 <h3><i class="fas fa-chart-line"></i> إحصائيات الحجوزات</h3>
@@ -640,6 +685,18 @@
         collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, query, orderBy 
     } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+    // دالة لاستخراج السعر كرقم
+    function extractPrice(price) {
+        if (!price) return 0;
+        if (typeof price === 'number') return price;
+        if (typeof price === 'string') {
+            const cleaned = price.replace(/[^0-9.]/g, '');
+            const num = parseFloat(cleaned);
+            return isNaN(num) ? 0 : num;
+        }
+        return 0;
+    }
 
     // ==================== دوال مساعدة ====================
     async function compressImage(file, maxSizeKB = 500, maxWidth = 800, maxHeight = 800) {
@@ -762,6 +819,87 @@
                     <td>${s.available_seats || 0}</td>
                     <td>${startDate}</td><td>${endDate}</td>
                     <td><button class="delete-btn" onclick="deleteDocument('services', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td>
+                </tr>`;
+        });
+    });
+
+    // ==================== الرحلات (新增) ====================
+    let tripBase64Image = "";
+    const tripImgInput = document.getElementById('tripImgInput');
+    const tripImgPreview = document.getElementById('tripImgPreview');
+
+    if (tripImgInput) {
+        tripImgInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                try {
+                    tripBase64Image = await compressImage(file, 400, 800, 800);
+                    tripImgPreview.src = tripBase64Image;
+                    tripImgPreview.style.display = 'block';
+                } catch (err) { alert("❌ فشل في ضغط الصورة"); }
+            }
+        };
+    }
+
+    const tripsForm = document.getElementById('tripsForm');
+    if (tripsForm) {
+        tripsForm.onsubmit = async (e) => {
+            e.preventDefault();
+            if (!tripBase64Image) { alert("⚠️ يرجى اختيار صورة للرحلة"); return; }
+
+            const submitBtn = document.getElementById('submitTripBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإضافة...';
+
+            const priceRaw = document.getElementById('tripPrice').value;
+            const priceValue = extractPrice(priceRaw);
+
+            const newTrip = {
+                title: document.getElementById('tripTitle').value,
+                description: document.getElementById('tripDescription').value,
+                price: priceValue,
+                priceRaw: priceRaw,
+                category: document.getElementById('tripCategory').value,
+                img: tripBase64Image,
+                createdAt: new Date()
+            };
+
+            try {
+                await addDoc(collection(db, "trips"), newTrip);
+                alert("✅ تمت إضافة الرحلة بنجاح!");
+                tripsForm.reset();
+                tripImgPreview.style.display = 'none';
+                tripBase64Image = "";
+            } catch (err) { alert("❌ خطأ: " + err.message); } 
+            finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-plus-circle"></i> إضافة الرحلة';
+            }
+        };
+    }
+
+    // عرض الرحلات في الجدول
+    onSnapshot(collection(db, "trips"), (snapshot) => {
+        const tbody = document.getElementById('tripsTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        if (snapshot.empty) { tbody.innerHTML = '<table><td colspan="6">📭 لا توجد رحلات حالياً</td></tr>'; return; }
+        
+        const categoryNames = { umrah: 'عمرة', hajj: 'حج', group: 'كروبات', flight: 'طيران', land: 'برية' };
+        
+        snapshot.forEach((docSnap) => {
+            const trip = docSnap.data();
+            const createdAt = trip.createdAt?.toDate ? new Date(trip.createdAt.toDate()).toLocaleDateString('ar') : '-';
+            const priceDisplay = trip.priceRaw || trip.price || 0;
+            
+            tbody.innerHTML += `
+                <tr>
+                    <td>${trip.img ? `<img src="${trip.img}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
+                    <td><strong>${trip.title || '-'}</strong></td>
+                    <td>${typeof priceDisplay === 'number' ? priceDisplay.toLocaleString() : priceDisplay} $</td>
+                    <td><span class="badge">${categoryNames[trip.category] || trip.category}</span></td>
+                    <td>${createdAt}</td>
+                    <td><button class="delete-btn" onclick="deleteDocument('trips', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td>
                 </tr>`;
         });
     });
@@ -935,10 +1073,9 @@
         });
     });
 
-    // ==================== الحجوزات (الأهم!) ====================
+    // ==================== الحجوزات ====================
     let allBookings = [];
     
-    // جلب الحجوزات مع تحديث فوري
     const bookingsQuery = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
     
     onSnapshot(bookingsQuery, (snapshot) => {
@@ -1029,14 +1166,14 @@
                             <option value="cancelled" ${booking.status === 'cancelled' ? 'selected' : ''}>❌ ملغي</option>
                             <option value="completed" ${booking.status === 'completed' ? 'selected' : ''}>🎉 مكتمل</option>
                         </select>
-                    </td>
+                     </td>
                     <td>
                         <select class="booking-status-select" data-id="${booking.id}" data-field="paymentStatus" style="padding:6px; border-radius:8px;">
                             <option value="pending" ${booking.paymentStatus === 'pending' ? 'selected' : ''}>⏳ معلق</option>
                             <option value="paid" ${booking.paymentStatus === 'paid' ? 'selected' : ''}>✅ مدفوع</option>
                             <option value="failed" ${booking.paymentStatus === 'failed' ? 'selected' : ''}>❌ فشل</option>
                         </select>
-                    </td>
+                     </td>
                     <td style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${booking.notes || ''}">
                         ${booking.notes ? booking.notes.substring(0,30) : '-'}
                     </td>
@@ -1049,7 +1186,6 @@
             tbody.innerHTML += row;
         });
         
-        // إضافة مستمعي الأحداث لتحديث الحالة
         document.querySelectorAll('.booking-status-select').forEach(select => {
             select.addEventListener('change', async (e) => {
                 const bookingId = select.dataset.id;
@@ -1065,7 +1201,6 @@
         });
     }
 
-    // عرض تفاصيل الحجز
     window.viewBookingDetails = async (bookingId) => {
         const booking = allBookings.find(b => b.id === bookingId);
         if (!booking) return;
@@ -1095,19 +1230,16 @@
         document.getElementById('bookingModal').style.display = 'none';
     };
     
-    // إغلاق المودال عند النقر خارج المحتوى
     window.onclick = (event) => {
         const modal = document.getElementById('bookingModal');
         if (event.target === modal) modal.style.display = 'none';
     };
     
-    // البحث المباشر
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', () => updateBookingsTable());
     }
 
-    // ==================== دالة الحذف العامة ====================
     window.deleteDocument = async (collectionName, docId) => {
         if(confirm("⚠️ هل أنت متأكد من الحذف؟ لا يمكن التراجع!")) {
             try {
@@ -1119,25 +1251,14 @@
         }
     };
 
-    // ==================== تسجيل الخروج ====================
     document.getElementById('logoutBtn').onclick = () => signOut(auth);
     
-    // ==================== تبديل الأقسام ====================
     window.showSection = (id) => {
         document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         if (event?.target) {
             event.target.classList.add('active');
-        } else {
-            // إذا تم استدعاؤها بدون حدث، نبحث عن الزر المناسب
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if (btn.textContent.includes(id === 'bookings-sec' ? 'الحجوزات' : 
-                    (id === 'services-sec' ? 'الخدمات' : 
-                     (id === 'hotels-sec' ? 'الفنادق' : 'العروض')))) {
-                    btn.classList.add('active');
-                }
-            });
         }
     };
     </script>
