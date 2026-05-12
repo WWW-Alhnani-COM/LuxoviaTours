@@ -817,47 +817,46 @@
         }
 
         function createOfferCard(offer) {
-            const currentPrice = offer.current_price || offer.newPrice || 0;
-            const oldPrice = offer.old_price || offer.oldPrice || 0;
-            const discountPercent = Math.round(((oldPrice - currentPrice) / oldPrice) * 100) || 0;
-            const title = offer.title || 'عرض مميز';
-            const name = offer.name || '';
-            const description = offer.description || name;
-            const imageUrl = offer.image || offer.img || 'https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image';
-            const endDate = offer.end_date || offer.expiryDate;
-            
-            let timerHtml = '<div class="offer-timer"><i class="fas fa-hourglass-half"></i> عرض محدود الكمية</div>';
-            if (endDate) {
-                const timeLeft = getTimeRemaining(endDate);
-                if (!timeLeft.expired) {
-                    let timerText = '';
-                    if (timeLeft.days > 0) timerText += `${timeLeft.days} يوم `;
-                    if (timeLeft.hours > 0) timerText += `${timeLeft.hours} ساعة `;
-                    if (timeLeft.minutes > 0) timerText += `${timeLeft.minutes} دقيقة`;
-                    timerHtml = `<div class="offer-timer"><i class="fas fa-clock"></i> ينتهي خلال: ${timerText || 'أقل من دقيقة'}</div>`;
-                } else {
-                    timerHtml = '<div class="offer-timer" style="background:#fee2e2; color:#dc2626;"><i class="fas fa-ban"></i> انتهى العرض</div>';
-                }
-            }
-            
-            return `
-                <div class="offer-card" onclick="window.location.href='trip-details.html?id=${offer.id}'">
-                    <div class="discount-badge"><i class="fas fa-fire"></i> خصم ${discountPercent}%</div>
-                    <img src="${imageUrl}" class="offer-img" alt="${title}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image'">
-                    <div class="offer-body">
-                        <h3>${title}</h3>
-                        ${description ? `<div class="offer-description"><i class="fas fa-map-marker-alt" style="color:#D4AF37; margin-left:5px;"></i> ${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</div>` : ''}
-                        <div class="price-container">
-                            <span class="new-price">${currentPrice.toLocaleString()} <span>ر.س</span></span>
-                            <span class="old-price">${oldPrice.toLocaleString()} ر.س</span>
-                        </div>
-                        ${timerHtml}
-                        <button class="btn-offer"><i class="fas fa-gem"></i> اغتنم العرض الآن</button>
-                    </div>
-                </div>
-            `;
+    const currentPrice = offer.current_price || offer.newPrice || 0;
+    const oldPrice = offer.old_price || offer.oldPrice || 0;
+    const discountPercent = Math.round(((oldPrice - currentPrice) / oldPrice) * 100) || 0;
+    const title = offer.title || 'عرض مميز';
+    const name = offer.name || '';
+    const description = offer.description || name;
+    const imageUrl = offer.image || offer.img || 'https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image';
+    const endDate = offer.end_date || offer.expiryDate;
+    
+    let timerHtml = '<div class="offer-timer"><i class="fas fa-hourglass-half"></i> عرض محدود الكمية</div>';
+    if (endDate) {
+        const timeLeft = getTimeRemaining(endDate);
+        if (!timeLeft.expired) {
+            let timerText = '';
+            if (timeLeft.days > 0) timerText += `${timeLeft.days} يوم `;
+            if (timeLeft.hours > 0) timerText += `${timeLeft.hours} ساعة `;
+            if (timeLeft.minutes > 0) timerText += `${timeLeft.minutes} دقيقة`;
+            timerHtml = `<div class="offer-timer"><i class="fas fa-clock"></i> ينتهي خلال: ${timerText || 'أقل من دقيقة'}</div>`;
+        } else {
+            timerHtml = '<div class="offer-timer" style="background:#fee2e2; color:#dc2626;"><i class="fas fa-ban"></i> انتهى العرض</div>';
         }
-
+    }
+    
+    return `
+        <div class="offer-card" onclick="window.location.href='offer-details.html?id=${offer.id}'">
+            <div class="discount-badge"><i class="fas fa-fire"></i> خصم ${discountPercent}%</div>
+            <img src="${imageUrl}" class="offer-img" alt="${title}" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=Offer+Image'">
+            <div class="offer-body">
+                <h3>${title}</h3>
+                ${description ? `<div class="offer-description"><i class="fas fa-map-marker-alt" style="color:#D4AF37; margin-left:5px;"></i> ${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</div>` : ''}
+                <div class="price-container">
+                    <span class="new-price">${currentPrice.toLocaleString()} <span>ر.س</span></span>
+                    <span class="old-price">${oldPrice.toLocaleString()} ر.س</span>
+                </div>
+                ${timerHtml}
+                <button class="btn-offer"><i class="fas fa-gem"></i> اغتنم العرض الآن</button>
+            </div>
+        </div>
+    `;
+}
         async function fetchOffers() {
             showSkeleton();
             
