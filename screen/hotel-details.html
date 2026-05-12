@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>تفاصيل الفندق | Luxovia Tours</title>
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.1/css/all.css">
+    
+    <style>
+        :root {
+            --primary-blue: #003366;
+            --gold: #D4AF37;
+            --green: #28a745;
+            --red: #e63946;
+            --orange: #fd7e14;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f8f9fa;
+            direction: rtl;
+        }
+        
+        .hotel-details-container {
+            max-width: 1400px;
+            margin: 120px auto 60px;
+            padding: 0 24px;
+        }
+        
+        /* ===== شبكة المحتوى المتجاوبة ===== */
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+        }
+        
+        /* ===== شارة حالة الفندق ===== */
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
+        }
+        
+        .status-available {
+            background: linear-gradient(135deg, var(--green), #1a7a2a);
+            color: white;
+        }
+        
+        .status-booked {
+            background: linear-gradient(135deg, var(--red), #c53030);
+            color: white;
+        }
+        
+        .status-partial {
+            background: linear-gradient(135deg, var(--orange), #e67e22);
+            color: white;
+        }
+        
+        /* ===== معرض الصور ===== */
+        .gallery-section {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+        
+        /* ===== معلومات الفندق ===== */
+        .hotel-info {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .hotel-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+        
+        .hotel-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0f2f5;
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .hotel-description {
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+        
+        /* ===== مميزات الفندق ===== */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+            padding: 20px 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #334155;
+        }
+        
+        .feature-item i {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--gold), #b8960c);
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        /* ===== معلومات إضافية ===== */
+        .extra-info {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .rooms-available {
+            color: var(--green);
+            font-weight: bold;
+        }
+        
+        .rooms-low {
+            color: var(--orange);
+            font-weight: bold;
+        }
+        
+        .rooms-full {
+            color: var(--red);
+            font-weight: bold;
+        }
+        
+        /* ===== بطاقة الحجز ===== */
+        .booking-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            position: sticky;
+            top: 100px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            border: 2px solid var(--gold);
+        }
+        
+        .price-box {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #fef5e7, #fff8ed);
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+        
+        .price-per-night {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+        
+        .price-per-night small {
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        
+        .price-note {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        
+        .total-price-box {
+            background: linear-gradient(135deg, var(--primary-blue), #001a33);
+            color: white;
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .total-price-box .total-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .total-price-box .total-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+        }
+        
+        .date-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .btn-book {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--gold), #b8960c);
+            color: var(--primary-blue);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+            margin-top: 10px;
+        }
+        
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212,175,55,0.3);
+        }
+        
+        .btn-book:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: linear-gradient(135deg, #94a3b8, #64748b);
+        }
+        
+        /* ===== نافذة منبثقة ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .modal-content i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+        }
+        
+        .confirm-btn {
+            background: var(--green);
+            color: white;
+        }
+        
+        .cancel-btn {
+            background: #e2e8f0;
+            color: #475569;
+        }
+        
+        /* ===== تحميل ===== */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            z-index: 1999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.error {
+            background: #fee2e2;
+            color: #dc2626;
+            border-right: 4px solid #dc2626;
+        }
+        
+        .alert.success {
+            background: #dcfce7;
+            color: #16a34a;
+            border-right: 4px solid #16a34a;
+        }
+        
+        .login-warning {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .login-warning a {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        /* ===== سكيلتون ===== */
+        .skeleton-details {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+        }
+        
+        .skeleton-title {
+            height: 40px;
+            width: 60%;
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* ===== التصميم المتجاوب ===== */
+        @media (max-width: 1024px) {
+            .hotel-grid {
+                grid-template-columns: 1fr 380px;
+                gap: 30px;
+            }
+            .hotel-name {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 991px) {
+            .hotel-details-container {
+                margin: 100px auto 40px;
+                padding: 0 20px;
+            }
+            .hotel-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .booking-card {
+                position: static;
+            }
+            .main-image {
+                height: 380px;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .hotel-details-container {
+                margin: 90px auto 30px;
+                padding: 0 16px;
+            }
+            .hotel-name {
+                font-size: 1.5rem;
+            }
+            .main-image {
+                height: 280px;
+            }
+            .hotel-info {
+                padding: 20px;
+            }
+            .booking-card {
+                padding: 20px;
+            }
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            .price-per-night {
+                font-size: 1.8rem;
+            }
+            .date-inputs {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hotel-name {
+                font-size: 1.3rem;
+            }
+            .main-image {
+                height: 220px;
+            }
+            .hotel-info {
+                padding: 16px;
+            }
+            .price-per-night {
+                font-size: 1.5rem;
+            }
+            .total-price-box .total-value {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header class="main-header" id="mainHeader">
+        <div class="container flex-header">
+            <div class="logo">
+                <img src="../img/logo.jpg" alt="Luxovia" class="logo-icon-img" onerror="this.src='https://placehold.co/48/1a56db/d4af37?text=L'">
+                <h1>Luxovia Tours</h1>
+            </div>
+            <button class="hamburger-menu" id="hamburgerBtn">
+                <div class="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <nav class="desktop-nav">
+                <a href="../index.html">الرئيسية</a>
+                <a href="trips.html">الرحلات</a>
+                <a href="offers.html">العروض</a>
+                <a href="hotels.html" style="color: #D4AF37;">الفنادق</a>
+                <a href="profile.html">الملف الشخصي</a>
+                <a href="contact.html">اتصل بنا</a>
+            </nav>
+            <button class="btn-primary">EN</button>
+        </div>
+    </header>
+
+    <!-- القائمة الجانبية -->
+    <div class="sidebar-overlay"></div>
+    <nav class="sidebar-nav">
+        <button class="sidebar-close"><i class="fas fa-times"></i></button>
+        <div class="sidebar-nav-links">
+            <a href="../index.html"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="trips.html"><i class="fas fa-suitcase-rolling"></i> الرحلات</a>
+            <a href="offers.html"><i class="fas fa-tags"></i> العروض</a>
+            <a href="hotels.html" class="active"><i class="fas fa-building"></i> الفنادق</a>
+            <a href="profile.html"><i class="fas fa-user-circle"></i> الملف الشخصي</a>
+            <a href="contact.html"><i class="fas fa-phone"></i> اتصل بنا</a>
+        </div>
+    </nav>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p style="margin-top: 15px; color: var(--primary-blue);">جاري معالجة حجزك...</p>
+    </div>
+
+    <div class="hotel-details-container" id="hotelDetailsContainer">
+        <div id="skeletonLoader">
+            <div class="hotel-grid">
+                <div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-title"></div>
+                        <div style="height: 300px; background: #e2e8f0; border-radius: 16px; margin-bottom: 20px;"></div>
+                        <div class="skeleton-title" style="width: 40%; height: 30px;"></div>
+                        <div style="height: 100px; background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="skeleton-details">
+                        <div class="skeleton-title" style="width: 80%; height: 50px;"></div>
+                        <div style="height: 200px; background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 16px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="hotelContent" style="display: none;"></div>
+    </div>
+
+    <!-- الموبايل ناف -->
+    <nav class="mobile-nav">
+        <a href="../index.html"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="trips.html"><i class="fas fa-suitcase-rolling"></i><span>الرحلات</span></a>
+        <a href="offers.html"><i class="fas fa-tags"></i><span>العروض</span></a>
+        <a href="hotels.html" class="active"><i class="fas fa-hotel"></i><span>الفنادق</span></a>
+        <a href="profile.html"><i class="fas fa-user-circle"></i><span>حسابي</span></a>
+        <a href="contact.html"><i class="fas fa-phone"></i><span>اتصل بنا</span></a>
+    </nav>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 Luxovia Tours | جميع الحقوق محفوظة</p>
+            <p style="font-size: 14px; margin-top: 10px;">شريكك الموثوق في السفر الفاخر</p>
+        </div>
+    </footer>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-hotel"></i>
+            <h3>تأكيد حجز الفندق</h3>
+            <p>هل أنت متأكد من رغبتك في حجز هذا الفندق؟</p>
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="confirmBooking">نعم، أحجز</button>
+                <button class="cancel-btn" id="cancelBooking">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, auth } from "../js/firebase-config.js";
+        import { doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const hotelId = urlParams.get('id');
+        
+        let currentHotel = null;
+        let currentUser = null;
+        
+        const skeletonLoader = document.getElementById('skeletonLoader');
+        const hotelContent = document.getElementById('hotelContent');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const confirmModal = document.getElementById('confirmModal');
+        
+        // حالة الفندق
+        const statusText = {
+            available: 'متاح',
+            booked: 'محجوز بالكامل',
+            partial: 'حجز جزئي'
+        };
+        
+        const statusClass = {
+            available: 'status-available',
+            booked: 'status-booked',
+            partial: 'status-partial'
+        };
+        
+        // مميزات الفندق الافتراضية
+        const defaultFeatures = [
+            { icon: 'fa-wifi', text: 'واي فاي مجاني' },
+            { icon: 'fa-utensils', text: 'مطعم فاخر' },
+            { icon: 'fa-swimming-pool', text: 'مسبح خارجي' },
+            { icon: 'fa-dumbbell', text: 'نادي صحي' },
+            { icon: 'fa-car', text: 'مواقف سيارات' },
+            { icon: 'fa-concierge-bell', text: 'خدمة الغرف 24/7' }
+        ];
+        
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (currentHotel && hotelContent.style.display !== 'none') {
+                updateBookingForm();
+            }
+        });
+        
+        async function fetchHotelDetails() {
+            if (!hotelId) {
+                window.location.href = 'hotels.html';
+                return;
+            }
+            
+            try {
+                console.log("جاري جلب الفندق بالـ ID:", hotelId);
+                const hotelRef = doc(db, "hotels", hotelId);
+                const hotelSnap = await getDoc(hotelRef);
+                
+                if (!hotelSnap.exists()) {
+                    console.log("الفندق غير موجود");
+                    hotelContent.innerHTML = `
+                        <div style="text-align: center; padding: 80px 20px;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 64px; color: #D4AF37;"></i>
+                            <h2 style="margin-top: 20px; color: #003366;">الفندق غير موجود</h2>
+                            <p style="margin: 20px 0; color: #64748b;">عذراً، لم نتمكن من العثور على الفندق المطلوب</p>
+                            <a href="hotels.html" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px; text-decoration: none; background: linear-gradient(135deg, #003366, #001a33);">العودة إلى الفنادق</a>
+                        </div>
+                    `;
+                    skeletonLoader.style.display = 'none';
+                    hotelContent.style.display = 'block';
+                    return;
+                }
+                
+                const hotelData = hotelSnap.data();
+                console.log("تم جلب الفندق بنجاح:", hotelData);
+                
+                currentHotel = { id: hotelSnap.id, ...hotelData };
+                renderHotelDetails();
+                
+            } catch (error) {
+                console.error("خطأ في جلب تفاصيل الفندق:", error);
+                hotelContent.innerHTML = `
+                    <div style="text-align: center; padding: 80px 20px;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 64px; color: #dc2626;"></i>
+                        <h2 style="margin-top: 20px;">حدث خطأ</h2>
+                        <p style="margin: 20px 0; color: #64748b;">${error.message}</p>
+                        <button onclick="location.reload()" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px;">إعادة المحاولة</button>
+                    </div>
+                `;
+                skeletonLoader.style.display = 'none';
+                hotelContent.style.display = 'block';
+            }
+        }
+        
+        function getRoomsStatusClass(availableRooms) {
+            if (availableRooms === 0) return 'rooms-full';
+            if (availableRooms <= 5) return 'rooms-low';
+            return 'rooms-available';
+        }
+        
+        function getRoomsStatusText(availableRooms) {
+            if (availableRooms === 0) return 'غير متاح حالياً';
+            if (availableRooms <= 5) return `${availableRooms} غرف فقط متبقية!`;
+            return `${availableRooms} غرف متاحة`;
+        }
+        
+        function renderHotelDetails() {
+            const hotel = currentHotel;
+            
+            const mainImage = hotel.image || 'https://placehold.co/1200x600/e2e8f0/475569?text=No+Image';
+            const statusTextAr = statusText[hotel.status] || 'متاح';
+            const statusClassHotel = statusClass[hotel.status] || 'status-available';
+            const availableRooms = hotel.available_rooms || 0;
+            const isAvailable = hotel.status !== 'booked' && availableRooms > 0;
+            
+            const features = hotel.features || defaultFeatures;
+            
+            const html = `
+                <div class="hotel-grid">
+                    <div>
+                        <div class="gallery-section">
+                            <div class="status-badge ${statusClassHotel}">
+                                <i class="fas ${hotel.status === 'available' ? 'fa-check-circle' : (hotel.status === 'booked' ? 'fa-times-circle' : 'fa-clock')}"></i>
+                                ${statusTextAr}
+                            </div>
+                            <img src="${mainImage}" alt="${hotel.name}" class="main-image" onerror="this.src='https://placehold.co/1200x600/e2e8f0/475569?text=No+Image'">
+                        </div>
+                        
+                        <div class="hotel-info">
+                            <h1 class="hotel-name">${hotel.name || 'فندق فاخر'}</h1>
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${hotel.location || 'موقع مميز'}</span>
+                            </div>
+                            <div class="hotel-description">
+                                ${hotel.description || 'فندق فاخر يقدم أفضل الخدمات والإطلالات الرائعة. استمتع بإقامة لا تُنسى مع Luxovia Tours.'}
+                            </div>
+                            
+                            <!-- مميزات الفندق -->
+                            <div class="features-list">
+                                ${features.map(feature => `
+                                    <div class="feature-item">
+                                        <i class="fas ${feature.icon || 'fa-check-circle'}"></i>
+                                        <span>${typeof feature === 'string' ? feature : feature.text}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <!-- معلومات إضافية -->
+                            <div class="extra-info">
+                                <div class="info-row">
+                                    <span class="info-label"><i class="fas fa-bed"></i> الغرف المتاحة:</span>
+                                    <span class="${getRoomsStatusClass(availableRooms)}">${getRoomsStatusText(availableRooms)}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label"><i class="fas fa-dollar-sign"></i> السعر لليلة:</span>
+                                    <span>${(hotel.price_per_night || 0).toLocaleString()} ر.س</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="booking-card" id="bookingCard">
+                            <div id="bookingFormContainer"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            hotelContent.innerHTML = html;
+            skeletonLoader.style.display = 'none';
+            hotelContent.style.display = 'block';
+            
+            updateBookingForm();
+        }
+        
+        function updateBookingForm() {
+            const container = document.getElementById('bookingFormContainer');
+            if (!container) return;
+            
+            const hotel = currentHotel;
+            const isLoggedIn = !!currentUser;
+            const isAvailable = hotel.status !== 'booked' && hotel.available_rooms > 0;
+            
+            if (!isLoggedIn) {
+                container.innerHTML = `
+                    <div class="login-warning">
+                        <i class="fas fa-sign-in-alt"></i> 
+                        يرجى <a href="login.html">تسجيل الدخول</a> لإتمام حجز الفندق
+                    </div>
+                `;
+                return;
+            }
+            
+            if (!isAvailable) {
+                container.innerHTML = `
+                    <div class="price-box">
+                        <div class="price-per-night">${(hotel.price_per_night || 0).toLocaleString()} <small>ر.س / ليلة</small></div>
+                    </div>
+                    <div class="alert error" style="display: block; background: #fee2e2; color: #dc2626; text-align: center;">
+                        <i class="fas fa-ban"></i> عذراً، لا توجد غرف متاحة حالياً
+                    </div>
+                    <a href="hotels.html" class="btn-book" style="display: block; text-align: center; text-decoration: none; background: linear-gradient(135deg, #003366, #001a33);">
+                        <i class="fas fa-arrow-right"></i> استكشاف فنادق أخرى
+                    </a>
+                `;
+                return;
+            }
+            
+            // تعيين تاريخ اليوم وتاريخ غد كحد أدنى
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const todayStr = today.toISOString().split('T')[0];
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+            
+            container.innerHTML = `
+                <div class="price-box">
+                    <div class="price-per-night">${(hotel.price_per_night || 0).toLocaleString()} <small>ر.س / ليلة</small></div>
+                    <div class="price-note">شامل الضرائب والرسوم</div>
+                </div>
+                
+                <div class="alert error" id="formAlert"></div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> الاسم الكامل</label>
+                    <input type="text" id="fullName" value="${currentUser.displayName || ''}" placeholder="أدخل اسمك الكامل" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+                    <input type="email" id="email" value="${currentUser.email || ''}" readonly style="background:#f5f5f5;">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> رقم الهاتف</label>
+                    <input type="tel" id="phone" placeholder="مثال: 05XXXXXXXX" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> مدة الإقامة</label>
+                    <div class="date-inputs">
+                        <input type="date" id="checkIn" min="${todayStr}" value="${todayStr}">
+                        <input type="date" id="checkOut" min="${tomorrowStr}" value="${tomorrowStr}">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-users"></i> عدد الغرف</label>
+                    <input type="number" id="rooms" min="1" max="${hotel.available_rooms}" value="1" step="1">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-user-friends"></i> عدد الضيوف</label>
+                    <input type="number" id="guests" min="1" max="10" value="2" step="1">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-sticky-note"></i> ملاحظات إضافية</label>
+                    <textarea id="notes" rows="3" placeholder="أي ملاحظات أو طلبات خاصة..."></textarea>
+                </div>
+                
+                <div class="total-price-box">
+                    <div class="total-label">إجمالي قيمة الحجز</div>
+                    <div class="total-value" id="totalPrice">${(hotel.price_per_night || 0).toLocaleString()}</div>
+                    <div class="total-label">ر.س</div>
+                </div>
+                
+                <button class="btn-book" id="bookNowBtn">
+                    <i class="fas fa-calendar-check"></i> احجز الآن
+                </button>
+            `;
+            
+            const checkInInput = document.getElementById('checkIn');
+            const checkOutInput = document.getElementById('checkOut');
+            const roomsInput = document.getElementById('rooms');
+            const totalSpan = document.getElementById('totalPrice');
+            const bookBtn = document.getElementById('bookNowBtn');
+            
+            function calculateTotal() {
+                const checkIn = new Date(checkInInput.value);
+                const checkOut = new Date(checkOutInput.value);
+                const rooms = parseInt(roomsInput.value) || 1;
+                
+                if (checkOut <= checkIn) {
+                    showAlert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول', 'error');
+                    return 0;
+                }
+                
+                const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                const total = (currentHotel.price_per_night || 0) * nights * rooms;
+                totalSpan.innerText = total.toLocaleString();
+                return total;
+            }
+            
+            if (checkInInput && checkOutInput) {
+                checkInInput.addEventListener('change', () => calculateTotal());
+                checkOutInput.addEventListener('change', () => calculateTotal());
+            }
+            
+            if (roomsInput) {
+                roomsInput.addEventListener('input', () => calculateTotal());
+            }
+            
+            if (bookBtn) {
+                bookBtn.addEventListener('click', () => {
+                    calculateTotal();
+                    confirmModal.style.display = 'flex';
+                });
+            }
+        }
+        
+        function showAlert(message, type = 'error') {
+            const alertEl = document.getElementById('formAlert');
+            if (alertEl) {
+                alertEl.innerText = message;
+                alertEl.style.display = 'block';
+                setTimeout(() => {
+                    alertEl.style.display = 'none';
+                }, 4000);
+            }
+        }
+        
+        async function confirmBooking() {
+            if (!currentHotel || !currentUser) return;
+            
+            const fullName = document.getElementById('fullName')?.value.trim();
+            const phone = document.getElementById('phone')?.value.trim();
+            const checkIn = document.getElementById('checkIn')?.value;
+            const checkOut = document.getElementById('checkOut')?.value;
+            const rooms = parseInt(document.getElementById('rooms')?.value) || 1;
+            const guests = parseInt(document.getElementById('guests')?.value) || 1;
+            const notes = document.getElementById('notes')?.value.trim() || '';
+            
+            if (!fullName) {
+                showAlert('يرجى إدخال الاسم الكامل', 'error');
+                return;
+            }
+            
+            if (!phone) {
+                showAlert('يرجى إدخال رقم الهاتف', 'error');
+                return;
+            }
+            
+            if (!checkIn || !checkOut) {
+                showAlert('يرجى تحديد تاريخ الوصول والمغادرة', 'error');
+                return;
+            }
+            
+            const checkInDate = new Date(checkIn);
+            const checkOutDate = new Date(checkOut);
+            const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+            
+            if (nights <= 0) {
+                showAlert('تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول', 'error');
+                return;
+            }
+            
+            if (rooms > currentHotel.available_rooms) {
+                showAlert(`العدد الأقصى للغرف هو ${currentHotel.available_rooms}`, 'error');
+                return;
+            }
+            
+            confirmModal.style.display = 'none';
+            loadingOverlay.style.display = 'flex';
+            
+            const totalAmount = (currentHotel.price_per_night || 0) * nights * rooms;
+            
+            const bookingData = {
+                bookingDate: new Date(),
+                createdAt: new Date(),
+                notes: notes,
+                paymentStatus: 'pending',
+                status: 'pending',
+                totalPrice: totalAmount,
+                hotelId: currentHotel.id,
+                hotelName: currentHotel.name || 'فندق فاخر',
+                hotelLocation: currentHotel.location || 'موقع مميز',
+                pricePerNight: currentHotel.price_per_night || 0,
+                nights: nights,
+                rooms: rooms,
+                guests: guests,
+                checkIn: checkInDate,
+                checkOut: checkOutDate,
+                userEmail: currentUser.email,
+                userId: currentUser.uid,
+                userName: fullName,
+                userPhone: phone,
+                bookingType: 'hotel'
+            };
+            
+            console.log("بيانات حجز الفندق:", bookingData);
+            
+            try {
+                await addDoc(collection(db, "bookings"), bookingData);
+                
+                loadingOverlay.style.display = 'none';
+                
+                hotelContent.innerHTML = `
+                    <div style="text-align: center; padding: 80px 20px; background: white; border-radius: 24px;">
+                        <i class="fas fa-check-circle" style="font-size: 80px; color: #28a745;"></i>
+                        <h2 style="margin-top: 20px; color: #003366;">تم حجز الفندق بنجاح!</h2>
+                        <p style="margin: 20px 0; color: #64748b; font-size: 1.1rem;">
+                            شكراً لك ${fullName}<br>
+                            لقد قمت بحجز <strong>${currentHotel.name}</strong><br>
+                            لمدة <strong>${nights}</strong> ليلة (${rooms} غرفة)<br>
+                            بقيمة إجمالية <strong>${totalAmount.toLocaleString()} ر.س</strong><br>
+                            سيتم إرسال تفاصيل الحجز إلى بريدك الإلكتروني قريباً
+                        </p>
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <a href="hotels.html" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px; text-decoration: none; background: linear-gradient(135deg, #003366, #001a33);">
+                                <i class="fas fa-search"></i> فنادق أخرى
+                            </a>
+                            <a href="profile.html" class="btn-book" style="display: inline-block; width: auto; padding: 12px 30px; text-decoration: none; background: linear-gradient(135deg, #D4AF37, #b8960c); color: #003366;">
+                                <i class="fas fa-user"></i> حجوزاتي
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                loadingOverlay.style.display = 'none';
+                console.error("خطأ في حجز الفندق:", error);
+                showAlert('حدث خطأ أثناء حجز الفندق: ' + error.message, 'error');
+            }
+        }
+        
+        document.getElementById('confirmBooking')?.addEventListener('click', confirmBooking);
+        document.getElementById('cancelBooking')?.addEventListener('click', () => {
+            confirmModal.style.display = 'none';
+        });
+        
+        window.onclick = (event) => {
+            if (event.target === confirmModal) {
+                confirmModal.style.display = 'none';
+            }
+        };
+        
+        // الهامبرجر
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarNav = document.querySelector('.sidebar-nav');
+        const sidebarOverlay = document.querySelector('.sidebar-overlay');
+        
+        if (hamburgerBtn && sidebarNav && sidebarOverlay) {
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.toggle('active');
+                sidebarNav.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            });
+            
+            sidebarOverlay.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                sidebarNav.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            });
+            
+            const sidebarClose = document.querySelector('.sidebar-close');
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', () => {
+                    hamburgerBtn.classList.remove('active');
+                    sidebarNav.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                });
+            }
+        }
+        
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        fetchHotelDetails();
+    </script>
+</body>
+</html>
