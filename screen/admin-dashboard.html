@@ -25,7 +25,6 @@
             direction: rtl;
         }
         
-        /* ========== القائمة الجانبية ========== */
         .sidebar {
             width: 280px;
             background: linear-gradient(180deg, var(--blue) 0%, #001a33 100%);
@@ -81,7 +80,6 @@
         
         .logout-btn:hover { background: rgba(230,57,70,0.3); color: #ffaaaa; }
         
-        /* ========== المحتوى الرئيسي ========== */
         .main-content {
             margin-right: 280px;
             padding: 30px;
@@ -89,7 +87,6 @@
             min-height: 100vh;
         }
         
-        /* ========== البطاقات ========== */
         .card {
             background: white;
             padding: 25px;
@@ -106,7 +103,6 @@
             padding-right: 15px;
         }
         
-        /* ========== النماذج ========== */
         input, select, textarea {
             width: 100%;
             padding: 12px 15px;
@@ -151,7 +147,6 @@
             box-shadow: 0 5px 15px rgba(0,51,102,0.3);
         }
         
-        /* ========== الجداول ========== */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 12px;
@@ -182,7 +177,6 @@
             background: #fafafa;
         }
         
-        /* ========== الشارات والحالات ========== */
         .badge {
             background: var(--gold);
             color: var(--blue);
@@ -233,7 +227,6 @@
             background: #fef5e0;
         }
         
-        /* ========== إحصائيات ========== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -266,7 +259,6 @@
             font-size: 0.9rem;
         }
         
-        /* ========== شريط البحث ========== */
         .search-bar {
             margin-bottom: 20px;
             display: flex;
@@ -278,7 +270,6 @@
             margin: 0;
         }
         
-        /* ========== نافذة منبثقة ========== */
         .modal {
             display: none;
             position: fixed;
@@ -358,7 +349,7 @@
             margin: 10px 0;
             display: none;
         }
-        /* ========== الشعار الدائري في القائمة الجانبية ========== */
+        
         .sidebar-header {
             text-align: center;
             padding: 25px 20px;
@@ -424,18 +415,17 @@
         <button class="nav-btn" onclick="showSection('bookings-sec')">
             <i class="fas fa-calendar-check"></i> إدارة الحجوزات
         </button>
+        <button class="nav-btn" onclick="showSection('users-sec')">
+            <i class="fas fa-users-cog"></i> إدارة الحسابات
+        </button>
         <br><br>
         <button class="nav-btn logout-btn" id="logoutBtn">
             <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
         </button>
-        <button class="nav-btn" onclick="showSection('users-sec')">
-    <i class="fas fa-users-cog"></i> إدارة الحسابات
-</button>
     </aside>
     
     <main class="main-content">
         
-        <!-- ==================== قسم الخدمات ==================== -->
         <section id="services-sec">
             <div class="card">
                 <h3><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h3>
@@ -448,186 +438,110 @@
                         <option value="flight">طيران</option>
                         <option value="land">رحلات برية</option>
                     </select>
-                    
                     <input type="text" id="title" placeholder="📝 عنوان الخدمة" required>
                     <textarea id="description" rows="4" placeholder="📄 وصف الخدمة بالتفصيل..." required></textarea>
-                    
                     <div class="form-row">
                         <div><input type="number" id="price" placeholder="💰 السعر (بالدولار)" required></div>
                         <div><input type="number" id="availableSeats" placeholder="🪑 المقاعد المتاحة" required></div>
                     </div>
-                    
                     <div class="form-row">
                         <div><input type="datetime-local" id="startDate" required></div>
                         <div><input type="datetime-local" id="endDate" required></div>
                     </div>
-                    
                     <label class="file-label" for="serviceImgInput">
                         <i class="fas fa-cloud-upload-alt"></i> اختر صورة الخدمة
                     </label>
                     <input type="file" id="serviceImgInput" accept="image/*" style="display: none;">
                     <img id="imgPreview" alt="معاينة الصورة">
-                    
                     <button type="submit" id="submitBtn" class="btn-save">
                         <i class="fas fa-paper-plane"></i> نشر الخدمة
                     </button>
                 </form>
             </div>
-
             <div class="card">
                 <h3><i class="fas fa-list"></i> قائمة الخدمات</h3>
                 <div class="table-wrapper">
                     <table id="servicesTable">
-                        <thead>
-                            <tr><th>الصورة</th><th>العنوان</th><th>السعر</th><th>الفئة</th><th>المقاعد</th><th>تاريخ البداية</th><th>تاريخ النهاية</th><th>إجراء</th></tr>
-                        </thead>
+                        <thead><tr><th>الصورة</th><th>العنوان</th><th>السعر</th><th>الفئة</th><th>المقاعد</th><th>تاريخ البداية</th><th>تاريخ النهاية</th><th>إجراء</th></tr></thead>
                         <tbody id="servicesTableBody"><tr><td colspan="8" style="text-align:center;">جاري التحميل...</td></tr></tbody>
                     </table>
                 </div>
             </div>
         </section>
         
-        <!-- ==================== قسم الرحلات ==================== -->
         <section id="trips-sec" class="hidden">
             <div class="card">
                 <h3><i class="fas fa-plus-circle"></i> إضافة رحلة جديدة</h3>
                 <form id="tripsForm">
                     <input type="text" id="tripTitle" placeholder="📝 عنوان الرحلة" required>
                     <textarea id="tripDescription" rows="4" placeholder="📄 وصف الرحلة بالتفصيل..." required></textarea>
-                    
                     <div class="form-row">
-                        <div>
-                            <input type="text" id="tripPrice" placeholder="💰 السعر (مثال: 1200 أو $1200)" required>
-                        </div>
-                        <div>
-                            <select id="tripCategory" required>
-                                <option value="">اختر الفئة</option>
-                                <option value="umrah">عمرة</option>
-                                <option value="hajj">حج</option>
-                                <option value="group">كروبات سياحية</option>
-                                <option value="flight">طيران</option>
-                                <option value="land">رحلات برية</option>
-                            </select>
-                        </div>
+                        <div><input type="text" id="tripPrice" placeholder="💰 السعر (مثال: 1200 أو $1200)" required></div>
+                        <div><select id="tripCategory" required><option value="">اختر الفئة</option><option value="umrah">عمرة</option><option value="hajj">حج</option><option value="group">كروبات سياحية</option><option value="flight">طيران</option><option value="land">رحلات برية</option></select></div>
                     </div>
-                    
-                    <label class="file-label" for="tripImgInput">
-                        <i class="fas fa-cloud-upload-alt"></i> اختر صورة الرحلة
-                    </label>
+                    <label class="file-label" for="tripImgInput"><i class="fas fa-cloud-upload-alt"></i> اختر صورة الرحلة</label>
                     <input type="file" id="tripImgInput" accept="image/*" style="display: none;">
                     <img id="tripImgPreview" alt="معاينة الصورة">
-                    
-                    <button type="submit" id="submitTripBtn" class="btn-save">
-                        <i class="fas fa-plus-circle"></i> إضافة الرحلة
-                    </button>
+                    <button type="submit" id="submitTripBtn" class="btn-save"><i class="fas fa-plus-circle"></i> إضافة الرحلة</button>
                 </form>
             </div>
-
             <div class="card">
                 <h3><i class="fas fa-list"></i> قائمة الرحلات</h3>
                 <div class="table-wrapper">
-                    <table id="tripsTable">
-                        <thead>
-                            <tr><th>الصورة</th><th>عنوان الرحلة</th><th>السعر</th><th>الفئة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr>
-                        </thead>
-                        <tbody id="tripsTableBody"><td><td colspan="6">جاري التحميل......</td></td></tbody>
-                    </table>
+                    <table id="tripsTable"><thead><tr><th>الصورة</th><th>عنوان الرحلة</th><th>السعر</th><th>الفئة</th><th>تاريخ الإضافة</th><th>إجراء</th></tr></thead>
+                    <tbody id="tripsTableBody"><tr><td colspan="6">جاري التحميل......</td></tr></tbody></table>
                 </div>
             </div>
         </section>
         
-        <!-- ==================== قسم الفنادق ==================== -->
         <section id="hotels-sec" class="hidden">
             <div class="card">
                 <h3><i class="fas fa-plus-circle"></i> إضافة فندق جديد</h3>
                 <form id="hotelForm">
                     <input type="text" id="hotelName" placeholder="🏨 اسم الفندق" required>
                     <input type="text" id="hotelLocation" placeholder="📍 الموقع" required>
-                    
-                    <div class="form-row">
-                        <div><input type="number" id="hotelPrice" placeholder="💰 السعر لليلة" required></div>
-                        <div><input type="number" id="hotelRooms" placeholder="🛏️ عدد الغرف" required></div>
-                    </div>
-                    
-                    <select id="hotelStatus" required>
-                        <option value="available">✅ متاح</option>
-                        <option value="booked">🔴 محجوز بالكامل</option>
-                        <option value="partial">🟡 حجز جزئي</option>
-                    </select>
-                    
+                    <div class="form-row"><div><input type="number" id="hotelPrice" placeholder="💰 السعر لليلة" required></div><div><input type="number" id="hotelRooms" placeholder="🛏️ عدد الغرف" required></div></div>
+                    <select id="hotelStatus" required><option value="available">✅ متاح</option><option value="booked">🔴 محجوز بالكامل</option><option value="partial">🟡 حجز جزئي</option></select>
                     <textarea id="hotelDescription" rows="3" placeholder="📝 وصف الفندق والخدمات"></textarea>
-                    
-                    <label class="file-label" for="hotelImgInput">
-                        <i class="fas fa-cloud-upload-alt"></i> اختر صورة الفندق
-                    </label>
+                    <label class="file-label" for="hotelImgInput"><i class="fas fa-cloud-upload-alt"></i> اختر صورة الفندق</label>
                     <input type="file" id="hotelImgInput" accept="image/*" style="display: none;">
                     <img id="hotelImgPreview" alt="معاينة الصورة">
-                    
-                    <button type="submit" id="submitHotelBtn" class="btn-save">
-                        <i class="fas fa-hotel"></i> إضافة الفندق
-                    </button>
+                    <button type="submit" id="submitHotelBtn" class="btn-save"><i class="fas fa-hotel"></i> إضافة الفندق</button>
                 </form>
             </div>
-
             <div class="card">
                 <h3><i class="fas fa-list"></i> قائمة الفنادق</h3>
                 <div class="table-wrapper">
-                    <table id="hotelsTable">
-                        <thead><tr><th>الصورة</th><th>اسم الفندق</th><th>الموقع</th><th>السعر</th><th>الغرف</th><th>الحالة</th><th>إجراء</th></tr></thead>
-                        <tbody id="hotelsTableBody"><tr><td colspan="7">جاري التحميل...</td></tr></tbody>
-                    </table>
+                    <table id="hotelsTable"><thead><tr><th>الصورة</th><th>اسم الفندق</th><th>الموقع</th><th>السعر</th><th>الغرف</th><th>الحالة</th><th>إجراء</th></tr></thead>
+                    <tbody id="hotelsTableBody"><tr><td colspan="7">جاري التحميل...</td></tr></tbody></table>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== قسم العروض ==================== -->
         <section id="offers-sec" class="hidden">
             <div class="card">
                 <h3><i class="fas fa-plus-circle"></i> إضافة عرض جديد</h3>
                 <form id="offerForm">
-                    <div class="form-row">
-                        <div><input type="text" id="offerTitle" placeholder="🏷️ عنوان العرض" required></div>
-                        <div><input type="text" id="offerName" placeholder="📝 اسم العرض المختصر" required></div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div><input type="number" id="currentPrice" placeholder="💰 السعر الحالي" required></div>
-                        <div><input type="number" id="oldPrice" placeholder="💸 السعر السابق" required></div>
-                    </div>
-                    
+                    <div class="form-row"><div><input type="text" id="offerTitle" placeholder="🏷️ عنوان العرض" required></div><div><input type="text" id="offerName" placeholder="📝 اسم العرض المختصر" required></div></div>
+                    <div class="form-row"><div><input type="number" id="currentPrice" placeholder="💰 السعر الحالي" required></div><div><input type="number" id="oldPrice" placeholder="💸 السعر السابق" required></div></div>
                     <textarea id="offerDescription" rows="4" placeholder="📄 وصف تفصيلي للعرض" required></textarea>
-                    
-                    <div class="form-row">
-                        <div><input type="datetime-local" id="offerStartDate" required></div>
-                        <div><input type="datetime-local" id="offerEndDate" required></div>
-                    </div>
-                    
+                    <div class="form-row"><div><input type="datetime-local" id="offerStartDate" required></div><div><input type="datetime-local" id="offerEndDate" required></div></div>
                     <input type="url" id="offerLink" placeholder="🔗 رابط العرض (اختياري)">
-                    
-                    <label class="file-label" for="offerImgInput">
-                        <i class="fas fa-cloud-upload-alt"></i> اختر صورة العرض
-                    </label>
+                    <label class="file-label" for="offerImgInput"><i class="fas fa-cloud-upload-alt"></i> اختر صورة العرض</label>
                     <input type="file" id="offerImgInput" accept="image/*" style="display: none;">
                     <img id="offerImgPreview" alt="معاينة الصورة">
-                    
-                    <button type="submit" id="submitOfferBtn" class="btn-save">
-                        <i class="fas fa-gift"></i> نشر العرض
-                    </button>
+                    <button type="submit" id="submitOfferBtn" class="btn-save"><i class="fas fa-gift"></i> نشر العرض</button>
                 </form>
             </div>
-
             <div class="card">
                 <h3><i class="fas fa-list"></i> قائمة العروض</h3>
                 <div class="table-wrapper">
-                    <table id="offersTable">
-                        <thead><tr><th>الصورة</th><th>العنوان</th><th>الاسم</th><th>السعر الحالي</th><th>السعر السابق</th><th>الخصم</th><th>المدة</th><th>إجراء</th></tr></thead>
-                        <tbody id="offersTableBody"><tr><td colspan="8">جاري التحميل...</td></tr></tbody>
-                    </table>
+                    <table id="offersTable"><thead><tr><th>الصورة</th><th>العنوان</th><th>الاسم</th><th>السعر الحالي</th><th>السعر السابق</th><th>الخصم</th><th>المدة</th><th>إجراء</th></tr></thead>
+                    <tbody id="offersTableBody"><tr><td colspan="8">جاري التحميل...</td></tr></tbody></table>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== قسم الحجوزات ==================== -->
         <section id="bookings-sec" class="hidden">
             <div class="card">
                 <h3><i class="fas fa-chart-line"></i> إحصائيات الحجوزات</h3>
@@ -637,161 +551,47 @@
                     <div class="stat-card"><i class="fas fa-clock"></i><h4 id="pendingBookings">0</h4><p>حجوزات معلقة</p></div>
                 </div>
             </div>
-
             <div class="card">
                 <h3><i class="fas fa-search"></i> البحث في الحجوزات</h3>
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="🔍 بحث بالبريد الإلكتروني أو اسم الرحلة...">
-                </div>
+                <div class="search-bar"><input type="text" id="searchInput" placeholder="🔍 بحث بالبريد الإلكتروني أو اسم الرحلة..."></div>
             </div>
-
             <div class="card">
                 <h3><i class="fas fa-list-alt"></i> قائمة الحجوزات</h3>
                 <div class="table-wrapper">
-                    <table id="bookingsTable">
-                        <thead>
-                            <tr>
-                                <th>تاريخ الحجز</th>
-                                <th>المستخدم</th>
-                                <th>البريد الإلكتروني</th>
-                                <th>الرحلة</th>
-                                <th>الموقع</th>
-                                <th>السعر</th>
-                                <th>المسافرون</th>
-                                <th>حالة الدفع</th>
-                                <th>حالة الحجز</th>
-                                <th>ملاحظات</th>
-                                <th>إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bookingsTableBody">
-                            <tr><td colspan="11" style="text-align:center;">جاري التحميل...</td></tr>
-                        </tbody>
-                    </table>
+                    <table id="bookingsTable"><thead><tr><th>تاريخ الحجز</th><th>المستخدم</th><th>البريد الإلكتروني</th><th>الرحلة</th><th>الموقع</th><th>السعر</th><th>المسافرون</th><th>حالة الدفع</th><th>حالة الحجز</th><th>ملاحظات</th><th>إجراءات</th></tr></thead>
+                    <tbody id="bookingsTableBody"><tr><td colspan="11" style="text-align:center;">جاري التحميل...</td></tr></tbody></table>
                 </div>
             </div>
         </section>
-        <!-- ==================== قسم إدارة الحسابات ==================== -->
-<section id="users-sec" class="hidden">
-    <div class="card">
-        <h3><i class="fas fa-user-plus"></i> إضافة حساب جديد</h3>
-        <form id="userForm">
-            <div class="form-row">
-                <div>
-                    <input type="text" id="userFullName" placeholder="👤 الاسم الكامل" required>
-                </div>
-                <div>
-                    <input type="email" id="userEmail" placeholder="📧 البريد الإلكتروني" required>
+        
+        <section id="users-sec" class="hidden">
+            <div class="card">
+                <h3><i class="fas fa-user-plus"></i> إضافة حساب جديد</h3>
+                <form id="userForm">
+                    <div class="form-row"><div><input type="text" id="userFullName" placeholder="👤 الاسم الكامل" required></div><div><input type="email" id="userEmail" placeholder="📧 البريد الإلكتروني" required></div></div>
+                    <div class="form-row"><div><input type="password" id="userPassword" placeholder="🔒 كلمة المرور" required></div><div><select id="userRole" required><option value="">اختر الصلاحية</option><option value="admin">👑 أدمن</option><option value="user">👤 مستخدم</option><option value="editor">✏️ محرر</option></select></div></div>
+                    <div class="form-row"><div><input type="text" id="userPhone" placeholder="📱 رقم الهاتف"></div><div><select id="userStatus"><option value="active">✅ نشط</option><option value="inactive">⛔ غير نشط</option><option value="suspended">⚠️ موقوف</option></select></div></div>
+                    <button type="submit" class="btn-save"><i class="fas fa-save"></i> إضافة المستخدم</button>
+                </form>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-search"></i> بحث وتصفية المستخدمين</h3>
+                <div class="search-bar">
+                    <input type="text" id="searchUsers" placeholder="🔍 بحث بالاسم أو البريد الإلكتروني...">
+                    <select id="filterRole" style="width: 200px;"><option value="all">جميع الصلاحيات</option><option value="admin">أدمن</option><option value="user">مستخدمين</option><option value="editor">محررين</option></select>
+                    <select id="filterStatus" style="width: 200px;"><option value="all">جميع الحالات</option><option value="active">نشط</option><option value="inactive">غير نشط</option><option value="suspended">موقوف</option></select>
                 </div>
             </div>
-            <div class="form-row">
-                <div>
-                    <input type="password" id="userPassword" placeholder="🔒 كلمة المرور" required>
-                </div>
-                <div>
-                    <select id="userRole" required>
-                        <option value="">اختر الصلاحية</option>
-                        <option value="admin">👑 أدمن (صلاحية كاملة)</option>
-                        <option value="user">👤 مستخدم عادي</option>
-                        <option value="editor">✏️ محرر (إدارة المحتوى)</option>
-                    </select>
+            <div class="card">
+                <h3><i class="fas fa-list-alt"></i> قائمة المستخدمين</h3>
+                <div class="table-wrapper">
+                    <table id="usersTable"><thead><tr><th>#</th><th>الاسم</th><th>البريد الإلكتروني</th><th>الصلاحية</th><th>الحالة</th><th>رقم الهاتف</th><th>تاريخ التسجيل</th><th>الإجراءات</th></tr></thead>
+                    <tbody id="usersTableBody"><tr><td colspan="8" style="text-align:center;">جاري تحميل المستخدمين...</td></tr></tbody></table>
                 </div>
             </div>
-            <div class="form-row">
-                <div>
-                    <input type="text" id="userPhone" placeholder="📱 رقم الهاتف">
-                </div>
-                <div>
-                    <select id="userStatus">
-                        <option value="active">✅ نشط</option>
-                        <option value="inactive">⛔ غير نشط</option>
-                        <option value="suspended">⚠️ موقوف</option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn-save">
-                <i class="fas fa-save"></i> إضافة المستخدم
-            </button>
-        </form>
-    </div>
-
-    <div class="card">
-        <h3><i class="fas fa-search"></i> بحث وتصفية المستخدمين</h3>
-        <div class="search-bar">
-            <input type="text" id="searchUsers" placeholder="🔍 بحث بالاسم أو البريد الإلكتروني...">
-            <select id="filterRole" style="width: 200px;">
-                <option value="all">جميع الصلاحيات</option>
-                <option value="admin">أدمن</option>
-                <option value="user">مستخدمين</option>
-                <option value="editor">محررين</option>
-            </select>
-            <select id="filterStatus" style="width: 200px;">
-                <option value="all">جميع الحالات</option>
-                <option value="active">نشط</option>
-                <option value="inactive">غير نشط</option>
-                <option value="suspended">موقوف</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3><i class="fas fa-list-alt"></i> قائمة المستخدمين</h3>
-        <div class="table-wrapper">
-            <table id="usersTable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>الاسم</th>
-                        <th>البريد الإلكتروني</th>
-                        <th>الصلاحية</th>
-                        <th>الحالة</th>
-                        <th>رقم الهاتف</th>
-                        <th>تاريخ التسجيل</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody id="usersTableBody">
-                    <tr><td colspan="8" style="text-align:center;">جاري تحميل المستخدمين...</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<!-- نافذة تعديل المستخدم -->
-<div id="editUserModal" class="modal">
-    <div class="modal-content">
-        <h3><i class="fas fa-edit"></i> تعديل بيانات المستخدم</h3>
-        <form id="editUserForm">
-            <input type="hidden" id="editUserId">
-            <input type="text" id="editFullName" placeholder="الاسم الكامل" required>
-            <input type="email" id="editEmail" placeholder="البريد الإلكتروني" required>
-            <select id="editRole" required>
-                <option value="admin">أدمن</option>
-                <option value="user">مستخدم</option>
-                <option value="editor">محرر</option>
-            </select>
-            <select id="editStatus">
-                <option value="active">نشط</option>
-                <option value="inactive">غير نشط</option>
-                <option value="suspended">موقوف</option>
-            </select>
-            <input type="text" id="editPhone" placeholder="رقم الهاتف">
-            <input type="password" id="editPassword" placeholder="كلمة مرور جديدة (اتركها فارغة إذا لا تريد التغيير)">
-            <div class="form-row">
-                <button type="submit" class="btn-save" style="margin:0 10px 0 0;">
-                    <i class="fas fa-save"></i> حفظ التغييرات
-                </button>
-                <button type="button" class="close-modal" onclick="closeEditModal()" style="margin:0;">
-                    <i class="fas fa-times"></i> إلغاء
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+        </section>
     </main>
 
-    <!-- نافذة منبثقة لعرض التفاصيل -->
     <div id="bookingModal" class="modal">
         <div class="modal-content">
             <h3><i class="fas fa-info-circle"></i> تفاصيل الحجز</h3>
@@ -800,14 +600,34 @@
         </div>
     </div>
 
+    <div id="editUserModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-edit"></i> تعديل بيانات المستخدم</h3>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserId">
+                <input type="text" id="editFullName" placeholder="الاسم الكامل" required>
+                <input type="email" id="editEmail" placeholder="البريد الإلكتروني" required>
+                <select id="editRole" required><option value="admin">أدمن</option><option value="user">مستخدم</option><option value="editor">محرر</option></select>
+                <select id="editStatus"><option value="active">نشط</option><option value="inactive">غير نشط</option><option value="suspended">موقوف</option></select>
+                <input type="text" id="editPhone" placeholder="رقم الهاتف">
+                <input type="password" id="editPassword" placeholder="كلمة مرور جديدة (اتركها فارغة إذا لا تريد التغيير)">
+                <div class="form-row">
+                    <button type="submit" class="btn-save" style="margin:0 10px 0 0;"><i class="fas fa-save"></i> حفظ التغييرات</button>
+                    <button type="button" class="close-modal" onclick="closeEditModal()" style="margin:0;"><i class="fas fa-times"></i> إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script type="module">
     import { db, auth } from "../js/firebase-config.js";
     import { 
-        collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, query, orderBy 
+        collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, query, orderBy, setDoc
     } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+    import { 
+        onAuthStateChanged, signOut, createUserWithEmailAndPassword, updatePassword 
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-    // دالة لاستخراج السعر كرقم
     function extractPrice(price) {
         if (!price) return 0;
         if (typeof price === 'number') return price;
@@ -819,7 +639,6 @@
         return 0;
     }
 
-    // ==================== دوال مساعدة ====================
     async function compressImage(file, maxSizeKB = 500, maxWidth = 800, maxHeight = 800) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -831,13 +650,11 @@
                     let width = img.width, height = img.height;
                     if (width > maxWidth) { height = (height * maxWidth) / width; width = maxWidth; }
                     if (height > maxHeight) { width = (width * maxHeight) / height; height = maxHeight; }
-                    
                     const canvas = document.createElement('canvas');
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    
                     let quality = 0.7;
                     let result = canvas.toDataURL('image/jpeg', quality);
                     while (result.length > maxSizeKB * 1024 && quality > 0.1) {
@@ -858,6 +675,15 @@
         return discount > 0 ? discount : 0;
     }
 
+    window.showSection = (id) => {
+        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if (event && event.target) {
+            event.target.classList.add('active');
+        }
+    };
+
     onAuthStateChanged(auth, (user) => {
         if (!user) window.location.href = "admin-login.html";
     });
@@ -866,7 +692,6 @@
     let base64Image = "";
     const imgInput = document.getElementById('serviceImgInput');
     const imgPreview = document.getElementById('imgPreview');
-    
     if (imgInput) {
         imgInput.onchange = async (e) => {
             const file = e.target.files[0];
@@ -885,15 +710,12 @@
         serviceForm.onsubmit = async (e) => {
             e.preventDefault();
             if (!base64Image) { alert("⚠️ يرجى اختيار صورة للخدمة"); return; }
-            
             const startDate = new Date(document.getElementById('startDate').value);
             const endDate = new Date(document.getElementById('endDate').value);
             if (startDate >= endDate) { alert("⚠️ تاريخ البداية يجب أن يكون قبل تاريخ النهاية"); return; }
-
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
-
             const newService = {
                 category: document.getElementById('category').value,
                 title: document.getElementById('title').value,
@@ -905,7 +727,6 @@
                 available_seats: Number(document.getElementById('availableSeats').value),
                 createdAt: new Date()
             };
-
             try {
                 await addDoc(collection(db, "services"), newService);
                 alert("✅ تمت إضافة الخدمة بنجاح!");
@@ -925,30 +746,19 @@
         if (!tbody) return;
         tbody.innerHTML = "";
         if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="8">📭 لا توجد خدمات حالياً</td></tr>'; return; }
-        
         const categoryNames = { umrah: 'عمرة', hajj: 'حج', group: 'كروبات', flight: 'طيران', land: 'برية' };
         snapshot.forEach((docSnap) => {
             const s = docSnap.data();
             const startDate = s.start_date ? new Date(s.start_date.toDate()).toLocaleDateString('ar') : '-';
             const endDate = s.end_date ? new Date(s.end_date.toDate()).toLocaleDateString('ar') : '-';
-            tbody.innerHTML += `
-                <tr>
-                    <td>${s.img ? `<img src="${s.img}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
-                    <td><strong>${s.title || '-'}</strong></td>
-                    <td>${s.price || 0} $</td>
-                    <td><span class="badge">${categoryNames[s.category] || s.category}</span></td>
-                    <td>${s.available_seats || 0}</td>
-                    <td>${startDate}</td><td>${endDate}</td>
-                    <td><button class="delete-btn" onclick="deleteDocument('services', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td>
-                </tr>`;
+            tbody.innerHTML += `<tr><td>${s.img ? `<img src="${s.img}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td><td><strong>${s.title || '-'}</strong></td><td>${s.price || 0} $</td><td><span class="badge">${categoryNames[s.category] || s.category}</span></td><td>${s.available_seats || 0}</td><td>${startDate}</td><td>${endDate}</td><td><button class="delete-btn" onclick="deleteDocument('services', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td></tr>`;
         });
     });
 
-    // ==================== الرحلات (新增) ====================
+    // ==================== الرحلات ====================
     let tripBase64Image = "";
     const tripImgInput = document.getElementById('tripImgInput');
     const tripImgPreview = document.getElementById('tripImgPreview');
-
     if (tripImgInput) {
         tripImgInput.onchange = async (e) => {
             const file = e.target.files[0];
@@ -967,14 +777,11 @@
         tripsForm.onsubmit = async (e) => {
             e.preventDefault();
             if (!tripBase64Image) { alert("⚠️ يرجى اختيار صورة للرحلة"); return; }
-
             const submitBtn = document.getElementById('submitTripBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإضافة...';
-
             const priceRaw = document.getElementById('tripPrice').value;
             const priceValue = extractPrice(priceRaw);
-
             const newTrip = {
                 title: document.getElementById('tripTitle').value,
                 description: document.getElementById('tripDescription').value,
@@ -984,7 +791,6 @@
                 img: tripBase64Image,
                 createdAt: new Date()
             };
-
             try {
                 await addDoc(collection(db, "trips"), newTrip);
                 alert("✅ تمت إضافة الرحلة بنجاح!");
@@ -999,29 +805,17 @@
         };
     }
 
-    // عرض الرحلات في الجدول
     onSnapshot(collection(db, "trips"), (snapshot) => {
         const tbody = document.getElementById('tripsTableBody');
         if (!tbody) return;
         tbody.innerHTML = "";
-        if (snapshot.empty) { tbody.innerHTML = '<table><td colspan="6">📭 لا توجد رحلات حالياً</td></tr>'; return; }
-        
+        if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="6">📭 لا توجد رحلات حالياً</td></tr>'; return; }
         const categoryNames = { umrah: 'عمرة', hajj: 'حج', group: 'كروبات', flight: 'طيران', land: 'برية' };
-        
         snapshot.forEach((docSnap) => {
             const trip = docSnap.data();
             const createdAt = trip.createdAt?.toDate ? new Date(trip.createdAt.toDate()).toLocaleDateString('ar') : '-';
             const priceDisplay = trip.priceRaw || trip.price || 0;
-            
-            tbody.innerHTML += `
-                <tr>
-                    <td>${trip.img ? `<img src="${trip.img}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
-                    <td><strong>${trip.title || '-'}</strong></td>
-                    <td>${typeof priceDisplay === 'number' ? priceDisplay.toLocaleString() : priceDisplay} $</td>
-                    <td><span class="badge">${categoryNames[trip.category] || trip.category}</span></td>
-                    <td>${createdAt}</td>
-                    <td><button class="delete-btn" onclick="deleteDocument('trips', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td>
-                </tr>`;
+            tbody.innerHTML += `<tr><td>${trip.img ? `<img src="${trip.img}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td><td><strong>${trip.title || '-'}</strong></td><td>${typeof priceDisplay === 'number' ? priceDisplay.toLocaleString() : priceDisplay} $</td><td><span class="badge">${categoryNames[trip.category] || trip.category}</span></td><td>${createdAt}</td><td><button class="delete-btn" onclick="deleteDocument('trips', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td></tr>`;
         });
     });
 
@@ -1029,7 +823,6 @@
     let hotelBase64Image = "";
     const hotelImgInput = document.getElementById('hotelImgInput');
     const hotelImgPreview = document.getElementById('hotelImgPreview');
-    
     if (hotelImgInput) {
         hotelImgInput.onchange = async (e) => {
             const file = e.target.files[0];
@@ -1048,11 +841,9 @@
         hotelForm.onsubmit = async (e) => {
             e.preventDefault();
             if (!hotelBase64Image) { alert("⚠️ يرجى اختيار صورة للفندق"); return; }
-
             const submitBtn = document.getElementById('submitHotelBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإضافة...';
-
             const newHotel = {
                 name: document.getElementById('hotelName').value,
                 location: document.getElementById('hotelLocation').value,
@@ -1063,7 +854,6 @@
                 image: hotelBase64Image,
                 createdAt: new Date()
             };
-
             try {
                 await addDoc(collection(db, "hotels"), newHotel);
                 alert("✅ تمت إضافة الفندق بنجاح!");
@@ -1083,22 +873,10 @@
         if (!tbody) return;
         tbody.innerHTML = "";
         if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="7">📭 لا توجد فنادق حالياً</td></tr>'; return; }
-        
         const statusText = { available: '✅ متاح', booked: '🔴 محجوز', partial: '🟡 حجز جزئي' };
-        const statusClass = { available: 'status-available', booked: 'status-booked', partial: 'status-available' };
-        
         snapshot.forEach((docSnap) => {
             const h = docSnap.data();
-            tbody.innerHTML += `
-                <tr>
-                    <td>${h.image ? `<img src="${h.image}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
-                    <td><strong>${h.name || '-'}</strong></td>
-                    <td>📍 ${h.location || '-'}</td>
-                    <td>${h.price_per_night || 0} $</td>
-                    <td>🛏️ ${h.available_rooms || 0}</td>
-                    <td><span class="${statusClass[h.status]}">${statusText[h.status] || h.status}</span></td>
-                    <td><button class="delete-btn" onclick="deleteDocument('hotels', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td>
-                </tr>`;
+            tbody.innerHTML += `<tr><td>${h.image ? `<img src="${h.image}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td><td><strong>${h.name || '-'}</strong></td><td>📍 ${h.location || '-'}</td><td>${h.price_per_night || 0} $</td><td>🛏️ ${h.available_rooms || 0}</td><td>${statusText[h.status] || h.status}</td><td><button class="delete-btn" onclick="deleteDocument('hotels', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td></tr>`;
         });
     });
 
@@ -1106,7 +884,6 @@
     let offerBase64Image = "";
     const offerImgInput = document.getElementById('offerImgInput');
     const offerImgPreview = document.getElementById('offerImgPreview');
-    
     if (offerImgInput) {
         offerImgInput.onchange = async (e) => {
             const file = e.target.files[0];
@@ -1125,21 +902,16 @@
         offerForm.onsubmit = async (e) => {
             e.preventDefault();
             if (!offerBase64Image) { alert("⚠️ يرجى اختيار صورة للعرض"); return; }
-            
             const startDate = new Date(document.getElementById('offerStartDate').value);
             const endDate = new Date(document.getElementById('offerEndDate').value);
             const currentPrice = Number(document.getElementById('currentPrice').value);
             const oldPrice = Number(document.getElementById('oldPrice').value);
-            
             if (startDate >= endDate) { alert("⚠️ تاريخ بداية العرض يجب أن يكون قبل تاريخ النهاية"); return; }
             if (currentPrice >= oldPrice) { alert("⚠️ السعر الحالي يجب أن يكون أقل من السعر السابق"); return; }
-
             const submitBtn = document.getElementById('submitOfferBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
-
             const discount = calculateDiscount(oldPrice, currentPrice);
-
             const newOffer = {
                 title: document.getElementById('offerTitle').value,
                 name: document.getElementById('offerName').value,
@@ -1154,7 +926,6 @@
                 is_active: true,
                 createdAt: new Date()
             };
-
             try {
                 await addDoc(collection(db, "offers"), newOffer);
                 alert(`✅ تمت إضافة العرض بنجاح! الخصم: ${discount}%`);
@@ -1174,36 +945,21 @@
         if (!tbody) return;
         tbody.innerHTML = "";
         if (snapshot.empty) { tbody.innerHTML = '<tr><td colspan="8">📭 لا توجد عروض حالياً</td></tr>'; return; }
-        
         snapshot.forEach((docSnap) => {
             const o = docSnap.data();
             const startDate = o.start_date ? new Date(o.start_date.toDate()).toLocaleDateString('ar') : '-';
             const endDate = o.end_date ? new Date(o.end_date.toDate()).toLocaleDateString('ar') : '-';
-            
-            tbody.innerHTML += `
-                <tr>
-                    <td>${o.image ? `<img src="${o.image}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td>
-                    <td><strong>${o.title || '-'}</strong></td>
-                    <td>${o.name || '-'}</td>
-                    <td><span class="new-price">${o.current_price || 0} $</span></td>
-                    <td><span class="old-price">${o.old_price || 0} $</span></td>
-                    <td><span class="discount-badge">⚡ ${o.discount_percentage || 0}%</span></td>
-                    <td style="font-size:12px;">${startDate}<br>→<br>${endDate}</td>
-                    <td><button class="delete-btn" onclick="deleteDocument('offers', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td>
-                </tr>`;
+            tbody.innerHTML += `<tr><td>${o.image ? `<img src="${o.image}" width="50" height="50" style="border-radius:8px; object-fit:cover;">` : '🖼️'}</td><td><strong>${o.title || '-'}</strong></td><td>${o.name || '-'}</td><td>${o.current_price || 0} $</td><td>${o.old_price || 0} $</td><td>⚡ ${o.discount_percentage || 0}%</td><td style="font-size:12px;">${startDate}<br>→<br>${endDate}</td><td><button class="delete-btn" onclick="deleteDocument('offers', '${docSnap.id}')"><i class="fas fa-trash"></i> حذف</button></td></tr>`;
         });
     });
 
     // ==================== الحجوزات ====================
     let allBookings = [];
-    
     const bookingsQuery = query(collection(db, "bookings"), orderBy("createdAt", "desc"));
     
     onSnapshot(bookingsQuery, (snapshot) => {
         allBookings = [];
-        snapshot.forEach((docSnap) => {
-            allBookings.push({ id: docSnap.id, ...docSnap.data() });
-        });
+        snapshot.forEach((docSnap) => { allBookings.push({ id: docSnap.id, ...docSnap.data() }); });
         updateBookingsTable();
         updateStats();
     });
@@ -1212,7 +968,6 @@
         const total = allBookings.length;
         const totalRevenue = allBookings.reduce((sum, b) => sum + (Number(b.totalPrice) || 0), 0);
         const pending = allBookings.filter(b => b.paymentStatus === 'pending' || b.status === 'pending').length;
-        
         document.getElementById('totalBookings').innerText = total;
         document.getElementById('totalRevenue').innerText = totalRevenue.toLocaleString();
         document.getElementById('pendingBookings').innerText = pending;
@@ -1221,103 +976,27 @@
     function updateBookingsTable() {
         const tbody = document.getElementById('bookingsTableBody');
         if (!tbody) return;
-        
         const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
-        
         let filtered = allBookings;
         if (searchTerm) {
-            filtered = allBookings.filter(b => 
-                (b.userEmail && b.userEmail.toLowerCase().includes(searchTerm)) ||
-                (b.tripName && b.tripName.toLowerCase().includes(searchTerm))
-            );
+            filtered = allBookings.filter(b => (b.userEmail && b.userEmail.toLowerCase().includes(searchTerm)) || (b.tripName && b.tripName.toLowerCase().includes(searchTerm)));
         }
-        
-        if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">📭 لا توجد حجوزات</td></tr>';
-            return;
-        }
-        
+        if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">📭 لا توجد حجوزات</td></tr>'; return; }
         tbody.innerHTML = '';
         filtered.forEach((booking) => {
-            const bookingDate = booking.bookingDate ? new Date(booking.bookingDate).toLocaleDateString('ar') : 
-                               (booking.createdAt?.toDate ? new Date(booking.createdAt.toDate()).toLocaleDateString('ar') : '-');
-            
-            const paymentStatusClass = {
-                'paid': 'payment-paid',
-                'completed': 'payment-paid',
-                'pending': 'payment-pending',
-                'failed': 'payment-failed'
-            }[booking.paymentStatus] || 'payment-pending';
-            
-            const paymentStatusText = {
-                'paid': 'مدفوع',
-                'completed': 'مدفوع',
-                'pending': 'معلق',
-                'failed': 'فشل'
-            }[booking.paymentStatus] || booking.paymentStatus || 'معلق';
-            
-            const bookingStatusClass = {
-                'confirmed': 'status-confirmed',
-                'pending': 'status-pending',
-                'cancelled': 'status-cancelled',
-                'completed': 'status-completed'
-            }[booking.status] || 'status-pending';
-            
-            const bookingStatusText = {
-                'confirmed': 'مؤكد',
-                'pending': 'قيد الانتظار',
-                'cancelled': 'ملغي',
-                'completed': 'مكتمل'
-            }[booking.status] || booking.status || 'قيد الانتظار';
-            
-            const row = `
-                <tr>
-                    <td>${bookingDate}</td>
-                    <td><strong>${booking.userName || 'غير محدد'}</strong></td>
-                    <td>${booking.userEmail || '-'}</td>
-                    <td>${booking.tripName || '-'}</td>
-                    <td>${booking.tripLocation || '-'}</td>
-                    <td>${booking.totalPrice || 0} $</td>
-                    <td>${booking.travelers || 1}</td>
-                    <td><span class="${paymentStatusClass}">${paymentStatusText}</span></td>
-                    <td>
-                        <select class="booking-status-select" data-id="${booking.id}" data-field="status" style="padding:6px; border-radius:8px;">
-                            <option value="pending" ${booking.status === 'pending' ? 'selected' : ''}>⏳ قيد الانتظار</option>
-                            <option value="confirmed" ${booking.status === 'confirmed' ? 'selected' : ''}>✅ مؤكد</option>
-                            <option value="cancelled" ${booking.status === 'cancelled' ? 'selected' : ''}>❌ ملغي</option>
-                            <option value="completed" ${booking.status === 'completed' ? 'selected' : ''}>🎉 مكتمل</option>
-                        </select>
-                     </td>
-                    <td>
-                        <select class="booking-status-select" data-id="${booking.id}" data-field="paymentStatus" style="padding:6px; border-radius:8px;">
-                            <option value="pending" ${booking.paymentStatus === 'pending' ? 'selected' : ''}>⏳ معلق</option>
-                            <option value="paid" ${booking.paymentStatus === 'paid' ? 'selected' : ''}>✅ مدفوع</option>
-                            <option value="failed" ${booking.paymentStatus === 'failed' ? 'selected' : ''}>❌ فشل</option>
-                        </select>
-                     </td>
-                    <td style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${booking.notes || ''}">
-                        ${booking.notes ? booking.notes.substring(0,30) : '-'}
-                    </td>
-                    <td>
-                        <button class="edit-btn" onclick="viewBookingDetails('${booking.id}')"><i class="fas fa-eye"></i></button>
-                        <button class="delete-btn" onclick="deleteDocument('bookings', '${booking.id}')"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-            `;
+            const bookingDate = booking.bookingDate ? new Date(booking.bookingDate).toLocaleDateString('ar') : (booking.createdAt?.toDate ? new Date(booking.createdAt.toDate()).toLocaleDateString('ar') : '-');
+            const paymentStatusClass = { 'paid': 'payment-paid', 'completed': 'payment-paid', 'pending': 'payment-pending', 'failed': 'payment-failed' }[booking.paymentStatus] || 'payment-pending';
+            const paymentStatusText = { 'paid': 'مدفوع', 'completed': 'مدفوع', 'pending': 'معلق', 'failed': 'فشل' }[booking.paymentStatus] || booking.paymentStatus || 'معلق';
+            const row = `<tr><td>${bookingDate}</td><td><strong>${booking.userName || 'غير محدد'}</strong></td><td>${booking.userEmail || '-'}</td><td>${booking.tripName || '-'}</td><td>${booking.tripLocation || '-'}</td><td>${booking.totalPrice || 0} $</td><td>${booking.travelers || 1}</td><td><span class="${paymentStatusClass}">${paymentStatusText}</span></td><td><select class="booking-status-select" data-id="${booking.id}" data-field="status" style="padding:6px; border-radius:8px;"><option value="pending" ${booking.status === 'pending' ? 'selected' : ''}>⏳ قيد الانتظار</option><option value="confirmed" ${booking.status === 'confirmed' ? 'selected' : ''}>✅ مؤكد</option><option value="cancelled" ${booking.status === 'cancelled' ? 'selected' : ''}>❌ ملغي</option><option value="completed" ${booking.status === 'completed' ? 'selected' : ''}>🎉 مكتمل</option></select></td><td><select class="booking-status-select" data-id="${booking.id}" data-field="paymentStatus" style="padding:6px; border-radius:8px;"><option value="pending" ${booking.paymentStatus === 'pending' ? 'selected' : ''}>⏳ معلق</option><option value="paid" ${booking.paymentStatus === 'paid' ? 'selected' : ''}>✅ مدفوع</option><option value="failed" ${booking.paymentStatus === 'failed' ? 'selected' : ''}>❌ فشل</option></select></td><td style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${booking.notes || ''}">${booking.notes ? booking.notes.substring(0,30) : '-'}</td><td><button class="edit-btn" onclick="viewBookingDetails('${booking.id}')"><i class="fas fa-eye"></i></button><button class="delete-btn" onclick="deleteDocument('bookings', '${booking.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
             tbody.innerHTML += row;
         });
-        
         document.querySelectorAll('.booking-status-select').forEach(select => {
             select.addEventListener('change', async (e) => {
                 const bookingId = select.dataset.id;
                 const field = select.dataset.field;
                 const newValue = select.value;
-                try {
-                    await updateDoc(doc(db, "bookings", bookingId), { [field]: newValue });
-                    alert(`✅ تم تحديث ${field === 'status' ? 'حالة الحجز' : 'حالة الدفع'} بنجاح`);
-                } catch (err) {
-                    alert("❌ خطأ في التحديث: " + err.message);
-                }
+                try { await updateDoc(doc(db, "bookings", bookingId), { [field]: newValue }); alert(`✅ تم تحديث ${field === 'status' ? 'حالة الحجز' : 'حالة الدفع'} بنجاح`); } 
+                catch (err) { alert("❌ خطأ في التحديث: " + err.message); }
             });
         });
     }
@@ -1325,302 +1004,134 @@
     window.viewBookingDetails = async (bookingId) => {
         const booking = allBookings.find(b => b.id === bookingId);
         if (!booking) return;
-        
         const modal = document.getElementById('bookingModal');
         const modalDetails = document.getElementById('modalDetails');
-        
-        modalDetails.innerHTML = `
-            <div class="detail-row"><strong>🆔 معرف الحجز:</strong> <span>${booking.id}</span></div>
-            <div class="detail-row"><strong>👤 اسم المستخدم:</strong> <span>${booking.userName || 'غير محدد'}</span></div>
-            <div class="detail-row"><strong>📧 البريد الإلكتروني:</strong> <span>${booking.userEmail || '-'}</span></div>
-            <div class="detail-row"><strong>🆔 معرف المستخدم:</strong> <span>${booking.userId || '-'}</span></div>
-            <div class="detail-row"><strong>🏷️ اسم الرحلة:</strong> <span>${booking.tripName || '-'}</span></div>
-            <div class="detail-row"><strong>📍 موقع الرحلة:</strong> <span>${booking.tripLocation || '-'}</span></div>
-            <div class="detail-row"><strong>💰 السعر الإجمالي:</strong> <span>${booking.totalPrice || 0} $</span></div>
-            <div class="detail-row"><strong>🧳 عدد المسافرين:</strong> <span>${booking.travelers || 1}</span></div>
-            <div class="detail-row"><strong>💳 حالة الدفع:</strong> <span>${booking.paymentStatus || 'معلق'}</span></div>
-            <div class="detail-row"><strong>📋 حالة الحجز:</strong> <span>${booking.status || 'قيد الانتظار'}</span></div>
-            <div class="detail-row"><strong>📝 ملاحظات:</strong> <span>${booking.notes || 'لا توجد ملاحظات'}</span></div>
-            <div class="detail-row"><strong>📅 تاريخ الحجز:</strong> <span>${booking.bookingDate ? new Date(booking.bookingDate).toLocaleString('ar') : '-'}</span></div>
-        `;
-        
+        modalDetails.innerHTML = `<div class="detail-row"><strong>🆔 معرف الحجز:</strong> <span>${booking.id}</span></div><div class="detail-row"><strong>👤 اسم المستخدم:</strong> <span>${booking.userName || 'غير محدد'}</span></div><div class="detail-row"><strong>📧 البريد الإلكتروني:</strong> <span>${booking.userEmail || '-'}</span></div><div class="detail-row"><strong>🆔 معرف المستخدم:</strong> <span>${booking.userId || '-'}</span></div><div class="detail-row"><strong>🏷️ اسم الرحلة:</strong> <span>${booking.tripName || '-'}</span></div><div class="detail-row"><strong>📍 موقع الرحلة:</strong> <span>${booking.tripLocation || '-'}</span></div><div class="detail-row"><strong>💰 السعر الإجمالي:</strong> <span>${booking.totalPrice || 0} $</span></div><div class="detail-row"><strong>🧳 عدد المسافرين:</strong> <span>${booking.travelers || 1}</span></div><div class="detail-row"><strong>💳 حالة الدفع:</strong> <span>${booking.paymentStatus || 'معلق'}</span></div><div class="detail-row"><strong>📋 حالة الحجز:</strong> <span>${booking.status || 'قيد الانتظار'}</span></div><div class="detail-row"><strong>📝 ملاحظات:</strong> <span>${booking.notes || 'لا توجد ملاحظات'}</span></div><div class="detail-row"><strong>📅 تاريخ الحجز:</strong> <span>${booking.bookingDate ? new Date(booking.bookingDate).toLocaleString('ar') : '-'}</span></div>`;
         modal.style.display = 'flex';
     };
     
-    window.closeModal = () => {
-        document.getElementById('bookingModal').style.display = 'none';
-    };
-    
-    window.onclick = (event) => {
-        const modal = document.getElementById('bookingModal');
-        if (event.target === modal) modal.style.display = 'none';
-    };
+    window.closeModal = () => { document.getElementById('bookingModal').style.display = 'none'; };
+    window.onclick = (event) => { const modal = document.getElementById('bookingModal'); if (event.target === modal) modal.style.display = 'none'; };
     
     const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', () => updateBookingsTable());
-    }
+    if (searchInput) searchInput.addEventListener('input', () => updateBookingsTable());
 
     window.deleteDocument = async (collectionName, docId) => {
         if(confirm("⚠️ هل أنت متأكد من الحذف؟ لا يمكن التراجع!")) {
-            try {
-                await deleteDoc(doc(db, collectionName, docId));
-                alert("✅ تم الحذف بنجاح");
-            } catch (err) {
-                alert("❌ خطأ في الحذف: " + err.message);
-            }
+            try { await deleteDoc(doc(db, collectionName, docId)); alert("✅ تم الحذف بنجاح"); } 
+            catch (err) { alert("❌ خطأ في الحذف: " + err.message); }
         }
     };
 
     document.getElementById('logoutBtn').onclick = () => signOut(auth);
-    
-    window.showSection = (id) => {
-        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        if (event?.target) {
-            event.target.classList.add('active');
-        }
-    };
-        // ==================== نظام إدارة المستخدمين ====================
-let allUsers = [];
-let currentEditUserId = null;
 
-// دالة لإضافة مستخدم جديد
-const userForm = document.getElementById('userForm');
-if (userForm) {
-    userForm.onsubmit = async (e) => {
-        e.preventDefault();
-        
-        const email = document.getElementById('userEmail').value;
-        const password = document.getElementById('userPassword').value;
-        const fullName = document.getElementById('userFullName').value;
-        const role = document.getElementById('userRole').value;
-        const phone = document.getElementById('userPhone').value;
-        const status = document.getElementById('userStatus').value;
-        
-        if (!email || !password || !fullName || !role) {
-            alert("⚠️ الرجاء تعبئة جميع الحقول المطلوبة");
-            return;
-        }
-        
-        try {
-            // إنشاء مستخدم في Firebase Auth
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const userId = userCredential.user.uid;
-            
-            // إضافة بيانات المستخدم في Firestore
-            await setDoc(doc(db, "users", userId), {
-                fullName: fullName,
-                email: email,
-                role: role,
-                phone: phone || '',
-                status: status,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                uid: userId
-            });
-            
-            alert("✅ تم إضافة المستخدم بنجاح!");
-            userForm.reset();
-            
-        } catch (error) {
-            if (error.code === 'auth/email-already-in-use') {
-                alert("❌ هذا البريد الإلكتروني مستخدم بالفعل!");
-            } else {
-                alert("❌ خطأ: " + error.message);
+    // ==================== نظام إدارة المستخدمين ====================
+    let allUsers = [];
+    let currentEditUserId = null;
+
+    const userForm = document.getElementById('userForm');
+    if (userForm) {
+        userForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            const fullName = document.getElementById('userFullName').value;
+            const role = document.getElementById('userRole').value;
+            const phone = document.getElementById('userPhone').value;
+            const status = document.getElementById('userStatus').value;
+            if (!email || !password || !fullName || !role) { alert("⚠️ الرجاء تعبئة جميع الحقول المطلوبة"); return; }
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const userId = userCredential.user.uid;
+                await setDoc(doc(db, "users", userId), { fullName, email, role, phone: phone || '', status, createdAt: new Date(), updatedAt: new Date(), uid: userId });
+                alert("✅ تم إضافة المستخدم بنجاح!");
+                userForm.reset();
+            } catch (error) {
+                if (error.code === 'auth/email-already-in-use') alert("❌ هذا البريد الإلكتروني مستخدم بالفعل!");
+                else alert("❌ خطأ: " + error.message);
             }
-        }
+        };
+    }
+
+    const usersQuery = query(collection(db, "users"), orderBy("createdAt", "desc"));
+    onSnapshot(usersQuery, (snapshot) => {
+        allUsers = [];
+        snapshot.forEach((docSnap) => { allUsers.push({ id: docSnap.id, ...docSnap.data() }); });
+        displayUsers();
+    });
+
+    function displayUsers() {
+        const tbody = document.getElementById('usersTableBody');
+        if (!tbody) return;
+        const searchTerm = document.getElementById('searchUsers')?.value.toLowerCase() || '';
+        const roleFilter = document.getElementById('filterRole')?.value || 'all';
+        const statusFilter = document.getElementById('filterStatus')?.value || 'all';
+        let filtered = allUsers;
+        if (searchTerm) filtered = filtered.filter(user => (user.fullName && user.fullName.toLowerCase().includes(searchTerm)) || (user.email && user.email.toLowerCase().includes(searchTerm)));
+        if (roleFilter !== 'all') filtered = filtered.filter(user => user.role === roleFilter);
+        if (statusFilter !== 'all') filtered = filtered.filter(user => user.status === statusFilter);
+        if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">📭 لا يوجد مستخدمين</td></tr>'; return; }
+        tbody.innerHTML = '';
+        filtered.forEach((user, index) => {
+            const roleText = { 'admin': '👑 أدمن', 'user': '👤 مستخدم', 'editor': '✏️ محرر' }[user.role] || user.role;
+            const statusText = { 'active': '✅ نشط', 'inactive': '⭕ غير نشط', 'suspended': '⚠️ موقوف' }[user.status] || user.status;
+            const statusClass = { 'active': 'status-confirmed', 'inactive': 'status-pending', 'suspended': 'status-cancelled' }[user.status] || '';
+            const createdAt = user.createdAt?.toDate ? new Date(user.createdAt.toDate()).toLocaleDateString('ar') : '-';
+            tbody.innerHTML += `<tr><td>${index + 1}</td><td><strong>${user.fullName || '-'}</strong></td><td>${user.email || '-'}</td><td><span class="badge">${roleText}</span></td><td><span class="${statusClass}">${statusText}</span></td><td>${user.phone || '-'}</td><td>${createdAt}</td><td><button class="edit-btn" onclick="editUser('${user.id}')"><i class="fas fa-edit"></i> تعديل</button><button class="delete-btn" onclick="deleteUser('${user.id}')"><i class="fas fa-trash"></i> حذف</button></td></tr>`;
+        });
+    }
+
+    window.editUser = async (userId) => {
+        const user = allUsers.find(u => u.id === userId);
+        if (!user) return;
+        currentEditUserId = userId;
+        document.getElementById('editUserId').value = userId;
+        document.getElementById('editFullName').value = user.fullName || '';
+        document.getElementById('editEmail').value = user.email || '';
+        document.getElementById('editRole').value = user.role || 'user';
+        document.getElementById('editStatus').value = user.status || 'active';
+        document.getElementById('editPhone').value = user.phone || '';
+        document.getElementById('editPassword').value = '';
+        document.getElementById('editUserModal').style.display = 'flex';
     };
-}
 
-// تحميل المستخدمين من Firestore
-const usersQuery = query(collection(db, "users"), orderBy("createdAt", "desc"));
-
-onSnapshot(usersQuery, (snapshot) => {
-    allUsers = [];
-    snapshot.forEach((docSnap) => {
-        allUsers.push({ id: docSnap.id, ...docSnap.data() });
-    });
-    displayUsers();
-});
-
-// دالة عرض المستخدمين مع فلترة وبحث
-function displayUsers() {
-    const tbody = document.getElementById('usersTableBody');
-    if (!tbody) return;
-    
-    const searchTerm = document.getElementById('searchUsers')?.value.toLowerCase() || '';
-    const roleFilter = document.getElementById('filterRole')?.value || 'all';
-    const statusFilter = document.getElementById('filterStatus')?.value || 'all';
-    
-    let filtered = allUsers;
-    
-    if (searchTerm) {
-        filtered = filtered.filter(user => 
-            (user.fullName && user.fullName.toLowerCase().includes(searchTerm)) ||
-            (user.email && user.email.toLowerCase().includes(searchTerm))
-        );
-    }
-    
-    if (roleFilter !== 'all') {
-        filtered = filtered.filter(user => user.role === roleFilter);
-    }
-    
-    if (statusFilter !== 'all') {
-        filtered = filtered.filter(user => user.status === statusFilter);
-    }
-    
-    if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">📭 لا يوجد مستخدمين</td></tr>';
-        return;
-    }
-    
-    tbody.innerHTML = '';
-    filtered.forEach((user, index) => {
-        const roleText = {
-            'admin': '👑 أدمن',
-            'user': '👤 مستخدم',
-            'editor': '✏️ محرر'
-        }[user.role] || user.role;
-        
-        const statusText = {
-            'active': '✅ نشط',
-            'inactive': '⭕ غير نشط',
-            'suspended': '⚠️ موقوف'
-        }[user.status] || user.status;
-        
-        const statusClass = {
-            'active': 'status-confirmed',
-            'inactive': 'status-pending',
-            'suspended': 'status-cancelled'
-        }[user.status] || '';
-        
-        const createdAt = user.createdAt?.toDate ? new Date(user.createdAt.toDate()).toLocaleDateString('ar') : '-';
-        
-        tbody.innerHTML += `
-            <tr>
-                <td>${index + 1}</td>
-                <td><strong>${user.fullName || '-'}</strong></td>
-                <td>${user.email || '-'}</td>
-                <td><span class="badge">${roleText}</span></td>
-                <td><span class="${statusClass}">${statusText}</span></td>
-                <td>${user.phone || '-'}</td>
-                <td>${createdAt}</td>
-                <td>
-                    <button class="edit-btn" onclick="editUser('${user.id}')">
-                        <i class="fas fa-edit"></i> تعديل
-                    </button>
-                    <button class="delete-btn" onclick="deleteUser('${user.id}')">
-                        <i class="fas fa-trash"></i> حذف
-                    </button>
-                </td>
-            </tr>
-        `;
-    });
-}
-
-// دالة تعديل المستخدم
-window.editUser = async (userId) => {
-    const user = allUsers.find(u => u.id === userId);
-    if (!user) return;
-    
-    currentEditUserId = userId;
-    document.getElementById('editUserId').value = userId;
-    document.getElementById('editFullName').value = user.fullName || '';
-    document.getElementById('editEmail').value = user.email || '';
-    document.getElementById('editRole').value = user.role || 'user';
-    document.getElementById('editStatus').value = user.status || 'active';
-    document.getElementById('editPhone').value = user.phone || '';
-    document.getElementById('editPassword').value = '';
-    
-    document.getElementById('editUserModal').style.display = 'flex';
-};
-
-// حفظ تعديلات المستخدم
-const editUserForm = document.getElementById('editUserForm');
-if (editUserForm) {
-    editUserForm.onsubmit = async (e) => {
-        e.preventDefault();
-        
-        const userId = document.getElementById('editUserId').value;
-        const fullName = document.getElementById('editFullName').value;
-        const email = document.getElementById('editEmail').value;
-        const role = document.getElementById('editRole').value;
-        const status = document.getElementById('editStatus').value;
-        const phone = document.getElementById('editPhone').value;
-        const newPassword = document.getElementById('editPassword').value;
-        
-        try {
-            // تحديث بيانات المستخدم في Firestore
-            await updateDoc(doc(db, "users", userId), {
-                fullName: fullName,
-                email: email,
-                role: role,
-                status: status,
-                phone: phone,
-                updatedAt: new Date()
-            });
-            
-            // إذا تم إدخال كلمة مرور جديدة، قم بتحديثها في Auth
-            if (newPassword && newPassword.length >= 6) {
-                const user = auth.currentUser;
-                if (user && user.uid === userId) {
-                    await updatePassword(user, newPassword);
-                } else {
-                    // ملاحظة: لا يمكن تغيير كلمة مرور مستخدم آخر من الواجهة الأمامية لأسباب أمنية
-                    console.log("لا يمكن تغيير كلمة مرور مستخدم آخر");
+    const editUserForm = document.getElementById('editUserForm');
+    if (editUserForm) {
+        editUserForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('editUserId').value;
+            const fullName = document.getElementById('editFullName').value;
+            const email = document.getElementById('editEmail').value;
+            const role = document.getElementById('editRole').value;
+            const status = document.getElementById('editStatus').value;
+            const phone = document.getElementById('editPhone').value;
+            const newPassword = document.getElementById('editPassword').value;
+            try {
+                await updateDoc(doc(db, "users", userId), { fullName, email, role, status, phone, updatedAt: new Date() });
+                if (newPassword && newPassword.length >= 6) {
+                    const user = auth.currentUser;
+                    if (user && user.uid === userId) await updatePassword(user, newPassword);
                 }
-            }
-            
-            alert("✅ تم تحديث بيانات المستخدم بنجاح!");
-            closeEditModal();
-            
-        } catch (error) {
-            alert("❌ خطأ في التحديث: " + error.message);
-        }
-    };
-}
-
-// دالة حذف المستخدم
-window.deleteUser = async (userId) => {
-    if (!confirm("⚠️ هل أنت متأكد من حذف هذا المستخدم؟ لا يمكن التراجع!")) return;
-    
-    try {
-        // حذف المستخدم من Firestore
-        await deleteDoc(doc(db, "users", userId));
-        
-        // ملاحظة: حذف المستخدم من Authentication يتطلب دوال Cloud Function لأسباب أمنية
-        alert("✅ تم حذف المستخدم بنجاح!");
-        
-    } catch (error) {
-        alert("❌ خطأ في الحذف: " + error.message);
+                alert("✅ تم تحديث بيانات المستخدم بنجاح!");
+                closeEditModal();
+            } catch (error) { alert("❌ خطأ في التحديث: " + error.message); }
+        };
     }
-};
 
-// إغلاق نافذة التعديل
-window.closeEditModal = () => {
-    document.getElementById('editUserModal').style.display = 'none';
-    currentEditUserId = null;
-};
+    window.deleteUser = async (userId) => {
+        if (!confirm("⚠️ هل أنت متأكد من حذف هذا المستخدم؟ لا يمكن التراجع!")) return;
+        try { await deleteDoc(doc(db, "users", userId)); alert("✅ تم حذف المستخدم بنجاح!"); } 
+        catch (error) { alert("❌ خطأ في الحذف: " + error.message); }
+    };
 
-// أحداث البحث والفلترة
-const searchUsers = document.getElementById('searchUsers');
-const filterRole = document.getElementById('filterRole');
-const filterStatus = document.getElementById('filterStatus');
+    window.closeEditModal = () => { document.getElementById('editUserModal').style.display = 'none'; currentEditUserId = null; };
 
-if (searchUsers) searchUsers.addEventListener('input', () => displayUsers());
-if (filterRole) filterRole.addEventListener('change', () => displayUsers());
-if (filterStatus) filterStatus.addEventListener('change', () => displayUsers());
-
-// إضافة import ضرورية
-import { 
-    createUserWithEmailAndPassword, 
-    updatePassword 
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { 
-    doc, setDoc, updateDoc, deleteDoc, query, orderBy 
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    const searchUsers = document.getElementById('searchUsers');
+    const filterRole = document.getElementById('filterRole');
+    const filterStatus = document.getElementById('filterStatus');
+    if (searchUsers) searchUsers.addEventListener('input', () => displayUsers());
+    if (filterRole) filterRole.addEventListener('change', () => displayUsers());
+    if (filterStatus) filterStatus.addEventListener('change', () => displayUsers());
     </script>
 </body>
 </html>
