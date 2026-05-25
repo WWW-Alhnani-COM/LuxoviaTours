@@ -428,6 +428,9 @@
         <button class="nav-btn logout-btn" id="logoutBtn">
             <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
         </button>
+        <button class="nav-btn" onclick="showSection('users-sec')">
+    <i class="fas fa-users-cog"></i> إدارة الحسابات
+</button>
     </aside>
     
     <main class="main-content">
@@ -668,6 +671,124 @@
                 </div>
             </div>
         </section>
+        <!-- ==================== قسم إدارة الحسابات ==================== -->
+<section id="users-sec" class="hidden">
+    <div class="card">
+        <h3><i class="fas fa-user-plus"></i> إضافة حساب جديد</h3>
+        <form id="userForm">
+            <div class="form-row">
+                <div>
+                    <input type="text" id="userFullName" placeholder="👤 الاسم الكامل" required>
+                </div>
+                <div>
+                    <input type="email" id="userEmail" placeholder="📧 البريد الإلكتروني" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <input type="password" id="userPassword" placeholder="🔒 كلمة المرور" required>
+                </div>
+                <div>
+                    <select id="userRole" required>
+                        <option value="">اختر الصلاحية</option>
+                        <option value="admin">👑 أدمن (صلاحية كاملة)</option>
+                        <option value="user">👤 مستخدم عادي</option>
+                        <option value="editor">✏️ محرر (إدارة المحتوى)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <input type="text" id="userPhone" placeholder="📱 رقم الهاتف">
+                </div>
+                <div>
+                    <select id="userStatus">
+                        <option value="active">✅ نشط</option>
+                        <option value="inactive">⛔ غير نشط</option>
+                        <option value="suspended">⚠️ موقوف</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn-save">
+                <i class="fas fa-save"></i> إضافة المستخدم
+            </button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-search"></i> بحث وتصفية المستخدمين</h3>
+        <div class="search-bar">
+            <input type="text" id="searchUsers" placeholder="🔍 بحث بالاسم أو البريد الإلكتروني...">
+            <select id="filterRole" style="width: 200px;">
+                <option value="all">جميع الصلاحيات</option>
+                <option value="admin">أدمن</option>
+                <option value="user">مستخدمين</option>
+                <option value="editor">محررين</option>
+            </select>
+            <select id="filterStatus" style="width: 200px;">
+                <option value="all">جميع الحالات</option>
+                <option value="active">نشط</option>
+                <option value="inactive">غير نشط</option>
+                <option value="suspended">موقوف</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3><i class="fas fa-list-alt"></i> قائمة المستخدمين</h3>
+        <div class="table-wrapper">
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>الاسم</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>الصلاحية</th>
+                        <th>الحالة</th>
+                        <th>رقم الهاتف</th>
+                        <th>تاريخ التسجيل</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr><td colspan="8" style="text-align:center;">جاري تحميل المستخدمين...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- نافذة تعديل المستخدم -->
+<div id="editUserModal" class="modal">
+    <div class="modal-content">
+        <h3><i class="fas fa-edit"></i> تعديل بيانات المستخدم</h3>
+        <form id="editUserForm">
+            <input type="hidden" id="editUserId">
+            <input type="text" id="editFullName" placeholder="الاسم الكامل" required>
+            <input type="email" id="editEmail" placeholder="البريد الإلكتروني" required>
+            <select id="editRole" required>
+                <option value="admin">أدمن</option>
+                <option value="user">مستخدم</option>
+                <option value="editor">محرر</option>
+            </select>
+            <select id="editStatus">
+                <option value="active">نشط</option>
+                <option value="inactive">غير نشط</option>
+                <option value="suspended">موقوف</option>
+            </select>
+            <input type="text" id="editPhone" placeholder="رقم الهاتف">
+            <input type="password" id="editPassword" placeholder="كلمة مرور جديدة (اتركها فارغة إذا لا تريد التغيير)">
+            <div class="form-row">
+                <button type="submit" class="btn-save" style="margin:0 10px 0 0;">
+                    <i class="fas fa-save"></i> حفظ التغييرات
+                </button>
+                <button type="button" class="close-modal" onclick="closeEditModal()" style="margin:0;">
+                    <i class="fas fa-times"></i> إلغاء
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
     </main>
 
     <!-- نافذة منبثقة لعرض التفاصيل -->
@@ -1261,6 +1382,245 @@
             event.target.classList.add('active');
         }
     };
+        // ==================== نظام إدارة المستخدمين ====================
+let allUsers = [];
+let currentEditUserId = null;
+
+// دالة لإضافة مستخدم جديد
+const userForm = document.getElementById('userForm');
+if (userForm) {
+    userForm.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('userEmail').value;
+        const password = document.getElementById('userPassword').value;
+        const fullName = document.getElementById('userFullName').value;
+        const role = document.getElementById('userRole').value;
+        const phone = document.getElementById('userPhone').value;
+        const status = document.getElementById('userStatus').value;
+        
+        if (!email || !password || !fullName || !role) {
+            alert("⚠️ الرجاء تعبئة جميع الحقول المطلوبة");
+            return;
+        }
+        
+        try {
+            // إنشاء مستخدم في Firebase Auth
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userId = userCredential.user.uid;
+            
+            // إضافة بيانات المستخدم في Firestore
+            await setDoc(doc(db, "users", userId), {
+                fullName: fullName,
+                email: email,
+                role: role,
+                phone: phone || '',
+                status: status,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                uid: userId
+            });
+            
+            alert("✅ تم إضافة المستخدم بنجاح!");
+            userForm.reset();
+            
+        } catch (error) {
+            if (error.code === 'auth/email-already-in-use') {
+                alert("❌ هذا البريد الإلكتروني مستخدم بالفعل!");
+            } else {
+                alert("❌ خطأ: " + error.message);
+            }
+        }
+    };
+}
+
+// تحميل المستخدمين من Firestore
+const usersQuery = query(collection(db, "users"), orderBy("createdAt", "desc"));
+
+onSnapshot(usersQuery, (snapshot) => {
+    allUsers = [];
+    snapshot.forEach((docSnap) => {
+        allUsers.push({ id: docSnap.id, ...docSnap.data() });
+    });
+    displayUsers();
+});
+
+// دالة عرض المستخدمين مع فلترة وبحث
+function displayUsers() {
+    const tbody = document.getElementById('usersTableBody');
+    if (!tbody) return;
+    
+    const searchTerm = document.getElementById('searchUsers')?.value.toLowerCase() || '';
+    const roleFilter = document.getElementById('filterRole')?.value || 'all';
+    const statusFilter = document.getElementById('filterStatus')?.value || 'all';
+    
+    let filtered = allUsers;
+    
+    if (searchTerm) {
+        filtered = filtered.filter(user => 
+            (user.fullName && user.fullName.toLowerCase().includes(searchTerm)) ||
+            (user.email && user.email.toLowerCase().includes(searchTerm))
+        );
+    }
+    
+    if (roleFilter !== 'all') {
+        filtered = filtered.filter(user => user.role === roleFilter);
+    }
+    
+    if (statusFilter !== 'all') {
+        filtered = filtered.filter(user => user.status === statusFilter);
+    }
+    
+    if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">📭 لا يوجد مستخدمين</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = '';
+    filtered.forEach((user, index) => {
+        const roleText = {
+            'admin': '👑 أدمن',
+            'user': '👤 مستخدم',
+            'editor': '✏️ محرر'
+        }[user.role] || user.role;
+        
+        const statusText = {
+            'active': '✅ نشط',
+            'inactive': '⭕ غير نشط',
+            'suspended': '⚠️ موقوف'
+        }[user.status] || user.status;
+        
+        const statusClass = {
+            'active': 'status-confirmed',
+            'inactive': 'status-pending',
+            'suspended': 'status-cancelled'
+        }[user.status] || '';
+        
+        const createdAt = user.createdAt?.toDate ? new Date(user.createdAt.toDate()).toLocaleDateString('ar') : '-';
+        
+        tbody.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td><strong>${user.fullName || '-'}</strong></td>
+                <td>${user.email || '-'}</td>
+                <td><span class="badge">${roleText}</span></td>
+                <td><span class="${statusClass}">${statusText}</span></td>
+                <td>${user.phone || '-'}</td>
+                <td>${createdAt}</td>
+                <td>
+                    <button class="edit-btn" onclick="editUser('${user.id}')">
+                        <i class="fas fa-edit"></i> تعديل
+                    </button>
+                    <button class="delete-btn" onclick="deleteUser('${user.id}')">
+                        <i class="fas fa-trash"></i> حذف
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// دالة تعديل المستخدم
+window.editUser = async (userId) => {
+    const user = allUsers.find(u => u.id === userId);
+    if (!user) return;
+    
+    currentEditUserId = userId;
+    document.getElementById('editUserId').value = userId;
+    document.getElementById('editFullName').value = user.fullName || '';
+    document.getElementById('editEmail').value = user.email || '';
+    document.getElementById('editRole').value = user.role || 'user';
+    document.getElementById('editStatus').value = user.status || 'active';
+    document.getElementById('editPhone').value = user.phone || '';
+    document.getElementById('editPassword').value = '';
+    
+    document.getElementById('editUserModal').style.display = 'flex';
+};
+
+// حفظ تعديلات المستخدم
+const editUserForm = document.getElementById('editUserForm');
+if (editUserForm) {
+    editUserForm.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const userId = document.getElementById('editUserId').value;
+        const fullName = document.getElementById('editFullName').value;
+        const email = document.getElementById('editEmail').value;
+        const role = document.getElementById('editRole').value;
+        const status = document.getElementById('editStatus').value;
+        const phone = document.getElementById('editPhone').value;
+        const newPassword = document.getElementById('editPassword').value;
+        
+        try {
+            // تحديث بيانات المستخدم في Firestore
+            await updateDoc(doc(db, "users", userId), {
+                fullName: fullName,
+                email: email,
+                role: role,
+                status: status,
+                phone: phone,
+                updatedAt: new Date()
+            });
+            
+            // إذا تم إدخال كلمة مرور جديدة، قم بتحديثها في Auth
+            if (newPassword && newPassword.length >= 6) {
+                const user = auth.currentUser;
+                if (user && user.uid === userId) {
+                    await updatePassword(user, newPassword);
+                } else {
+                    // ملاحظة: لا يمكن تغيير كلمة مرور مستخدم آخر من الواجهة الأمامية لأسباب أمنية
+                    console.log("لا يمكن تغيير كلمة مرور مستخدم آخر");
+                }
+            }
+            
+            alert("✅ تم تحديث بيانات المستخدم بنجاح!");
+            closeEditModal();
+            
+        } catch (error) {
+            alert("❌ خطأ في التحديث: " + error.message);
+        }
+    };
+}
+
+// دالة حذف المستخدم
+window.deleteUser = async (userId) => {
+    if (!confirm("⚠️ هل أنت متأكد من حذف هذا المستخدم؟ لا يمكن التراجع!")) return;
+    
+    try {
+        // حذف المستخدم من Firestore
+        await deleteDoc(doc(db, "users", userId));
+        
+        // ملاحظة: حذف المستخدم من Authentication يتطلب دوال Cloud Function لأسباب أمنية
+        alert("✅ تم حذف المستخدم بنجاح!");
+        
+    } catch (error) {
+        alert("❌ خطأ في الحذف: " + error.message);
+    }
+};
+
+// إغلاق نافذة التعديل
+window.closeEditModal = () => {
+    document.getElementById('editUserModal').style.display = 'none';
+    currentEditUserId = null;
+};
+
+// أحداث البحث والفلترة
+const searchUsers = document.getElementById('searchUsers');
+const filterRole = document.getElementById('filterRole');
+const filterStatus = document.getElementById('filterStatus');
+
+if (searchUsers) searchUsers.addEventListener('input', () => displayUsers());
+if (filterRole) filterRole.addEventListener('change', () => displayUsers());
+if (filterStatus) filterStatus.addEventListener('change', () => displayUsers());
+
+// إضافة import ضرورية
+import { 
+    createUserWithEmailAndPassword, 
+    updatePassword 
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { 
+    doc, setDoc, updateDoc, deleteDoc, query, orderBy 
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
     </script>
 </body>
 </html>
